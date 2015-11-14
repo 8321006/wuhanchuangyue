@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cy.mapper.CourseCommentMapper">
+	<!-- 实体类 - 数据库映射 2015-07-08 14:27:56. -->
+	<resultMap id="BaseResultMap" type="CourseComment">
+		<id column="comment_id" property="commentId" jdbcType="CHAR" />
+		<result column="course_id" property="courseId" jdbcType="CHAR" />
+		<result column="comment_time" property="commentTime" jdbcType="TIMESTAMP" />
+		<result column="commenter_id" property="commenterId" jdbcType="CHAR" />
+		<result column="commenter_name" property="commenterName"
+			jdbcType="CHAR" />
+		<result column="university_name" property="universityName"
+			jdbcType="CHAR" />
+		<result column="creat_time" property="creatTime" jdbcType="TIMESTAMP" />
+		<result column="creator" property="creator" jdbcType="CHAR" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="updator" property="updator" jdbcType="CHAR" />
+		<result column="parent_comment_id" property="parentCommentId" jdbcType="CHAR" />
+		<result column="comment_title" property="commentTitle"
+			jdbcType="LONGVARCHAR" />
+		<result column="comment_content" property="commentContent"
+			jdbcType="LONGVARCHAR" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段 2015-07-08 14:27:56. -->
+	<sql id="Base_Column_List">
+		comment_id, course_id, comment_title, comment_content,
+		comment_time,
+		commenter_id, commenter_name, university_name,
+		creat_time,
+		creator, update_time, updator, parent_comment_id
+	</sql>
+	<!-- 查询消息 -->
+	<select id="getuserMessage" resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List" />
+		from t_course_comment
+		where comment_content = #{commentContent} and course_id = #{courseId}
+	</select>
+
+  <!--查询评论的消息-->
+	<select id="getplList" resultType="java.util.HashMap">
+		select tc.comment_time commentTime,tu.real_name realName,tc.comment_content commentContent
+		from t_course_comment tc,t_user tu
+		WHERE tc.user_id = tu.user_id 
+		and tc.user_id = #{userId,jdbcType=VARCHAR}
+		and tc.course_id =#{courseId,jdbcType=CHAR} ORDER BY tc.comment_time DESC	
+	</select>
+	
+	<!--查询评论的消息-->
+	<select id="getplwidList" resultType="java.util.HashMap">
+		select tc.comment_time commentTime,tu.real_name realName,tc.comment_content commentContent,
+		date_format(comment_time,"%Y-%m-%d %H:%i:%s") as commenttimeString
+		from t_course_comment tc,t_user tu
+		WHERE tc.user_id = tu.user_id 
+		and tc.course_id =#{courseId,jdbcType=CHAR} ORDER BY tc.comment_time DESC	
+	</select>
+
+	<!-- 按主键查询 2015-07-08 14:27:56. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from t_course_comment
+		where comment_id = #{commentId,jdbcType=CHAR}
+	</select>
+
+	<!-- 按主键删除 2015-07-08 14:27:56. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		t_course_comment
+		where comment_id =
+		#{commentId,jdbcType=CHAR}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2015-07-08 14:27:56. -->
+	<insert id="insert" parameterType="com.cy.model.CourseComment">
+		insert into t_course_comment
+		(comment_id, course_id, comment_time,
+		commenter_id, commenter_name,
+		university_name,
+		creat_time, creator, update_time,
+		updator,user_id,
+		comment_title, comment_content,parent_comment_id
+		)
+		values (#{commentId,jdbcType=CHAR},
+		#{courseId,jdbcType=CHAR},
+		#{commentTime,jdbcType=TIMESTAMP},
+		#{commenterId,jdbcType=CHAR}, #{commenterName,jdbcType=CHAR},
+		#{universityName,jdbcType=CHAR},
+		#{creatTime,jdbcType=TIMESTAMP},
+		#{creator,jdbcType=CHAR},
+		#{updateTime,jdbcType=TIMESTAMP},
+		#{updator,jdbcType=CHAR},#{userId,jdbcType=CHAR}, 
+		#{commentTitle,jdbcType=LONGVARCHAR},
+		#{commentContent,jdbcType=LONGVARCHAR},#{parentCommentId,jdbcType=CHAR}
+		)
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2015-07-08 14:27:56. -->
+	<insert id="insertSelective" parameterType="com.cy.model.CourseComment">
+		insert into t_course_comment
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="commentId != null">
+				comment_id,
+			</if>
+			<if test="courseId != null">
+				course_id,
+			</if>
+			<if test="commentTime != null">
+				comment_time,
+			</if>
+			<if test="commenterId != null">
+				commenter_id,
+			</if>
+			<if test="commenterName != null">
+				commenter_name,
+			</if>
+			<if test="universityName != null">
+				university_name,
+			</if>
+			<if test="creatTime != null">
+				creat_time,
+			</if>
+			<if test="creator != null">
+				creator,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="updator != null">
+				updator,
+			</if>
+			<if test="commentTitle != null">
+				comment_title,
+			</if>
+			<if test="commentContent != null">
+				comment_content,
+			</if>
+			<if test="parentCommentId != null">
+				parent_comment_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="commentId != null">
+				#{commentId,jdbcType=CHAR},
+			</if>
+			<if test="courseId != null">
+				#{courseId,jdbcType=CHAR},
+			</if>
+			<if test="commentTime != null">
+				#{commentTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="commenterId != null">
+				#{commenterId,jdbcType=CHAR},
+			</if>
+			<if test="commenterName != null">
+				#{commenterName,jdbcType=CHAR},
+			</if>
+			<if test="universityName != null">
+				#{universityName,jdbcType=CHAR},
+			</if>
+			<if test="creatTime != null">
+				#{creatTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creator != null">
+				#{creator,jdbcType=CHAR},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updator != null">
+				#{updator,jdbcType=CHAR},
+			</if>
+			<if test="commentTitle != null">
+				#{commentTitle,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="commentContent != null">
+				#{commentContent,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="parentCommentId != null">
+				#{parentCommentId,jdbcType=CHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2015-07-08 14:27:56. -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.cy.model.CourseComment">
+		update t_course_comment
+		<set>
+			<if test="courseId != null">
+				course_id = #{courseId,jdbcType=CHAR},
+			</if>
+			<if test="commentTime != null">
+				comment_time =
+				#{commentTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="commenterId != null">
+				commenter_id =
+				#{commenterId,jdbcType=CHAR},
+			</if>
+			<if test="commenterName != null">
+				commenter_name =
+				#{commenterName,jdbcType=CHAR},
+			</if>
+			<if test="universityName != null">
+				university_name =
+				#{universityName,jdbcType=CHAR},
+			</if>
+			<if test="creatTime != null">
+				creat_time =
+				#{creatTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creator != null">
+				creator = #{creator,jdbcType=CHAR},
+			</if>
+			<if test="updateTime != null">
+				update_time =
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updator != null">
+				updator = #{updator,jdbcType=CHAR},
+			</if>
+			<if test="commentTitle != null">
+				comment_title =
+				#{commentTitle,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="commentContent != null">
+				comment_content =
+				#{commentContent,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="parentCommentId != null">
+				parent_comment_id =
+				#{parentCommentId,jdbcType=CHAR},
+			</if>
+		</set>
+		where comment_id = #{commentId,jdbcType=CHAR}
+	</update>
+
+	<!-- 2015-07-08 14:27:56. -->
+	<!-- 按主键更新 - 全更新 2015-07-08 14:27:56. -->
+	<update id="updateByPrimaryKey" parameterType="com.cy.model.CourseComment">
+		update
+		t_course_comment
+		set course_id = #{courseId,jdbcType=CHAR},
+		comment_time = #{commentTime,jdbcType=TIMESTAMP},
+		commenter_id =
+		#{commenterId,jdbcType=CHAR},
+		commenter_name =
+		#{commenterName,jdbcType=CHAR},
+		university_name =
+		#{universityName,jdbcType=CHAR},
+		creat_time =
+		#{creatTime,jdbcType=TIMESTAMP},
+		creator = #{creator,jdbcType=CHAR},
+		update_time = #{updateTime,jdbcType=TIMESTAMP},
+		updator =
+		#{updator,jdbcType=CHAR},
+		comment_title =
+		#{commentTitle,jdbcType=LONGVARCHAR},
+		comment_content =
+		#{commentContent,jdbcType=LONGVARCHAR},
+		parent_comment_id =
+		#{parentCommentId,jdbcType=CHAR}
+		where comment_id =
+		#{commentId,jdbcType=CHAR}
+	</update>
+	
+	<select id="countComment" parameterType="String" resultType="Integer">		
+		select COUNT(*)
+		from t_course_comment tc,t_user tu
+		WHERE tc.user_id = tu.user_id 
+		and tc.user_id = #{userId,jdbcType=VARCHAR}
+		and tc.course_id =#{courseId,jdbcType=CHAR}
+	</select>
+
+	<select id="countwidComment" parameterType="String" resultType="Integer">		
+		select COUNT(*)
+		from t_course_comment tc,t_user tu
+		WHERE tc.user_id = tu.user_id 
+		and tc.course_id =#{courseId,jdbcType=CHAR}
+	</select>
+</mapper>

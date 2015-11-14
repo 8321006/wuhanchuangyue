@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cy.mapper.PaperMapper">
+	<!-- 实体类 - 数据库映射 2015-06-26 15:47:16. -->
+	<resultMap id="BaseResultMap" type="com.cy.model.Paper">
+		<id column="paper_id" property="paperId" jdbcType="VARCHAR" />
+		<result column="paper_name" property="paperName" jdbcType="VARCHAR" />
+		<result column="subject_id" property="subjectId" jdbcType="INTEGER" />
+		<result column="school_id" property="schoolId" jdbcType="INTEGER" />
+		<result column="answer_cost_time" property="answerCostTime"
+			jdbcType="INTEGER" />
+		<result column="score" property="score" jdbcType="INTEGER" />
+		<result column="pass_score" property="passScore" jdbcType="INTEGER" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="creator" property="creator" jdbcType="VARCHAR" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="is_subjective" property="subjective" jdbcType="INTEGER" />
+		<result column="content" property="content" jdbcType="LONGVARCHAR" />
+		<result column="answer_sheet" property="answerSheet" jdbcType="LONGVARCHAR" />
+		<result column="chapter_id" property="chapterId" jdbcType="CHAR" />
+		<result column="paper_end_time" property="paperendTime" jdbcType="TIMESTAMP" />
+		<result column="test_type" property="testType" jdbcType="INTEGER" />
+		<result column="is_subjective" property="isSubjective" jdbcType="INTEGER"/>
+		<result column="course_id" property="courseId" jdbcType="CHAR"/>
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段 2015-06-08 15:47:16. -->
+	<sql id="Base_Column_List">
+		paper_id,
+		paper_name,
+		subject_id,
+		school_id,
+		answer_cost_time,
+		score,
+		pass_score,
+		create_time,
+		creator,
+		description,
+		is_subjective,
+		content,
+		answer_sheet,paper_end_time,test_type
+	</sql>
+
+	<!-- 按主键查询 -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_paper
+		where paper_id = #{paperId,jdbcType=INTEGER}
+	</select>
+
+
+	<!-- 按条件分页查询试卷列表 -->
+	<select id="getPaperList" resultMap="BaseResultMap">
+		select paper_id,
+		paper_name,
+		subject_id,
+		school_id,
+		answer_cost_time,
+		creator,
+		description
+		from t_paper
+		order by
+		create_time
+		desc
+	</select>
+	
+	<!-- 查询单个课程的试卷列表 -->
+	<select id="getPaperListByCourseId" resultMap="BaseResultMap" parameterType="java.lang.String">
+		SELECT p.paper_id,
+		p.subject_id,
+		p.school_id,
+		p.answer_cost_time,
+		p.creator,
+		p.description,
+		c.`index`,
+		CONCAT(c.chapter_index,c.chapter_name) as paper_name
+		FROM t_paper p LEFT JOIN 
+		t_course_chapter c ON
+		p.chapter_id = c.chapter_id
+		WHERE
+		p.chapter_id IN 
+		(SELECT c.chapter_id FROM t_course_chapter c WHERE c.course_id = #{courseId})
+		ORDER BY
+		c.`index`
+	</select>
+	<!-- 试卷插入 -->
+	<insert id="insertPaper" parameterType="com.cy.model.Paper">
+		insert into t_paper
+		(paper_id,paper_name,subject_id,answer_cost_time,score,pass_score,content,is_subjective)
+        values(#{paperId},#{paperName},#{subjectId},#{answerCostTime},#{score},#{passScore},#{content},#{isSubjective})
+	</insert>
+	<insert id="insertPapercourse" parameterType="com.cy.model.Paper">
+		insert into t_paper
+		(paper_id,paper_name,subject_id,school_id,answer_cost_time,score,pass_score,description,content,chapter_id,test_type,is_subjective)
+        values(#{paperId},#{paperName},#{subjectId},#{schoolId},#{answerCostTime},#{score},#{passScore},#{description},#{content},#{chapterId},#{testType},#{isSubjective})
+	</insert>
+<!-- 插入调查问卷 -->
+	<insert id="addPapersurvey" parameterType="com.cy.model.Paper">
+	insert into t_paper
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="paperId != null" >
+				paper_id,
+			</if>
+			<if test="paperName != null" >
+				paper_name,
+			</if>
+			<if test="chapterId != null" >
+				chapter_id,
+			</if>
+			<if test="testType != null" >
+				test_type,
+			</if>
+			<if test="content != null" >
+				content,
+			</if>
+			<if test="createTime != null" >
+				create_time,
+			</if>
+			<if test="answerCostTime != null" >
+				answer_cost_time,
+			</if>
+			</trim>
+			<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="paperId != null" >
+				#{paperId,jdbcType=VARCHAR},
+			</if>
+			<if test="paperName != null" >
+				#{paperName,jdbcType=VARCHAR},
+			</if>
+			<if test="chapterId != null" >
+				#{chapterId,jdbcType=VARCHAR},
+			</if>
+			<if test="testType != null" >
+				#{testType,jdbcType=INTEGER},
+			</if>
+			<if test="content != null" >
+				#{content,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="createTime != null" >
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="answerCostTime != null" >
+				#{answerCostTime,jdbcType=INTEGER},
+			</if>
+			</trim>
+	</insert>
+	<!-- 视频弹框随机选择试卷 -->
+	<select id="findpaperBycourseId" resultMap="BaseResultMap">
+			select 
+			tp.chapter_id,
+			tp.paper_id,
+			tc.course_id,  
+	        tp.content
+			from t_paper tp
+	        LEFT JOIN t_course_chapter  tc ON tc.chapter_id=tp.chapter_id 
+	       where tc.course_id=#{courseId}ORDER BY rand() limit 1
+	</select>
+</mapper>

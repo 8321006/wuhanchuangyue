@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cy.mapper.CourseClassMapper" >
+	<!-- 实体类 - 数据库映射 2015-07-02 15:44:18. -->
+	<resultMap id="BaseResultMap" type="CourseClass" >
+		<id column="class_id" property="classId" jdbcType="CHAR" />
+		<result column="class_name" property="className" jdbcType="CHAR" />
+		<result column="university_id" property="universityId" jdbcType="INTEGER" />
+		<result column="term_start_time" property="termStartTime" jdbcType="TIMESTAMP" />
+		<result column="term_end_time" property="termEndTime" jdbcType="TIMESTAMP" />
+		<result column="teacher_id" property="teacherId" jdbcType="CHAR" />
+		<result column="teacher_name" property="teacherName" jdbcType="CHAR" />
+		<result column="course_id" property="courseId" jdbcType="INTEGER" />
+		<result column="course_start_time" property="courseStartTime"
+			jdbcType="TIMESTAMP" />
+		<result column="course_end_time" property="courseEndTime"
+			jdbcType="TIMESTAMP" />
+		<result column="course_name" property="courseName" jdbcType="CHAR" />
+		<result column="course_start" property="courseStart" jdbcType="INTEGER" />
+		<result column="course_term" property="courseTerm" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2015-07-02 15:44:18. -->
+	<sql id="Base_Column_List" >
+		class_id, class_name, university_id, term_start_time, term_end_time, teacher_id, 
+		teacher_name,course_start_time,course_end_time, course_id, course_name
+	</sql>
+
+	<select id="selectbyid" resultType="java.lang.String" parameterType="com.cy.model.UniversityCourse">
+		select class_id from t_course_class where university_course_id =#{universityCourseId}
+	</select>
+
+	<!-- 按主键查询 2015-07-02 15:44:18. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from t_course_class
+		where class_id = #{classId,jdbcType=INTEGER}
+	</select>
+
+	<!-- 按主键删除 2015-07-02 15:44:18. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+		delete from t_course_class
+		where class_id = #{classId,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 按主键删除 2015-07-02 15:44:18. -->
+	<delete id="deletebyid" parameterType="com.cy.model.CourseClass" >
+		DELETE 
+		from t_course_class 
+		where university_course_id in 
+		 (SELECT id from t_university_course where course_id=#{courseId}and university_id=#{universityId} and course_term=#{courseTerm})
+
+	</delete>
+	<!-- 插入 - 全字段保存 2015-07-02 15:44:18. -->
+	<insert id="insert" parameterType="com.cy.model.CourseClass" >
+		insert into t_course_class (class_id, class_name, university_id, 
+			term_start_time, term_end_time, teacher_id, 
+			teacher_name, course_id, course_name
+			)
+		values (#{classId,jdbcType=INTEGER}, #{className,jdbcType=CHAR}, #{universityId,jdbcType=INTEGER}, 
+			#{termStartTime,jdbcType=TIMESTAMP}, #{termEndTime,jdbcType=TIMESTAMP}, #{teacherId,jdbcType=INTEGER}, 
+			#{teacherName,jdbcType=CHAR}, #{courseId,jdbcType=INTEGER}, #{courseName,jdbcType=CHAR}
+			)
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2015-07-02 15:44:18. -->
+	<insert id="insertSelective" parameterType="com.cy.model.CourseClass" >
+		insert into t_course_class
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="classId != null" >
+				class_id,
+			</if>
+			<if test="className != null" >
+				class_name,
+			</if>
+			<if test="universityId != null" >
+				university_id,
+			</if>
+			<if test="termStartTime != null" >
+				term_start_time,
+			</if>
+			<if test="termEndTime != null" >
+				term_end_time,
+			</if>
+			<if test="teacherId != null" >
+				teacher_id,
+			</if>
+			<if test="teacherName != null" >
+				teacher_name,
+			</if>
+			<if test="courseId != null" >
+				course_id,
+			</if>
+			<if test="courseName != null" >
+				course_name,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="classId != null" >
+				#{classId,jdbcType=INTEGER},
+			</if>
+			<if test="className != null" >
+				#{className,jdbcType=CHAR},
+			</if>
+			<if test="universityId != null" >
+				#{universityId,jdbcType=INTEGER},
+			</if>
+			<if test="termStartTime != null" >
+				#{termStartTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="termEndTime != null" >
+				#{termEndTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="teacherId != null" >
+				#{teacherId,jdbcType=INTEGER},
+			</if>
+			<if test="teacherName != null" >
+				#{teacherName,jdbcType=CHAR},
+			</if>
+			<if test="courseId != null" >
+				#{courseId,jdbcType=INTEGER},
+			</if>
+			<if test="courseName != null" >
+				#{courseName,jdbcType=CHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2015-07-02 15:44:18. -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.cy.model.CourseClass" >
+		update t_course_class
+		<set >
+			<if test="className != null" >
+				class_name = #{className,jdbcType=CHAR},
+			</if>
+			<if test="universityId != null" >
+				university_id = #{universityId,jdbcType=INTEGER},
+			</if>
+			<if test="termStartTime != null" >
+				term_start_time = #{termStartTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="termEndTime != null" >
+				term_end_time = #{termEndTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="teacherId != null" >
+				teacher_id = #{teacherId,jdbcType=INTEGER},
+			</if>
+			<if test="teacherName != null" >
+				teacher_name = #{teacherName,jdbcType=CHAR},
+			</if>
+			<if test="courseId != null" >
+				course_id = #{courseId,jdbcType=INTEGER},
+			</if>
+			<if test="courseName != null" >
+				course_name = #{courseName,jdbcType=CHAR},
+			</if>
+		</set>
+		where class_id = #{classId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2015-07-02 15:44:18. -->
+	<update id="updateByPrimaryKey" parameterType="com.cy.model.CourseClass" >
+		update t_course_class
+		set class_name = #{className,jdbcType=CHAR},
+			university_id = #{universityId,jdbcType=INTEGER},
+			term_start_time = #{termStartTime,jdbcType=TIMESTAMP},
+			term_end_time = #{termEndTime,jdbcType=TIMESTAMP},
+			teacher_id = #{teacherId,jdbcType=INTEGER},
+			teacher_name = #{teacherName,jdbcType=CHAR},
+			course_id = #{courseId,jdbcType=INTEGER},
+			course_name = #{courseName,jdbcType=CHAR}
+		where class_id = #{classId,jdbcType=INTEGER}
+	</update>
+
+
+	<!-- Excel 批量导入-->
+		<insert id="insertCourseClassList" parameterType="com.cy.model.CourseClass" >
+		insert into t_course_class (class_id, class_name, university_id, 
+			term_start_time, term_end_time, teacher_id, 
+			teacher_name, course_id, course_name,course_start_time,course_end_time,university_course_id
+			)
+		values 
+	  <foreach collection="list" item="item" index="index" separator=",">
+		(#{item.classId,jdbcType=INTEGER}, #{item.className,jdbcType=CHAR}, #{item.universityId,jdbcType=INTEGER}, 
+			#{item.termStartTime,jdbcType=TIMESTAMP}, #{item.termEndTime,jdbcType=TIMESTAMP}, #{item.teacherId,jdbcType=INTEGER}, 
+			#{item.teacherName,jdbcType=CHAR}, #{item.courseId,jdbcType=INTEGER}, #{item.courseName,jdbcType=CHAR},
+			#{item.courseStartTime,jdbcType=TIMESTAMP},#{item.courseEndTime,jdbcType=TIMESTAMP},
+			#{item.universityCourseId,jdbcType=CHAR}
+			)
+	  </foreach>
+	</insert>
+
+	<update id="UpdateTime" parameterType="com.cy.model.CourseClass">
+	      update t_course_class set
+		  course_start_time = #{courseStartTime,jdbcType=TIMESTAMP},
+		  course_end_time = #{courseEndTime,jdbcType=TIMESTAMP},
+		  course_start='1' 
+		  where course_id = #{courseId,jdbcType=CHAR}and university_id=#{universityId}
+	</update>
+	<update id="updateByClassId" parameterType="com.cy.model.CourseClass">
+	       update t_course_class 
+	       set  teacher_id =#{teacherId},
+           teacher_name=#{teacherName}
+		  where class_id = #{classId,jdbcType=CHAR}
+	</update>
+  
+
+</mapper>

@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cy.mapper.UserMapper">
+	<!-- 实体类 - 数据库映射 2015-06-08 15:47:16. -->
+	<resultMap id="BaseResultMap" type="User">
+		<id column="user_id" property="userId" jdbcType="VARCHAR" />
+		<result column="user_qq" property="userQQ" jdbcType="VARCHAR" />
+		<result column="login_name" property="loginName" jdbcType="CHAR" />
+		<result column="login_password" property="loginPassword"
+			jdbcType="CHAR" />
+		<result column="real_name" property="realName" jdbcType="CHAR" />
+		<result column="nick_name" property="nickName" jdbcType="CHAR" />
+		<result column="university_id" property="universityId"
+			jdbcType="VARCHAR" />
+		<result column="university_logo" property="universityLogo"
+			jdbcType="VARCHAR" />
+		<result column="university_name" property="universityName"
+			jdbcType="CHAR" />
+		<result column="phone" property="phone" jdbcType="CHAR" />
+		<result column="address" property="address" jdbcType="CHAR" />
+		<result column="email" property="email" jdbcType="CHAR" />
+		<result column="last_login_time" property="lastLoginTime"
+			jdbcType="TIMESTAMP" />
+		<result column="login_count" property="loginCount" jdbcType="INTEGER" />
+		<result column="create_user" property="createUser" jdbcType="CHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_user" property="updateUser" jdbcType="CHAR" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="student_id" property="studentId" jdbcType="CHAR" />
+		<result column="college_name" property="collegeName" jdbcType="CHAR" />
+		<result column="subject_name" property="subjectName" jdbcType="CHAR" />
+		<result column="user_type" property="userType" jdbcType="INTEGER" />
+		<result column="extend" property="extend" jdbcType="LONGVARCHAR" />
+		<result column="user_introduction" property="userIntroduction"
+			jdbcType="LONGVARCHAR" />
+		<result column="sex" property="sex" jdbcType="CHAR" />
+	</resultMap>
+
+	<!-- 查询账号和密码 -->
+	<select id="selectUser" parameterType="User" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List_1" />
+		from t_user a join t_university b on a.university_id = b.university_id
+		where a.phone=#{phone} and a.login_password=#{loginPassword}
+	</select>
+
+	<!-- 用于 SELECT 语句的所有字段 2015-06-08 15:47:16. -->
+	<sql id="Base_Column_List">
+		user_id, login_name, login_password,
+		real_name, nick_name, university_id, university_name,
+		phone, address, email, last_login_time, login_count, create_user,
+		create_time, update_user,
+		update_time, student_id, college_name, subject_name, user_type,extend,
+		user_introduction,sex
+	</sql>
+
+	<sql id="Base_Column_List_1">
+		a.user_id, a.login_name,
+		a.login_password, a.real_name, a.nick_name, a.university_id,
+		a.phone, a.address, a.email, a.last_login_time, a.login_count, a.create_user,
+		a.create_time, a.update_user,
+		a.update_time, a.student_id, a.college_name, a.subject_name, a.user_type,extend,
+		a.user_introduction,a.sex,b.university_logo as
+		university_logo,b.university_name as university_name
+	</sql>
+    <!-- 删除user与mycourse表已存在的关系 -->
+	<delete id="deletebyClassId" parameterType="java.lang.String">
+		delete from t_user where user_id in 
+		(select user_id from t_my_course where class_id = #{classId})
+	</delete>
+
+	<!-- 按主键查询 2015-06-08 15:47:16. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from t_user
+		where user_id = #{userId,jdbcType=VARCHAR}
+	</select>
+	<!-- 按主键删除 2015-06-08 15:47:16. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from t_user
+		where user_id = #{userId,jdbcType=VARCHAR}
+	</delete>
+
+	<!-- 插入老师 -->
+	<insert id="insertTeacher" parameterType="com.cy.model.User">
+		insert into t_user (
+		user_id,
+		login_name,
+		login_password,
+		real_name,
+		phone,
+		university_id,
+		user_type,
+		sex
+		)
+		values (
+		#{userId},
+		#{loginName},
+		#{loginPassword},
+		#{realName},
+		#{phone},
+		#{universityId},
+		#{userType},
+		#{sex}
+		)
+	</insert>
+
+	<update id="updatebyPhone" parameterType="com.cy.model.User">
+		update t_user set
+		login_password = #{loginPassword}
+		where phone = #{phone}
+	</update>
+
+	<!-- 插入 - 全字段保存 2015-06-08 15:47:16. -->
+	<insert id="insert" parameterType="com.cy.model.User">
+		insert
+		into t_user (user_id, login_name, login_password,
+		real_name, nick_name, university_id,
+		university_name, phone, address,
+		email, last_login_time, login_count,
+		create_user, create_time, update_user,
+		update_time, student_id, college_name,
+		subject_name, user_type, extend,
+		user_introduction)
+		values (#{userId,jdbcType=VARCHAR}, #{loginName,jdbcType=CHAR},
+		#{loginPassword,jdbcType=CHAR},
+		#{realName,jdbcType=CHAR}, #{nickName,jdbcType=CHAR}, #{universityId,jdbcType=INTEGER},
+		#{universityName,jdbcType=CHAR}, #{phone,jdbcType=CHAR},
+		#{address,jdbcType=CHAR},
+		#{email,jdbcType=CHAR}, #{lastLoginTime,jdbcType=TIMESTAMP}, #{loginCount,jdbcType=INTEGER},
+		#{createUser,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP},
+		#{updateUser,jdbcType=CHAR},
+		#{updateTime,jdbcType=TIMESTAMP}, #{studentId,jdbcType=CHAR}, #{collegeName,jdbcType=CHAR},
+		#{subjectName,jdbcType=CHAR}, #{userType,jdbcType=INTEGER},
+		#{extend,jdbcType=LONGVARCHAR},
+		#{userIntroduction,jdbcType=LONGVARCHAR})
+	</insert>
+
+	<!--EXCEL数据保存操作 -->
+	<insert id="insertUserList" parameterType="java.util.List">
+		insert into t_user (user_id, login_name, login_password,
+		real_name, nick_name, university_id,
+		university_name, phone, address,
+		email, last_login_time, login_count,
+		create_user, create_time, update_user,
+		update_time, student_id, college_name,
+		subject_name, user_type, extend,
+		user_introduction)
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.userId,jdbcType=VARCHAR}, #{item.loginName,jdbcType=CHAR},
+			#{item.loginPassword,jdbcType=CHAR},
+			#{item.realName,jdbcType=CHAR}, #{item.nickName,jdbcType=CHAR},
+			#{item.universityId,jdbcType=VARCHAR},
+			#{item.universityName,jdbcType=CHAR}, #{item.phone,jdbcType=CHAR},
+			#{item.address,jdbcType=CHAR},
+			#{item.email,jdbcType=CHAR}, #{item.lastLoginTime,jdbcType=TIMESTAMP},
+			#{item.loginCount,jdbcType=INTEGER},
+			#{item.createUser,jdbcType=CHAR},
+			#{item.createTime,jdbcType=TIMESTAMP},
+			#{item.updateUser,jdbcType=CHAR},
+			#{item.updateTime,jdbcType=TIMESTAMP},
+			#{item.studentId,jdbcType=CHAR}, #{item.collegeName,jdbcType=CHAR},
+			#{item.subjectName,jdbcType=CHAR}, #{item.userType,jdbcType=INTEGER},
+			#{item.extend,jdbcType=LONGVARCHAR},
+			#{item.userIntroduction,jdbcType=LONGVARCHAR})
+		</foreach>
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2015-06-08 15:47:16. -->
+	<insert id="insertSelective" parameterType="com.cy.model.User">
+		insert into t_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="loginName != null">
+				login_name,
+			</if>
+			<if test="loginPassword != null">
+				login_password,
+			</if>
+			<if test="realName != null">
+				real_name,
+			</if>
+			<if test="nickName != null">
+				nick_name,
+			</if>
+			<if test="universityId != null">
+				university_id,
+			</if>
+			<if test="universityName != null">
+				university_name,
+			</if>
+			<if test="phone != null">
+				phone,
+			</if>
+			<if test="address != null">
+				address,
+			</if>
+			<if test="email != null">
+				email,
+			</if>
+			<if test="lastLoginTime != null">
+				last_login_time,
+			</if>
+			<if test="loginCount != null">
+				login_count,
+			</if>
+			<if test="createUser != null">
+				create_user,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateUser != null">
+				update_user,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="studentId != null">
+				student_id,
+			</if>
+			<if test="collegeName != null">
+				college_name,
+			</if>
+			<if test="subjectName != null">
+				subject_name,
+			</if>
+			<if test="userType != null">
+				user_type,
+			</if>
+			<if test="extend != null">
+				extend,
+			</if>
+			<if test="userIntroduction != null">
+				user_introduction,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				#{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="loginName != null">
+				#{loginName,jdbcType=CHAR},
+			</if>
+			<if test="loginPassword != null">
+				#{loginPassword,jdbcType=CHAR},
+			</if>
+			<if test="realName != null">
+				#{realName,jdbcType=CHAR},
+			</if>
+			<if test="nickName != null">
+				#{nickName,jdbcType=CHAR},
+			</if>
+			<if test="universityId != null">
+				#{universityId,jdbcType=INTEGER},
+			</if>
+			<if test="universityName != null">
+				#{universityName,jdbcType=CHAR},
+			</if>
+			<if test="phone != null">
+				#{phone,jdbcType=CHAR},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=CHAR},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=CHAR},
+			</if>
+			<if test="lastLoginTime != null">
+				#{lastLoginTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="loginCount != null">
+				#{loginCount,jdbcType=INTEGER},
+			</if>
+			<if test="createUser != null">
+				#{createUser,jdbcType=CHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateUser != null">
+				#{updateUser,jdbcType=CHAR},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="studentId != null">
+				#{studentId,jdbcType=CHAR},
+			</if>
+			<if test="collegeName != null">
+				#{collegeName,jdbcType=CHAR},
+			</if>
+			<if test="subjectName != null">
+				#{subjectName,jdbcType=CHAR},
+			</if>
+			<if test="userType != null">
+				#{userType,jdbcType=INTEGER},
+			</if>
+			<if test="extend != null">
+				#{extend,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="userIntroduction != null">
+				#{userIntroduction,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2015-06-08 15:47:16. -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.cy.model.User">
+		update t_user
+		<set>
+			<if test="loginName != null">
+				login_name =
+				#{loginName,jdbcType=CHAR},
+			</if>
+			<if test="loginPassword != null">
+				login_password =
+				#{loginPassword,jdbcType=CHAR},
+			</if>
+			<if test="realName != null">
+				real_name = #{realName,jdbcType=CHAR},
+			</if>
+			<if test="nickName != null">
+				nick_name = #{nickName,jdbcType=CHAR},
+			</if>
+			<if test="universityId != null">
+				university_id =
+				#{universityId,jdbcType=INTEGER},
+			</if>
+			<if test="universityName != null">
+				university_name =
+				#{universityName,jdbcType=CHAR},
+			</if>
+			<if test="phone != null">
+				phone = #{phone,jdbcType=CHAR},
+			</if>
+			<if test="address != null">
+				address = #{address,jdbcType=CHAR},
+			</if>
+			<if test="email != null">
+				email = #{email,jdbcType=CHAR},
+			</if>
+			<if test="lastLoginTime != null">
+				last_login_time =
+				#{lastLoginTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="loginCount != null">
+				login_count =
+				#{loginCount,jdbcType=INTEGER},
+			</if>
+			<if test="createUser != null">
+				create_user =
+				#{createUser,jdbcType=CHAR},
+			</if>
+			<if test="createTime != null">
+				create_time =
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateUser != null">
+				update_user =
+				#{updateUser,jdbcType=CHAR},
+			</if>
+			<if test="updateTime != null">
+				update_time =
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="studentId != null">
+				student_id =
+				#{studentId,jdbcType=CHAR},
+			</if>
+			<if test="collegeName != null">
+				college_name =
+				#{collegeName,jdbcType=CHAR},
+			</if>
+			<if test="subjectName != null">
+				subject_name =
+				#{subjectName,jdbcType=CHAR},
+			</if>
+			<if test="userType != null">
+				user_type =
+				#{userType,jdbcType=INTEGER},
+			</if>
+			<if test="extend != null">
+				extend = #{extend,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="userIntroduction != null">
+				user_introduction =
+				#{userIntroduction,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where user_id = #{userId,jdbcType=VARCHAR}
+	</update>
+
+	<!-- 2015-06-08 15:47:16. -->
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.cy.model.User">
+		update t_user
+		set login_name = #{loginName,jdbcType=CHAR},
+		login_password = #{loginPassword,jdbcType=CHAR},
+		real_name = #{realName,jdbcType=CHAR},
+		nick_name = #{nickName,jdbcType=CHAR},
+		university_id = #{universityId,jdbcType=INTEGER},
+		university_name = #{universityName,jdbcType=CHAR},
+		phone = #{phone,jdbcType=CHAR},
+		address = #{address,jdbcType=CHAR},
+		email = #{email,jdbcType=CHAR},
+		last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+		login_count = #{loginCount,jdbcType=INTEGER},
+		create_user = #{createUser,jdbcType=CHAR},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		update_user = #{updateUser,jdbcType=CHAR},
+		update_time = #{updateTime,jdbcType=TIMESTAMP},
+		student_id = #{studentId,jdbcType=CHAR},
+		college_name = #{collegeName,jdbcType=CHAR},
+		subject_name = #{subjectName,jdbcType=CHAR},
+		user_type = #{userType,jdbcType=INTEGER},
+		extend = #{extend,jdbcType=LONGVARCHAR},
+		user_introduction = #{userIntroduction,jdbcType=LONGVARCHAR}
+		where user_id =
+		#{userId,jdbcType=VARCHAR}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2015-06-08 15:47:16. -->
+	<update id="updateByPrimaryKey" parameterType="com.cy.model.User">
+		update t_user
+		set login_name = #{loginName,jdbcType=CHAR},
+		login_password = #{loginPassword,jdbcType=CHAR},
+		real_name = #{realName,jdbcType=CHAR},
+		nick_name = #{nickName,jdbcType=CHAR},
+		university_id = #{universityId,jdbcType=INTEGER},
+		university_name = #{universityName,jdbcType=CHAR},
+		phone = #{phone,jdbcType=CHAR},
+		address = #{address,jdbcType=CHAR},
+		email = #{email,jdbcType=CHAR},
+		last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+		login_count = #{loginCount,jdbcType=INTEGER},
+		create_user = #{createUser,jdbcType=CHAR},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		update_user = #{updateUser,jdbcType=CHAR},
+		update_time = #{updateTime,jdbcType=TIMESTAMP},
+		student_id = #{studentId,jdbcType=CHAR},
+		college_name = #{collegeName,jdbcType=CHAR},
+		subject_name = #{subjectName,jdbcType=CHAR},
+		user_qq = #{userQQ,jdbcType=CHAR},
+		user_type = #{userType,jdbcType=INTEGER}
+		where user_id =
+		#{userId,jdbcType=VARCHAR}
+	</update>
+	<!-- 在课程设置中查询老师的信息 -->
+	<select id="selectTecher" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		SELECT * from t_user where
+		user_type='1'
+	</select>
+	<select id="selectByTeacherName" resultMap="BaseResultMap"
+		parameterType="com.cy.model.User">
+		select
+		tc.user_id,
+		tc.real_name,
+		tc.university_id,
+		tc.phone,
+		tu.university_name
+		from t_user
+		tc
+		LEFT JOIN t_university tu
+		on tu.university_id=tc.university_id
+		<where>
+			<if test="realName != null and realName!=''">
+				real_name like CONCAT('%',#{realName},'%') and
+			</if>
+			tc.user_type='1' and tc.university_id=#{universityId}
+		</where>
+	</select>
+	<!-- 通过用户名称来查询userid -->
+	<select id="findbyuserid" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select user_id from t_user where
+		nick_name = #{nickName,jdbcType=CHAR}
+	</select>
+
+	<!-- 通过学校ID和角色查询用户列表 -->
+
+	<select id="selectUserListbySchool" resultType="com.cy.model.User"
+		parameterType="java.util.Map">
+		<!-- select t.user_id as userId, t.real_name as realName, t.university_name 
+			as universityName, t.phone as phone, t.sex as sex, t.student_id as studentId, 
+			mc.course_name as courseName, tm.course_term as courseTerm from t_user t,t_university_course 
+			tm,t_my_course mc where t.university_id =#{universityId} and t.user_type=#{role} 
+			and mc.user_id=t.user_id and t.university_id=tm.university_id and tm.course_id=mc.course_id -->
+		SELECT
+		tu.real_name realName,
+		tu.sex,
+		tu.phone,
+		tu.student_id studentId,
+		uc.course_name courseName,
+		uc.course_term courseTerm
+		from t_user tu LEFT JOIN
+		t_university_course uc on
+		tu.user_id = uc.teacher_id
+		where tu.university_id =#{universityId}
+		and tu.user_type = #{role}
+		<!-- <if test="courseTerm !='' and courseTerm !=null"> and uc.course_term 
+			= #{courseTerm} </if> <if test="courseId != '' and courseId != null "> and 
+			uc.course_id = #{courseId} </if> <if test="realName != null and realName 
+			!= ''"> and tu.real_name like #{realName} </if> -->
+
+	</select>
+
+	<!-- 通过学校ID和角色查询用户列表 -->
+
+	<select id="selectTeacherListbySchool" resultType="com.cy.model.User"
+		parameterType="java.util.Map">
+		<!-- select t.user_id as userId, t.real_name as realName, t.university_name 
+			as universityName, t.phone as phone, t.sex as sex, t.student_id as studentId, 
+			mc.course_name as courseName, tm.course_term as courseTerm from t_user t,t_university_course 
+			tm,t_my_course mc where t.university_id =#{universityId} and t.user_type=#{role} 
+			and mc.user_id=t.user_id and t.university_id=tm.university_id and tm.course_id=mc.course_id -->
+		SELECT
+		tu.real_name realName,
+		tu.sex,
+		tu.phone,
+		tu.student_id userId,
+		uc.course_name courseName,
+		uc.course_term courseTerm
+		from t_user tu LEFT JOIN
+		t_university_course uc on
+		tu.user_id = uc.teacher_id
+		where tu.university_id =#{universityId}
+		and tu.user_type = #{role}
+		<if test="courseTerm !='' and courseTerm !=null">
+			and uc.course_term = #{courseTerm}
+		</if>
+		<if test="courseId != '' and courseId != null ">
+			and uc.course_id = #{courseId}
+		</if>
+		<if test="realName != null and realName != ''">
+			and tu.real_name like #{realName}
+		</if>
+
+	</select>
+
+	<select id="selectUserListCountbySchool" resultType="String"
+		parameterType="java.util.Map">
+		select
+		count(t.user_id)
+		from t_user t,t_course_class uc,t_my_course mc
+		where t.university_id
+		=#{universityId} and t.user_type=#{role} and mc.user_id=t.user_id
+		and t.university_id=uc.university_id and uc.course_id=mc.course_id
+	</select>
+
+	<!-- 通过loginname称来查询user -->
+	<select id="findbyLoginName" resultType="String" parameterType="java.lang.String">
+		select count(user_id) from t_user where login_name =
+		#{loginName,jdbcType=CHAR}
+	</select>
+
+	<select id="selectByphone" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from t_user
+		where phone = #{phone}
+	</select>
+	<select id="findbyPhone" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from t_user
+		where phone = #{phone}
+	</select>
+
+	<select id="findBySchoolCode" resultMap="BaseResultMap"
+		parameterType="com.cy.model.User">
+		select
+		<include refid="Base_Column_List" />
+		from t_user
+		where student_id = #{studentId}
+		and university_id =
+		#{universityId}
+	</select>
+
+	<select id="findByUserQQ" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from t_user
+		where user_qq = #{qq}
+	</select>
+
+
+	<!-- 通过studentid称来查询userid -->
+	<select id="findbystudentId" resultType="String" parameterType="java.lang.String">
+		select user_id from t_user where student_id =
+		#{studentId,jdbcType=CHAR}
+	</select>
+	<!-- 判断当前用户是否已经存在，避免重复导入 -->
+	<select id="finduserBystudentId" resultType="String" parameterType="com.cy.model.User">
+		select user_id from t_user where student_id =
+		#{studentId,jdbcType=CHAR}and
+		university_id=#{universityId}
+	</select>
+
+</mapper>

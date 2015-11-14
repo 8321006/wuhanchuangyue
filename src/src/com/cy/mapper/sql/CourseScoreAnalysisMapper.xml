@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cy.mapper.CourseScoreAnalysisMapper">
+	<!-- 实体类 - 数据库映射 2015-07-23 15:10:16. -->
+	<resultMap id="BaseResultMap" type="CourseScoreAnalysis">
+		<id column="score_id" property="scoreId" jdbcType="INTEGER" />
+		<result column="student_id" property="studentId" jdbcType="CHAR" />
+		<result column="student_name" property="studentName" jdbcType="CHAR" />
+		<result column="class_id" property="classId" jdbcType="CHAR" />
+		<result column="class_name" property="className" jdbcType="CHAR" />
+		<result column="course_id" property="courseId" jdbcType="CHAR" />
+		<result column="course_name" property="courseName" jdbcType="CHAR" />
+		<result column="video_count" property="videoCount" jdbcType="INTEGER" />
+		<result column="video_score" property="videoScore" jdbcType="INTEGER" />
+		<result column="task_count" property="taskCount" jdbcType="INTEGER" />
+		<result column="task_score" property="taskScore" jdbcType="INTEGER" />
+		<result column="comment_count" property="commentCount"
+			jdbcType="INTEGER" />
+		<result column="comment_score" property="commentScore"
+			jdbcType="INTEGER" />
+		<result column="quiz_count" property="quizCount" jdbcType="INTEGER" />
+		<result column="quiz_score" property="quizScore" jdbcType="INTEGER" />
+		<result column="exam_count" property="examCount" jdbcType="INTEGER" />
+		<result column="exam_score" property="examScore" jdbcType="INTEGER" />
+		<result column="analysis_time" property="analysisTime"
+			jdbcType="DATE" />
+		<result column="course_score" property="courseScore" jdbcType="INTEGER" />
+		<result column="ifpass" property="ifpass" jdbcType="INTEGER" />
+		<result column="university_id" property="universityId"
+			jdbcType="INTEGER" />
+		<result column="university_name" property="universityName"
+			jdbcType="CHAR" />
+		<result column="teacher_id" property="teacherId" jdbcType="CHAR" />
+		<result column="teacher_name" property="teacherName" jdbcType="CHAR" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段 2015-07-23 15:10:16. -->
+	<sql id="Base_Column_List">
+		score_id, student_id, student_name,
+		class_id, class_name, course_id, course_name,
+		video_count, video_score, task_count, task_score, comment_count, comment_score,
+		quiz_count,
+		quiz_score, exam_count, exam_score, analysis_time, course_score, ifpass,
+		university_id,
+		university_name, teacher_id, teacher_name
+	</sql>
+
+	<!-- 按主键查询 2015-07-23 15:10:16. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_course_score_analysis
+		where score_id =
+		#{scoreId,jdbcType=INTEGER}
+	</select>
+
+	<select id="getScoreExamByClassAndUser" parameterType="map"
+		resultType="int">
+		SELECT MAX(userScore) FROM t_test WHERE user_id = #{userId} AND class_id =
+		#{classId} AND test_type = #{testType} AND mark_status = 1
+	</select>
+	
+	
+	<!-- 按主键删除 2015-07-23 15:10:16. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from t_course_score_analysis
+		where score_id =
+		#{scoreId,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2015-07-23 15:10:16. -->
+	<insert id="insert" parameterType="com.cy.model.CourseScoreAnalysis">
+		insert into t_course_score_analysis (score_id, student_id,
+		student_name,
+		class_id, class_name, course_id,
+		course_name, video_count, video_score,
+		task_count, task_score, comment_count,
+		comment_score, quiz_count, quiz_score,
+		exam_count, exam_score, analysis_time,
+		course_score, ifpass, university_id,
+		university_name, teacher_id, teacher_name
+		)
+		values (#{scoreId,jdbcType=INTEGER}, #{studentId,jdbcType=CHAR},
+		#{studentName,jdbcType=CHAR},
+		#{classId,jdbcType=CHAR}, #{className,jdbcType=CHAR}, #{courseId,jdbcType=CHAR},
+		#{courseName,jdbcType=CHAR}, #{videoCount,jdbcType=INTEGER},
+		#{videoScore,jdbcType=INTEGER},
+		#{taskCount,jdbcType=INTEGER}, #{taskScore,jdbcType=INTEGER}, #{commentCount,jdbcType=INTEGER},
+		#{commentScore,jdbcType=INTEGER}, #{quizCount,jdbcType=INTEGER},
+		#{quizScore,jdbcType=INTEGER},
+		#{examCount,jdbcType=INTEGER}, #{examScore,jdbcType=INTEGER}, #{analysisTime,jdbcType=DATE},
+		#{courseScore,jdbcType=INTEGER}, #{ifpass,jdbcType=INTEGER},
+		#{universityId,jdbcType=INTEGER},
+		#{universityName,jdbcType=CHAR}, #{teacherId,jdbcType=CHAR}, #{teacherName,jdbcType=CHAR}
+		)
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2015-07-23 15:10:16. -->
+	<insert id="insertSelective" parameterType="com.cy.model.CourseScoreAnalysis">
+		insert into t_course_score_analysis
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="scoreId != null">
+				score_id,
+			</if>
+			<if test="studentId != null">
+				student_id,
+			</if>
+			<if test="studentName != null">
+				student_name,
+			</if>
+			<if test="classId != null">
+				class_id,
+			</if>
+			<if test="className != null">
+				class_name,
+			</if>
+			<if test="courseId != null">
+				course_id,
+			</if>
+			<if test="courseName != null">
+				course_name,
+			</if>
+			<if test="videoCount != null">
+				video_count,
+			</if>
+			<if test="videoScore != null">
+				video_score,
+			</if>
+			<if test="taskCount != null">
+				task_count,
+			</if>
+			<if test="taskScore != null">
+				task_score,
+			</if>
+			<if test="commentCount != null">
+				comment_count,
+			</if>
+			<if test="commentScore != null">
+				comment_score,
+			</if>
+			<if test="quizCount != null">
+				quiz_count,
+			</if>
+			<if test="quizScore != null">
+				quiz_score,
+			</if>
+			<if test="examCount != null">
+				exam_count,
+			</if>
+			<if test="examScore != null">
+				exam_score,
+			</if>
+			<if test="analysisTime != null">
+				analysis_time,
+			</if>
+			<if test="courseScore != null">
+				course_score,
+			</if>
+			<if test="ifpass != null">
+				ifpass,
+			</if>
+			<if test="universityId != null">
+				university_id,
+			</if>
+			<if test="universityName != null">
+				university_name,
+			</if>
+			<if test="teacherId != null">
+				teacher_id,
+			</if>
+			<if test="teacherName != null">
+				teacher_name,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="scoreId != null">
+				#{scoreId,jdbcType=INTEGER},
+			</if>
+			<if test="studentId != null">
+				#{studentId,jdbcType=CHAR},
+			</if>
+			<if test="studentName != null">
+				#{studentName,jdbcType=CHAR},
+			</if>
+			<if test="classId != null">
+				#{classId,jdbcType=CHAR},
+			</if>
+			<if test="className != null">
+				#{className,jdbcType=CHAR},
+			</if>
+			<if test="courseId != null">
+				#{courseId,jdbcType=CHAR},
+			</if>
+			<if test="courseName != null">
+				#{courseName,jdbcType=CHAR},
+			</if>
+			<if test="videoCount != null">
+				#{videoCount,jdbcType=INTEGER},
+			</if>
+			<if test="videoScore != null">
+				#{videoScore,jdbcType=INTEGER},
+			</if>
+			<if test="taskCount != null">
+				#{taskCount,jdbcType=INTEGER},
+			</if>
+			<if test="taskScore != null">
+				#{taskScore,jdbcType=INTEGER},
+			</if>
+			<if test="commentCount != null">
+				#{commentCount,jdbcType=INTEGER},
+			</if>
+			<if test="commentScore != null">
+				#{commentScore,jdbcType=INTEGER},
+			</if>
+			<if test="quizCount != null">
+				#{quizCount,jdbcType=INTEGER},
+			</if>
+			<if test="quizScore != null">
+				#{quizScore,jdbcType=INTEGER},
+			</if>
+			<if test="examCount != null">
+				#{examCount,jdbcType=INTEGER},
+			</if>
+			<if test="examScore != null">
+				#{examScore,jdbcType=INTEGER},
+			</if>
+			<if test="analysisTime != null">
+				#{analysisTime,jdbcType=DATE},
+			</if>
+			<if test="courseScore != null">
+				#{courseScore,jdbcType=INTEGER},
+			</if>
+			<if test="ifpass != null">
+				#{ifpass,jdbcType=INTEGER},
+			</if>
+			<if test="universityId != null">
+				#{universityId,jdbcType=INTEGER},
+			</if>
+			<if test="universityName != null">
+				#{universityName,jdbcType=CHAR},
+			</if>
+			<if test="teacherId != null">
+				#{teacherId,jdbcType=CHAR},
+			</if>
+			<if test="teacherName != null">
+				#{teacherName,jdbcType=CHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2015-07-23 15:10:16. -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.cy.model.CourseScoreAnalysis">
+		update t_course_score_analysis
+		<set>
+			<if test="studentId != null">
+				student_id =
+				#{studentId,jdbcType=CHAR},
+			</if>
+			<if test="studentName != null">
+				student_name =
+				#{studentName,jdbcType=CHAR},
+			</if>
+			<if test="classId != null">
+				class_id = #{classId,jdbcType=CHAR},
+			</if>
+			<if test="className != null">
+				class_name =
+				#{className,jdbcType=CHAR},
+			</if>
+			<if test="courseId != null">
+				course_id = #{courseId,jdbcType=CHAR},
+			</if>
+			<if test="courseName != null">
+				course_name =
+				#{courseName,jdbcType=CHAR},
+			</if>
+			<if test="videoCount != null">
+				video_count =
+				#{videoCount,jdbcType=INTEGER},
+			</if>
+			<if test="videoScore != null">
+				video_score =
+				#{videoScore,jdbcType=INTEGER},
+			</if>
+			<if test="taskCount != null">
+				task_count =
+				#{taskCount,jdbcType=INTEGER},
+			</if>
+			<if test="taskScore != null">
+				task_score =
+				#{taskScore,jdbcType=INTEGER},
+			</if>
+			<if test="commentCount != null">
+				comment_count =
+				#{commentCount,jdbcType=INTEGER},
+			</if>
+			<if test="commentScore != null">
+				comment_score =
+				#{commentScore,jdbcType=INTEGER},
+			</if>
+			<if test="quizCount != null">
+				quiz_count =
+				#{quizCount,jdbcType=INTEGER},
+			</if>
+			<if test="quizScore != null">
+				quiz_score =
+				#{quizScore,jdbcType=INTEGER},
+			</if>
+			<if test="examCount != null">
+				exam_count =
+				#{examCount,jdbcType=INTEGER},
+			</if>
+			<if test="examScore != null">
+				exam_score =
+				#{examScore,jdbcType=INTEGER},
+			</if>
+			<if test="analysisTime != null">
+				analysis_time =
+				#{analysisTime,jdbcType=DATE},
+			</if>
+			<if test="courseScore != null">
+				course_score =
+				#{courseScore,jdbcType=INTEGER},
+			</if>
+			<if test="ifpass != null">
+				ifpass = #{ifpass,jdbcType=INTEGER},
+			</if>
+			<if test="universityId != null">
+				university_id =
+				#{universityId,jdbcType=INTEGER},
+			</if>
+			<if test="universityName != null">
+				university_name =
+				#{universityName,jdbcType=CHAR},
+			</if>
+			<if test="teacherId != null">
+				teacher_id =
+				#{teacherId,jdbcType=CHAR},
+			</if>
+			<if test="teacherName != null">
+				teacher_name =
+				#{teacherName,jdbcType=CHAR},
+			</if>
+		</set>
+		where score_id = #{scoreId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2015-07-23 15:10:16. -->
+	<update id="updateByPrimaryKey" parameterType="com.cy.model.CourseScoreAnalysis">
+		update t_course_score_analysis
+		set student_id =
+		#{studentId,jdbcType=CHAR},
+		student_name = #{studentName,jdbcType=CHAR},
+		class_id = #{classId,jdbcType=CHAR},
+		class_name = #{className,jdbcType=CHAR},
+		course_id = #{courseId,jdbcType=CHAR},
+		course_name = #{courseName,jdbcType=CHAR},
+		video_count = #{videoCount,jdbcType=INTEGER},
+		video_score = #{videoScore,jdbcType=INTEGER},
+		task_count = #{taskCount,jdbcType=INTEGER},
+		task_score = #{taskScore,jdbcType=INTEGER},
+		comment_count = #{commentCount,jdbcType=INTEGER},
+		comment_score = #{commentScore,jdbcType=INTEGER},
+		quiz_count = #{quizCount,jdbcType=INTEGER},
+		quiz_score = #{quizScore,jdbcType=INTEGER},
+		exam_count = #{examCount,jdbcType=INTEGER},
+		exam_score = #{examScore,jdbcType=INTEGER},
+		analysis_time = #{analysisTime,jdbcType=DATE},
+		course_score = #{courseScore,jdbcType=INTEGER},
+		ifpass = #{ifpass,jdbcType=INTEGER},
+		university_id = #{universityId,jdbcType=INTEGER},
+		university_name = #{universityName,jdbcType=CHAR},
+		teacher_id = #{teacherId,jdbcType=CHAR},
+		teacher_name = #{teacherName,jdbcType=CHAR}
+		where score_id =
+		#{scoreId,jdbcType=INTEGER}
+	</update>
+
+</mapper>

@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cy.mapper.CourseChapterMapper" >
+	<!-- 实体类 - 数据库映射 2015-07-07 09:52:28. -->
+	<resultMap id="BaseResultMap" type="com.cy.model.CourseChapter" >
+		<id column="chapter_id" property="chapterId" jdbcType="CHAR" />
+		<result column="chapter_name" property="chapterName" jdbcType="CHAR" />
+		<result column="chapter_video_file" property="chapterVideoFile" jdbcType="CHAR" />
+		<result column="course_id" property="courseId" jdbcType="CHAR" />
+		<result column="creat_time" property="creatTime" jdbcType="TIMESTAMP" />
+		<result column="creator" property="creator" jdbcType="CHAR" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="updator" property="updator" jdbcType="CHAR" />
+		<result column="index" property="index" jdbcType="INTEGER" />
+		<result column="chapter_index" property="chapterIndex" jdbcType="CHAR" />
+		<result column="index" property="index" jdbcType="INTEGER" />
+		<result column="plan" property="plan" jdbcType="INTEGER" />
+		<result column="plantotal" property="plantotal" jdbcType="INTEGER" />
+		<result column="outline" property="outline" jdbcType="CHAR" />
+	</resultMap>
+
+	<!--  2015-07-07 09:52:28. -->
+	<resultMap id="ResultMapWithBLOBs" type="com.cy.model.CourseChapter" extends="BaseResultMap" >
+		<result column="chapter_desc" property="chapterDesc" jdbcType="LONGVARCHAR" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2015-07-07 09:52:28. -->
+	<sql id="Base_Column_List" >
+		chapter_id, chapter_name, chapter_video_file, course_id, creat_time, creator, update_time, 
+		updator, `index`,chapter_index,plan,plantotal,outline
+	</sql>
+
+	<!--  2015-07-07 09:52:28. -->
+	<sql id="Blob_Column_List" >
+		chapter_desc
+	</sql>
+
+	<!-- 按主键查询 2015-07-07 09:52:28. -->
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+		select 
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from t_course_chapter
+		where chapter_id = #{chapterId,jdbcType=CHAR}
+	</select>
+
+	<!-- 按主键删除 2015-07-07 09:52:28. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+		delete from t_course_chapter
+		where chapter_id = #{chapterId,jdbcType=CHAR}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2015-07-07 09:52:28. -->
+	<insert id="insert" parameterType="com.cy.model.CourseChapter" >
+		insert into t_course_chapter (chapter_id, chapter_name, chapter_video_file, 
+			course_id, creat_time, creator, 
+			update_time, updator, index, 
+			chapter_desc)
+		values (#{chapterId,jdbcType=CHAR}, #{chapterName,jdbcType=CHAR}, #{chapterVideoFile,jdbcType=CHAR}, 
+			#{courseId,jdbcType=CHAR}, #{creatTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=CHAR}, 
+			#{updateTime,jdbcType=TIMESTAMP}, #{updator,jdbcType=CHAR}, #{index,jdbcType=INTEGER}, 
+			#{chapterDesc,jdbcType=LONGVARCHAR})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2015-07-07 09:52:28. -->
+	<insert id="insertSelective" parameterType="com.cy.model.CourseChapter" >
+		insert into t_course_chapter
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="chapterId != null" >
+				chapter_id,
+			</if>
+			<if test="chapterName != null" >
+				chapter_name,
+			</if>
+			<if test="chapterVideoFile != null" >
+				chapter_video_file,
+			</if>
+			<if test="courseId != null" >
+				course_id,
+			</if>
+			<if test="creatTime != null" >
+				creat_time,
+			</if>
+			<if test="creator != null" >
+				creator,
+			</if>
+			<if test="updateTime != null" >
+				update_time,
+			</if>
+			<if test="updator != null" >
+				updator,
+			</if>
+			<if test="index != null" >
+				index,
+			</if>
+			<if test="chapterDesc != null" >
+				chapter_desc,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="chapterId != null" >
+				#{chapterId,jdbcType=CHAR},
+			</if>
+			<if test="chapterName != null" >
+				#{chapterName,jdbcType=CHAR},
+			</if>
+			<if test="chapterVideoFile != null" >
+				#{chapterVideoFile,jdbcType=CHAR},
+			</if>
+			<if test="courseId != null" >
+				#{courseId,jdbcType=CHAR},
+			</if>
+			<if test="creatTime != null" >
+				#{creatTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creator != null" >
+				#{creator,jdbcType=CHAR},
+			</if>
+			<if test="updateTime != null" >
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updator != null" >
+				#{updator,jdbcType=CHAR},
+			</if>
+			<if test="index != null" >
+				#{index,jdbcType=INTEGER},
+			</if>
+			<if test="chapterDesc != null" >
+				#{chapterDesc,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2015-07-07 09:52:28. -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.cy.model.CourseChapter" >
+		update t_course_chapter
+		<set >
+			<if test="chapterName != null" >
+				chapter_name = #{chapterName,jdbcType=CHAR},
+			</if>
+			<if test="chapterVideoFile != null" >
+				chapter_video_file = #{chapterVideoFile,jdbcType=CHAR},
+			</if>
+			<if test="courseId != null" >
+				course_id = #{courseId,jdbcType=CHAR},
+			</if>
+			<if test="creatTime != null" >
+				creat_time = #{creatTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creator != null" >
+				creator = #{creator,jdbcType=CHAR},
+			</if>
+			<if test="updateTime != null" >
+				update_time = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updator != null" >
+				updator = #{updator,jdbcType=CHAR},
+			</if>
+			<if test="index != null" >
+				index = #{index,jdbcType=INTEGER},
+			</if>
+			<if test="chapterDesc != null" >
+				chapter_desc = #{chapterDesc,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where chapter_id = #{chapterId,jdbcType=CHAR}
+	</update>
+
+	<!--  2015-07-07 09:52:28. -->
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.cy.model.CourseChapter" >
+		update t_course_chapter
+		set chapter_name = #{chapterName,jdbcType=CHAR},
+			chapter_video_file = #{chapterVideoFile,jdbcType=CHAR},
+			course_id = #{courseId,jdbcType=CHAR},
+			creat_time = #{creatTime,jdbcType=TIMESTAMP},
+			creator = #{creator,jdbcType=CHAR},
+			update_time = #{updateTime,jdbcType=TIMESTAMP},
+			updator = #{updator,jdbcType=CHAR},
+			index = #{index,jdbcType=INTEGER},
+			chapter_desc = #{chapterDesc,jdbcType=LONGVARCHAR}
+		where chapter_id = #{chapterId,jdbcType=CHAR}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2015-07-07 09:52:28. -->
+	<update id="updateByPrimaryKey" parameterType="com.cy.model.CourseChapter" >
+		update t_course_chapter
+		set chapter_name = #{chapterName,jdbcType=CHAR},
+			chapter_video_file = #{chapterVideoFile,jdbcType=CHAR},
+			course_id = #{courseId,jdbcType=CHAR},
+			creat_time = #{creatTime,jdbcType=TIMESTAMP},
+			creator = #{creator,jdbcType=CHAR},
+			update_time = #{updateTime,jdbcType=TIMESTAMP},
+			updator = #{updator,jdbcType=CHAR},
+			index = #{index,jdbcType=INTEGER}
+		where chapter_id = #{chapterId,jdbcType=CHAR}
+	</update>
+	
+	<select id="findByCourseId" resultMap="BaseResultMap" parameterType="String" >
+		select
+		<include refid="Base_Column_List" />
+		from t_course_chapter
+		where course_id = #{courseId} order by `index`
+	</select>
+	
+	<select id="findPlan" resultType="com.cy.model.CourseClass" parameterType="Map" >
+		select b.course_start_time as courseStartTime,b.course_end_time as courseEndTime,a.course_name as className 
+		from t_my_course a inner join t_course_class b on a.class_id = b.class_id 
+		where a.course_id = #{courseId} and a.user_id =#{userId}
+	</select>
+<!-- 查询每章用的总时间 -->
+	<select id="findplantotalByCourseId" resultType="int" parameterType="com.cy.model.CourseChapter">
+	SELECT  plantotal from t_course_chapter  where course_id=#{courseId} order by `index` desc LIMIT 1
+</select>
+<!-- 插入该调查问卷对应的章节 -->
+<insert id="addcourseChapter" parameterType="com.cy.model.CourseChapter">
+ insert into t_course_chapter(chapter_id,course_id,creat_time)VALUES(#{chapterId},#{courseId},#{creatTime})
+</insert>
+</mapper>

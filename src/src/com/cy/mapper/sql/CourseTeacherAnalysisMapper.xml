@@ -1,0 +1,591 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cy.mapper.CourseTeacherAnalysisMapper">
+	<!-- 实体类 - 数据库映射 2015-07-29 11:12:42. -->
+	<resultMap id="BaseResultMap" type="CourseTeacherAnalysis">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="teacher_id" property="teacherId" jdbcType="CHAR" />
+		<result column="teacher_name" property="teacherName" jdbcType="VARCHAR" />
+		<result column="course_id" property="courseId" jdbcType="CHAR" />
+		<result column="course_name" property="courseName" jdbcType="VARCHAR" />
+		<result column="class_id" property="classId" jdbcType="CHAR" />
+		<result column="class_name" property="className" jdbcType="VARCHAR" />
+		<result column="university_id" property="universityId"
+			jdbcType="CHAR" />
+		<result column="university_name" property="universityName"
+			jdbcType="VARCHAR" />
+		<result column="analysis_time" property="analysisTime"
+			jdbcType="TIMESTAMP" />
+		<result column="learn_rate" property="learnRate" jdbcType="INTEGER" />
+		<result column="comment_count" property="commentCount"
+			jdbcType="INTEGER" />
+		<result column="comment_reply" property="commentReply"
+			jdbcType="INTEGER" />
+		<result column="quiz_count" property="quizCount" jdbcType="INTEGER" />
+		<result column="quiz_reply" property="quizReply" jdbcType="INTEGER" />
+		<result column="task_count" property="taskCount" jdbcType="INTEGER" />
+		<result column="task_read" property="taskRead" jdbcType="INTEGER" />
+		<result column="exam_count" property="examCount" jdbcType="INTEGER" />
+		<result column="exam_read" property="examRead" jdbcType="INTEGER" />
+		<result column="video_count" property="videoCount" jdbcType="INTEGER" />
+		<result column="course_status" property="courseStatus"
+			jdbcType="INTEGER" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段 2015-07-29 11:12:42. -->
+	<sql id="Base_Column_List">
+		id, teacher_id, teacher_name, course_id,
+		course_name,
+		class_id, class_name, university_id,
+		university_name, analysis_time,
+		learn_rate, comment_count, comment_reply, quiz_count,
+		quiz_reply,
+		task_count, task_read, exam_count, exam_read, video_count,
+		course_status
+	</sql>
+
+	<select id="calAvgScoreInClass" resultType="Integer">
+		SELECT SUM(total_score)/(SELECT COUNT(1) FROM t_course_learn_analysis WHERE
+		class_id = #{classId} AND analysis_time =
+		DATE_FORMAT(NOW(),'%Y-%m-%d')) FROM t_course_learn_analysis WHERE
+		class_id = #{classId} AND analysis_time =
+		DATE_FORMAT(NOW(),'%Y-%m-%d')
+
+	</select>
+
+	<select id="countTenInClass" resultType="Integer">
+		SELECT COUNT(1) FROM
+		t_course_learn_analysis WHERE class_id = #{classId} AND analysis_time =
+		DATE_FORMAT(NOW(),'%Y-%m-%d') AND total_score >= 80
+	</select>
+	<select id="countEightInClass" resultType="Integer">
+		SELECT COUNT(1) FROM
+		t_course_learn_analysis WHERE class_id = #{classId} AND analysis_time =
+		DATE_FORMAT(NOW(),'%Y-%m-%d') AND total_score
+		BETWEEN 60 AND 80
+	</select>
+	<select id="countSixInClass" resultType="Integer">
+		SELECT COUNT(1) FROM
+		t_course_learn_analysis WHERE class_id = #{classId} AND analysis_time =
+		DATE_FORMAT(NOW(),'%Y-%m-%d') AND total_score
+		&lt; 60
+	</select>
+	<select id="countPassInClass" resultType="Integer">
+		SELECT COUNT(1) FROM
+		t_course_learn_analysis WHERE class_id = #{classId} AND analysis_time =
+		DATE_FORMAT(NOW(),'%Y-%m-%d') AND
+		total_score
+		>=60
+	</select>
+
+	<select id="countFinishInClass" resultType="Integer">
+		SELECT COUNT(1) FROM
+		t_test WHERE class_id = #{classId} AND test_type = 1
+	</select>
+	<select id="calAvgLearningRate" resultType="Integer">
+		SELECT
+		SUM(learn_rate)/(SELECT COUNT(1) FROM t_course_learn_analysis WHERE
+		class_id = #{classId} AND analysis_time =
+		DATE_FORMAT(NOW(),'%Y-%m-%d')) FROM t_course_learn_analysis WHERE
+		class_id = #{classId} AND analysis_time =
+		DATE_FORMAT(NOW(),'%Y-%m-%d')
+	</select>
+
+	<select id="getTotalToInClass" resultMap="BaseResultMap">
+		SELECT
+		teacher_id,course_id,class_id,university_id,NOW()
+		analysis_time,SUM(comment_count)
+		comment_count,SUM(quiz_count)
+		quiz_count,SUM(task_count)
+		task_count,SUM(video_count) video_count
+		FROM
+		t_course_learn_analysis
+		WHERE class_id =
+		#{classId} AND analysis_time =
+		DATE_FORMAT(NOW(),'%Y-%m-%d')
+	</select>
+
+	<select id="getCurrentDay" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List"></include>
+		FROM t_course_teacher_analysis WHERE class_id = #{classId} AND
+		analysis_time =
+		DATE_FORMAT(NOW(),'%Y-%m-%d')
+	</select>
+
+	<select id="getTeacherAndClass" resultType="java.util.HashMap">
+		SELECT teacher_id
+		teacherId,course_id courseId,class_id classId FROM t_course_class
+		WHERE course_start = 1
+		GROUP BY teacher_id,class_id
+	</select>
+
+	<select id="getClassByTermAndUniversity" resultType="java.util.HashMap">
+		SELECT
+		cc.course_id courseId,cc.course_name courseName,cc.class_id classId
+		FROM t_university_course uc JOIN t_course_class cc ON uc.id =
+		cc.university_course_id WHERE uc.course_term = #{courseTerm} AND
+		uc.university_id = #{universityId}
+	</select>
+
+	<select id="getTermsByUniversity" resultType="java.lang.String">
+		SELECT DISTINCT
+		course_term FROM t_university_course WHERE university_id =
+		#{universityId}
+	</select>
+
+	<select id="calRateByScore" resultType="java.util.HashMap">
+		SELECT (SELECT COUNT(1)
+		FROM t_test WHERE class_id =
+		#{classId} AND test_type=1 AND userScore
+		&lt; #{less}
+		)/(SELECT COUNT(1) FROM t_test WHERE class_id =
+		#{classId}
+		AND test_type=1)*100 lrate,(SELECT
+		COUNT(1) FROM t_test WHERE class_id
+		=
+		#{classId} AND test_type=1 AND userScore
+		BETWEEN #{less} AND #{more}
+		)/(SELECT COUNT(1) FROM t_test WHERE class_id =
+		#{classId} AND
+		test_type=1)*100 brate,(SELECT
+		COUNT(1) FROM t_test WHERE class_id =
+		#{classId} AND test_type=1 AND userScore >
+		#{more})/(SELECT COUNT(1)
+		FROM t_test WHERE class_id =
+		#{classId} AND test_type=1)*100 mrate
+	</select>
+
+	<select id="countStudentByScoure" resultType="java.util.HashMap">
+		SELECT (SELECT
+		COUNT(1) FROM t_test WHERE class_id =
+		#{classId} AND test_type=1 AND
+		userScore &lt; #{less}
+		) lcount,(SELECT COUNT(1) FROM t_test WHERE
+		class_id =
+		#{classId} AND test_type=1 AND userScore
+		BETWEEN #{less} AND
+		#{more}
+		) bcount,(SELECT COUNT(1) FROM t_test WHERE class_id =
+		#{classId} AND test_type=1 AND userScore > #{more}) mcount
+	</select>
+
+	<select id="countStudentInClass" resultType="Integer">
+		SELECT COUNT(1) FROM
+		t_my_course mc,t_user us WHERE mc.user_id = us.user_id AND mc.class_id
+		= #{classId} AND us.user_type = 0
+	</select>
+
+
+	<select id="countStudentsMore" resultType="Integer">
+		SELECT COUNT(1) FROM
+		t_test WHERE class_id =
+		#{classId} AND test_type=1 AND userScore >
+		#{more}
+	</select>
+
+	<select id="countStudentsLessToMore" resultType="Integer">
+		SELECT COUNT(1)
+		FROM t_test WHERE class_id =
+		#{classId} AND test_type=1 AND userScore
+		BETWEEN #{less} AND #{more}
+	</select>
+
+	<select id="countStudentsLess" resultType="int">
+		SELECT COUNT(1) FROM
+		t_test WHERE class_id = #{classId} AND test_type=1 AND
+		userScore &lt;
+		#{less}
+	</select>
+
+	<select id="findByTimebucket" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM t_course_teacher_analysis WHERE
+		DATE_FORMAT(analysis_time,'%Y-%m') = #{startTime} AND
+		class_id =
+		#{classId} ORDER BY
+		analysis_time
+	</select>
+
+	<select id="findLastAnalysisByClass" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM t_course_teacher_analysis WHERE class_id =
+		'199cb334662eeafe2bfae7fde8655a9b' AND
+		analysis_time =
+		DATE_FORMAT(NOW(),'%Y-%m-%d')
+	</select>
+	<select id="findClassByTeacherAndCourse" resultType="java.lang.String">
+		SELECT
+		class_id FROM t_my_course WHERE course_id = #{courseId} AND user_id =
+		#{teacherId} AND
+		my_course_complete = 0
+	</select>
+
+	<select id="findAllClass" resultType="java.lang.String">
+		SELECT DISTINCT class_id
+		FROM
+		t_course_class WHERE term_end_time > NOW()
+	</select>
+
+	<select id="getTotalByDay" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		SELECT DISTINCT
+		course_id,course_name,class_id,class_name,teacher_id,teacher_name,university_id,university_name,learn_status
+		course_status,analysis_time,
+		ROUND((SELECT SUM(learn_rate) FROM
+		t_course_learn_analysis WHERE
+		analysis_time =
+		DATE_FORMAT(NOW(),'%Y-%m-%d') AND class_id
+		= #{classId})/(SELECT
+		COUNT(1) FROM
+		t_my_course WHERE class_id =
+		#{classId}))
+		learn_rate,
+		(SELECT SUM(comment_count) FROM
+		t_course_learn_analysis WHERE
+		analysis_time = DATE_FORMAT(NOW(),'%Y-%m-%d') AND class_id =
+		#{classId})
+		comment_count,
+		(SELECT SUM(task_count) FROM
+		t_course_learn_analysis
+		WHERE analysis_time =
+		(SELECT
+		DATE_FORMAT(NOW(),'%Y-%m-%d')) AND
+		class_id =
+		#{classId}) task_count,
+		(SELECT SUM(quiz_count) FROM
+		t_course_learn_analysis WHERE
+		analysis_time =
+		DATE_FORMAT(NOW(),'%Y-%m-%d') AND class_id =
+		#{classId}) quiz_count,
+		(SELECT SUM(video_count) FROM
+		t_course_learn_analysis WHERE
+		analysis_time =
+		DATE_FORMAT(NOW(),'%Y-%m-%d') AND class_id =
+		#{classId}) video_count
+		FROM
+		t_course_learn_analysis WHERE
+		analysis_time =
+		DATE_FORMAT(NOW(),'%Y-%m-%d') AND class_id = #{classId}
+	</select>
+
+	<!-- 按主键查询 2015-07-29 11:12:42. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_course_teacher_analysis
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<!-- 按主键删除 2015-07-29 11:12:42. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		t_course_teacher_analysis
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2015-07-29 11:12:42. -->
+	<insert id="insert" parameterType="com.cy.model.CourseTeacherAnalysis">
+		insert into
+		t_course_teacher_analysis (id, teacher_id, teacher_name,
+		course_id,
+		course_name, class_id,
+		class_name, university_id, university_name,
+		analysis_time, learn_rate, comment_count,
+		comment_reply, quiz_count,
+		quiz_reply,
+		task_count, task_read, exam_count,
+		exam_read, video_count,
+		course_status
+		)
+		values (#{id,jdbcType=INTEGER},
+		#{teacherId,jdbcType=CHAR},
+		#{teacherName,jdbcType=VARCHAR},
+		#{courseId,jdbcType=CHAR}, #{courseName,jdbcType=VARCHAR},
+		#{classId,jdbcType=CHAR},
+		#{className,jdbcType=VARCHAR},
+		#{universityId,jdbcType=CHAR},
+		#{universityName,jdbcType=VARCHAR},
+		#{analysisTime,jdbcType=TIMESTAMP}, #{learnRate,jdbcType=INTEGER},
+		#{commentCount,jdbcType=INTEGER},
+		#{commentReply,jdbcType=INTEGER},
+		#{quizCount,jdbcType=INTEGER}, #{quizReply,jdbcType=INTEGER},
+		#{taskCount,jdbcType=INTEGER}, #{taskRead,jdbcType=INTEGER},
+		#{examCount,jdbcType=INTEGER},
+		#{examRead,jdbcType=INTEGER},
+		#{videoCount,jdbcType=INTEGER}, #{courseStatus,jdbcType=INTEGER}
+		)
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2015-07-29 11:12:42. -->
+	<insert id="insertSelective" parameterType="com.cy.model.CourseTeacherAnalysis">
+		insert into t_course_teacher_analysis
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="teacherId != null">
+				teacher_id,
+			</if>
+			<if test="teacherName != null">
+				teacher_name,
+			</if>
+			<if test="courseId != null">
+				course_id,
+			</if>
+			<if test="courseName != null">
+				course_name,
+			</if>
+			<if test="classId != null">
+				class_id,
+			</if>
+			<if test="className != null">
+				class_name,
+			</if>
+			<if test="universityId != null">
+				university_id,
+			</if>
+			<if test="universityName != null">
+				university_name,
+			</if>
+			<if test="analysisTime != null">
+				analysis_time,
+			</if>
+			<if test="learnRate != null">
+				learn_rate,
+			</if>
+			<if test="commentCount != null">
+				comment_count,
+			</if>
+			<if test="commentReply != null">
+				comment_reply,
+			</if>
+			<if test="quizCount != null">
+				quiz_count,
+			</if>
+			<if test="quizReply != null">
+				quiz_reply,
+			</if>
+			<if test="taskCount != null">
+				task_count,
+			</if>
+			<if test="taskRead != null">
+				task_read,
+			</if>
+			<if test="examCount != null">
+				exam_count,
+			</if>
+			<if test="examRead != null">
+				exam_read,
+			</if>
+			<if test="videoCount != null">
+				video_count,
+			</if>
+			<if test="courseStatus != null">
+				course_status,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="teacherId != null">
+				#{teacherId,jdbcType=CHAR},
+			</if>
+			<if test="teacherName != null">
+				#{teacherName,jdbcType=VARCHAR},
+			</if>
+			<if test="courseId != null">
+				#{courseId,jdbcType=CHAR},
+			</if>
+			<if test="courseName != null">
+				#{courseName,jdbcType=VARCHAR},
+			</if>
+			<if test="classId != null">
+				#{classId,jdbcType=CHAR},
+			</if>
+			<if test="className != null">
+				#{className,jdbcType=VARCHAR},
+			</if>
+			<if test="universityId != null">
+				#{universityId,jdbcType=CHAR},
+			</if>
+			<if test="universityName != null">
+				#{universityName,jdbcType=VARCHAR},
+			</if>
+			<if test="analysisTime != null">
+				#{analysisTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="learnRate != null">
+				#{learnRate,jdbcType=INTEGER},
+			</if>
+			<if test="commentCount != null">
+				#{commentCount,jdbcType=INTEGER},
+			</if>
+			<if test="commentReply != null">
+				#{commentReply,jdbcType=INTEGER},
+			</if>
+			<if test="quizCount != null">
+				#{quizCount,jdbcType=INTEGER},
+			</if>
+			<if test="quizReply != null">
+				#{quizReply,jdbcType=INTEGER},
+			</if>
+			<if test="taskCount != null">
+				#{taskCount,jdbcType=INTEGER},
+			</if>
+			<if test="taskRead != null">
+				#{taskRead,jdbcType=INTEGER},
+			</if>
+			<if test="examCount != null">
+				#{examCount,jdbcType=INTEGER},
+			</if>
+			<if test="examRead != null">
+				#{examRead,jdbcType=INTEGER},
+			</if>
+			<if test="videoCount != null">
+				#{videoCount,jdbcType=INTEGER},
+			</if>
+			<if test="courseStatus != null">
+				#{courseStatus,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2015-07-29 11:12:42. -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.cy.model.CourseTeacherAnalysis">
+		update t_course_teacher_analysis
+		<set>
+			<if test="teacherId != null">
+				teacher_id =
+				#{teacherId,jdbcType=CHAR},
+			</if>
+			<if test="teacherName != null">
+				teacher_name =
+				#{teacherName,jdbcType=VARCHAR},
+			</if>
+			<if test="courseId != null">
+				course_id = #{courseId,jdbcType=CHAR},
+			</if>
+			<if test="courseName != null">
+				course_name =
+				#{courseName,jdbcType=VARCHAR},
+			</if>
+			<if test="classId != null">
+				class_id = #{classId,jdbcType=CHAR},
+			</if>
+			<if test="className != null">
+				class_name =
+				#{className,jdbcType=VARCHAR},
+			</if>
+			<if test="universityId != null">
+				university_id =
+				#{universityId,jdbcType=CHAR},
+			</if>
+			<if test="universityName != null">
+				university_name =
+				#{universityName,jdbcType=VARCHAR},
+			</if>
+			<if test="analysisTime != null">
+				analysis_time =
+				#{analysisTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="learnRate != null">
+				learn_rate =
+				#{learnRate,jdbcType=INTEGER},
+			</if>
+			<if test="commentCount != null">
+				comment_count =
+				#{commentCount,jdbcType=INTEGER},
+			</if>
+			<if test="commentReply != null">
+				comment_reply =
+				#{commentReply,jdbcType=INTEGER},
+			</if>
+			<if test="quizCount != null">
+				quiz_count =
+				#{quizCount,jdbcType=INTEGER},
+			</if>
+			<if test="quizReply != null">
+				quiz_reply =
+				#{quizReply,jdbcType=INTEGER},
+			</if>
+			<if test="taskCount != null">
+				task_count =
+				#{taskCount,jdbcType=INTEGER},
+			</if>
+			<if test="taskRead != null">
+				task_read =
+				#{taskRead,jdbcType=INTEGER},
+			</if>
+			<if test="examCount != null">
+				exam_count =
+				#{examCount,jdbcType=INTEGER},
+			</if>
+			<if test="examRead != null">
+				exam_read =
+				#{examRead,jdbcType=INTEGER},
+			</if>
+			<if test="videoCount != null">
+				video_count =
+				#{videoCount,jdbcType=INTEGER},
+			</if>
+			<if test="courseStatus != null">
+				course_status =
+				#{courseStatus,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2015-07-29 11:12:42. -->
+	<update id="updateByPrimaryKey" parameterType="com.cy.model.CourseTeacherAnalysis">
+		update
+		t_course_teacher_analysis
+		set teacher_id =
+		#{teacherId,jdbcType=CHAR},
+		teacher_name = #{teacherName,jdbcType=VARCHAR},
+		course_id =
+		#{courseId,jdbcType=CHAR},
+		course_name =
+		#{courseName,jdbcType=VARCHAR},
+		class_id = #{classId,jdbcType=CHAR},
+		class_name = #{className,jdbcType=VARCHAR},
+		university_id =
+		#{universityId,jdbcType=CHAR},
+		university_name =
+		#{universityName,jdbcType=VARCHAR},
+		analysis_time =
+		#{analysisTime,jdbcType=TIMESTAMP},
+		learn_rate =
+		#{learnRate,jdbcType=INTEGER},
+		comment_count =
+		#{commentCount,jdbcType=INTEGER},
+		comment_reply =
+		#{commentReply,jdbcType=INTEGER},
+		quiz_count =
+		#{quizCount,jdbcType=INTEGER},
+		quiz_reply =
+		#{quizReply,jdbcType=INTEGER},
+		task_count =
+		#{taskCount,jdbcType=INTEGER},
+		task_read =
+		#{taskRead,jdbcType=INTEGER},
+		exam_count =
+		#{examCount,jdbcType=INTEGER},
+		exam_read =
+		#{examRead,jdbcType=INTEGER},
+		video_count =
+		#{videoCount,jdbcType=INTEGER},
+		course_status =
+		#{courseStatus,jdbcType=INTEGER}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+
+</mapper>

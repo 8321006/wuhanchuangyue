@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cy.mapper.MessageMapper" >
+	<!-- 实体类 - 数据库映射 2015-06-08 16:37:51. -->
+	<resultMap id="BaseResultMap" type="Message" >
+		<id column="message_id" property="messageId" jdbcType="CHAR" />
+		<result column="message_type" property="messageType" jdbcType="INTEGER" />
+		<result column="reader" property="reader" jdbcType="INTEGER" />
+		<result column="message" property="message" jdbcType="VARCHAR" />
+		<result column="user" property="user" jdbcType="VARCHAR" />
+		<result column="fsruser" property="fsruser" jdbcType="VARCHAR" />
+		<result column="message_time" property="messagetime" jdbcType="TIMESTAMP" />
+		<result column="messuser_id" property="messuserid" jdbcType="CHAR" />
+		<result column="user_id" property="userId" jdbcType="CHAR" />
+		<result column="wthd" property="wthd" jdbcType="VARCHAR" />
+		<result column="nick_name" property="nickname" jdbcType="CHAR" />
+		
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2015-06-08 16:37:51. -->
+	<sql id="Base_Column_List" >
+		message_id, message_type, reader, message, user,fsruser,message_time,messuser_id,user_id,wthd,nick_name
+	</sql>
+
+	<!-- 按主键查询 2015-06-08 16:37:51. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+		select 
+		<include refid="Base_Column_List" />
+		from t_message
+		where message_id = #{messageId,jdbcType=CHAR}
+	</select>
+	
+	<!-- 查询全部 2015-06-08 16:37:51. -->
+	<select id="findMessageList" resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List" />  
+		from t_message                                                                                                                                               
+	</select>
+	
+	<!-- 按主键查询 2015-06-08 16:37:51. -->
+	<select id="getMessageListId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+		select 
+		message_id, message_type, reader, message, user,fsruser,date_format(message_time,"%Y-%m-%d %H:%i:%s") as messagetimeString,messuser_id
+		from t_message
+		where message_id = #{messageId,jdbcType=CHAR}
+	</select>
+	
+	<!-- 查询个人私信 -->
+	<select id="getuserMessage" resultMap="BaseResultMap">
+		select 
+		max(message_id), message_type, reader, message, user,fsruser,max(message_time) messagetime,date_format(message_time,"%Y-%m-%d %H:%i:%s") as messagetimeString,messuser_id,user_id,wthd,nick_name
+		from t_message
+		where message_type = 1 and user_id = #{userId,jdbcType=CHAR}
+		or fsruser=#{fsruser,jdbcType=CHAR} 
+		group by messuser_id
+		order by message_time desc
+	</select>
+	
+	<!--查询未读的有多少条数据-->
+	<select id="getnorederCount" resultMap="BaseResultMap">
+		select 
+		max(message_id), message_type, reader, message, user,fsruser,max(message_time),messuser_id,user_id,wthd
+		from t_message
+		where message_type = 1 and user_id = #{userId,jdbcType=CHAR} and reader=0
+		group by messuser_id
+		order by message_time desc
+	</select>
+	
+	<!-- 查询个人私信以及自己发送过的信息 -->
+	<select id="findmessprivesend" resultMap="BaseResultMap" parameterType="com.cy.model.Message">
+		select 
+		max(message_id), message_type, reader, message, user,fsruser,max(message_time),messuser_id,user_id,wthd,nick_name
+		from t_message
+		where message_type = 1 and user_id = #{userId,jdbcType=CHAR} 
+		or fsruser=#{fsruser,jdbcType=CHAR} 
+		group by messuser_id
+		order by message_time desc
+	</select>
+	
+	<!-- 查询个人私信详情 -->
+	<select id="messpridetail" resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List" />
+		from t_message
+		where message_type = 1 and messuser_id=#{messuserid,jdbcType=CHAR} order by message_time
+	</select>
+	
+	<!--查询系统消息-->
+	<select id="getadminMessage" resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List" />
+		from t_message
+		where message_type = 2 and user_id = #{userId} order by message_time desc
+	</select>
+	
+    <!--查询评论的消息-->
+	<select id="getplList" resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List" />
+		from t_message
+		where message_type = #{messageType} and user_id=#{userId};
+	</select>
+	
+
+
+	<!-- 按主键删除 2015-06-08 16:37:51. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+		delete from t_message
+		where message_id = #{messageId,jdbcType=CHAR}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2015-06-08 16:37:51. -->
+	<insert id="insert" parameterType="com.cy.model.Message" >
+		insert into t_message (message_id, message_type, reader, 
+			message, user,fsruser,message_time,messuser_id,user_id,nick_name)
+		values (#{messageId,jdbcType=CHAR}, #{messageType,jdbcType=INTEGER}, 0, 
+			#{message,jdbcType=VARCHAR}, #{user,jdbcType=VARCHAR},#{fsruser,jdbcType=VARCHAR},#{messagetime,jdbcType=TIMESTAMP},
+			#{messageId,jdbcType=CHAR},#{userId,jdbcType=CHAR},#{nickname,jdbcType=CHAR})
+	</insert>
+	
+	<!-- 点击回复私信时，界面点击发送时候调用的方法-->
+	<insert id="insertsend" parameterType="com.cy.model.Message" >
+		insert into t_message (message_id, message_type, reader, 
+			message, user,fsruser,message_time,messuser_id,user_id,wthd,nick_name)
+		values (#{messageId,jdbcType=CHAR}, #{messageType,jdbcType=INTEGER}, 0, 
+			#{message,jdbcType=VARCHAR}, #{user,jdbcType=VARCHAR},#{fsruser,jdbcType=VARCHAR},#{messagetime,jdbcType=TIMESTAMP},
+			#{messuserid,jdbcType=CHAR},#{userId,jdbcType=CHAR}, #{wthd,jdbcType=VARCHAR},#{nickname,jdbcType=CHAR})
+	</insert>
+	
+	<!-- 系统消息插入 -->
+	<insert id="insertadmin" parameterType="com.cy.model.Message" >
+		insert into t_message (message_id, message_type, reader, 
+			message, user,fsruser)
+		values (#{messageId,jdbcType=INTEGER},2, 0, 
+			#{message,jdbcType=VARCHAR}, #{user,jdbcType=VARCHAR},#{fsruser,jdbcType=VARCHAR})
+	</insert>
+	
+	<!-- 评论数据插入 -->
+	<insert id="insertpl" parameterType="com.cy.model.Message" >
+		insert into t_message (message_id, message_type, reader, 
+			message, user,fsruser)
+		values (#{messageId,jdbcType=INTEGER}, 4, 0, 
+			#{message,jdbcType=VARCHAR}, #{user,jdbcType=VARCHAR},#{fsruser,jdbcType=VARCHAR})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2015-06-08 16:37:51. -->
+	<insert id="insertSelective" parameterType="com.cy.model.Message" >
+		insert into t_message
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="messageId != null" >
+				message_id,
+			</if>
+			<if test="messageType != null" >
+				message_type,
+			</if>
+			<if test="reader != null" >
+				reader,
+			</if>
+			<if test="message != null" >
+				message,
+			</if>
+			<if test="user != null" >
+				user,
+			</if>
+			<if test="fsruser != null" >
+				fsruser,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="messageId != null" >
+				#{messageId,jdbcType=INTEGER},
+			</if>
+			<if test="messageType != null" >
+				#{messageType,jdbcType=INTEGER},
+			</if>
+			<if test="reader != null" >
+				#{reader,jdbcType=INTEGER},
+			</if>
+			<if test="message != null" >
+				#{message,jdbcType=VARCHAR},
+			</if>
+			<if test="user != null" >
+				#{user,jdbcType=VARCHAR},
+			</if>
+			<if test="fsruser != null" >
+				#{fsruser,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2015-06-08 16:37:51. -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.cy.model.Message" >
+		update t_message
+		<set >
+			<if test="messageType != null" >
+				message_type = #{messageType,jdbcType=INTEGER},
+			</if>
+			<if test="reader != null" >
+				reader = #{reader,jdbcType=INTEGER},
+			</if>
+			<if test="message != null" >
+				message = #{message,jdbcType=VARCHAR},
+			</if>
+			<if test="user != null" >
+				user = #{user,jdbcType=VARCHAR},
+			</if>
+			<if test="fsruser != null" >
+				fsruser = #{fsruser,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where message_id = #{messageId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2015-06-08 16:37:51. -->
+	<update id="updateByPrimaryKey" parameterType="com.cy.model.Message" >
+		update t_message
+		set message_type = #{messageType,jdbcType=INTEGER},
+			reader = #{reader,jdbcType=INTEGER},
+			message = #{message,jdbcType=VARCHAR},
+			user = #{user,jdbcType=VARCHAR},
+			fsruser = #{fsruser,jdbcType=VARCHAR}
+		where message_id = #{messageId,jdbcType=INTEGER}
+	</update>
+	
+    <!-- 按主键更新 - 全更新 2015-06-08 16:37:51. -->
+	<update id="updateReader" parameterType="com.cy.model.Message" >
+		update t_message
+		set reader = 1
+		where user_id = #{userId}
+	</update>
+	
+
+</mapper>

@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cy.mapper.SurveyMapper">
+	<resultMap id="BaseResultMap" type="com.cy.model.Survey">
+		<id column="id" property="Id" jdbcType="VARCHAR" />
+		<result column="user_id" property="userId" jdbcType="VARCHAR" />
+		<result column="university_id" property="universityId" jdbcType="VARCHAR" />
+		<result column="university_name" property="universityName" jdbcType="VARCHAR" />
+		<result column="course_id" property="courseId" jdbcType="VARCHAR" />
+		<result column="course_name" property="courseName" jdbcType="VARCHAR" />
+		<result column="real_name" property="realName" jdbcType="VARCHAR" />
+		<result column="survey_content" property="surveyContent" jdbcType="LONGVARCHAR" />
+		<result column="survey_result" property="surveyResult" jdbcType="VARCHAR" />
+		<result column="survey_state" property="surveyState" jdbcType="INTEGER" />
+		<result column="survey_type" property="surveyType" jdbcType="INTEGER" />
+		<result column="paper_id" property="paperId" jdbcType="VARCHAR" />
+		<result column="paper_name" property="paperName" jdbcType="VARCHAR" />
+		<result column="test_type" property="testType" jdbcType="INTEGER" />
+		<result column="test_id" property="testId" jdbcType="VARCHAR" />
+		<result column="course_cover_url" property="courseCoverUrl" jdbcType="CHAR" />
+		<result column="usertotal" property="userTotal" jdbcType="INTEGER" />
+		<result column="exsituser" property="exsitUser" jdbcType="INTEGER" />
+		<result column="course_start_time" property="courseStartTime" jdbcType="TIMESTAMP" />
+		<result column="course_end_time" property="courseEndTime" jdbcType="TIMESTAMP" />
+		<result column="course_term" property="courseTerm" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="question_id" property="questionId" jdbcType="VARCHAR" />
+		<result column="user_answer" property="userAnswer" jdbcType="VARCHAR" />
+		<result column="class_id" property="classId" jdbcType="CHAR"/>
+		<result column="surveytotal" property="surveyTotal" jdbcType="INTEGER" />
+		<result column="chapter_id" property="chapterId" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id,
+		user_id,
+		university_id,
+		course_id,
+		courseName,
+		real_name,
+		survey_content,
+		survey_result,
+		paper_id,
+		test_type,
+		test_id
+	</sql>
+	<!-- 查询调查列表 -pear-->
+	<select id="findsurveylist" resultMap="BaseResultMap">
+	SELECT 
+		ts.course_id,
+		ts.university_id,
+		ts.survey_state,
+		ts.survey_result,
+		tu.university_name,
+        mc.usertotal,
+        tc.course_name,
+        tc.course_cover_url,
+        c.class_id,
+        c.course_start_time,
+        c.course_end_time,
+        ts.test_id,
+        ts.paper_id,
+        a.paper_name,
+        a.create_time,
+        mm.userWriteTotal
+		from t_survey ts
+		LEFT JOIN t_university tu on ts.university_id=tu.university_id
+		LEFT JOIN t_course  tc on ts.course_id=tc.course_id 
+        LEFT JOIN ( select count(user_id)as usertotal ,course_id from t_my_course  where user_id in(select user_id from t_user where user_type='0'and university_id=#{universityId}) GROUP BY course_id ) mc   ON ts.course_id = mc.course_id 
+        LEFT JOIN t_course_class c on c.course_id=ts.course_id  and c.university_id=ts.university_id and c.course_start='1'
+        LEFT JOIN t_paper a on ts.paper_id=a.paper_id 
+        LEFT JOIN(SELECT  COUNT(DISTINCT user_id)as userWriteTotal,paper_id from t_test_question GROUP BY paper_id ) mm on mm.paper_id=ts.paper_id
+       where ts.university_id=#{universityId}and c.teacher_id=#{userId}
+	</select>
+	<select id="findcourselist" resultMap="BaseResultMap">
+		 select
+		 tc.course_name 
+		 from t_course_class  cc
+	     LEFT JOIN t_course  tc on  tc.course_id=cc.course_id 
+	     where cc.university_id=#{universityId} and cc.teacher_id=#{userId}
+	</select>
+	<!-- 插入该课程的调查问卷 -->
+	<insert id="insertSurvey"  parameterType="com.cy.model.Survey">
+	  INSERT into
+	  t_survey 
+	  (id,university_id,
+	  course_id,
+	  survey_state,
+	  paper_id,
+	  course_term,survey_type)
+	  VALUE
+	  <foreach collection="list" item="item" index="index" separator="," >  
+	  (#{item.Id},#{item.universityId},#{item.courseId},'0',#{item.paperId},#{item.courseTerm},'0')
+	  </foreach>
+	<!--   
+	<insert id="insertRecordList" parameterType="com.cy.model.Test" >
+		insert into t_test_question (id,test_id,paper_id,question_id,user_answer,user_id)   
+		values  
+		insert into t_question
+		(question_id,subject_id,content,question_type_id,creator,create_time,score,last_modify,answer,answer_analysis,keyword)
+		values  
+		 <foreach collection="list" item="item" index="index" separator="," > 
+		(#{item.questionId},#{item.subjectId},#{item.content},#{item.questionTypeId},#{item.creator},#{item.createTime},#{item.points},#{item.lastModify},#{item.answer},#{item.analysis},#{item.keyword})</foreach>
+	--> 
+	</insert>
+	<!-- 查询需要发送调查问卷的课程列表 -->
+	<select id="findsendSurvey" resultMap="BaseResultMap">
+		SELECT 
+		tc.course_id,
+		tc.teacher_id,
+		tc.course_start_time,
+		tc.course_end_time,
+		t.course_term,
+		a.course_name,
+		a.course_cover_url,
+		mc.usertotal,
+		tc.university_id,
+		pc.paper_id
+		from t_course_class tc  
+		LEFT JOIN ( select count(user_id)as usertotal ,course_id from t_my_course  where user_id in(select user_id from t_user where user_type='0'and university_id=#{universityId}) GROUP BY course_id ) mc   ON tc.course_id = mc.course_id  
+		LEFT JOIN t_course  a on a.course_id=tc.course_id
+		LEFT JOIN t_university_course  t on  t.course_id=tc.course_id and t.university_id=tc.university_id
+		 LEFT JOIN (select  tt.course_id,pp.paper_id from  t_survey_paper tt LEFT JOIN t_paper pp on pp.chapter_id=tt.chapter_id where pp.test_type='2' )pc on pc.course_id=tc.course_id
+		where not EXISTS (select course_id from t_survey where tc.course_id=t_survey.course_id  and t_survey.university_id=#{universityId})and tc.university_id=#{universityId}  and tc.teacher_id=#{userId}and tc.course_start='1'and pc.paper_id is not NULL
+	</select>
+	<!-- 查询发送调查问卷的paperId -->
+	<select id="findSurveyPaperId" resultMap="BaseResultMap">
+	    select 
+	    tp.paper_id
+	    from t_course_chapter tc
+	    LEFT JOIN t_paper  tp on  tc.chapter_id=tp.chapter_id 
+	    where tc.course_id=#{courseId} AND tp.test_type='2'
+	</select>
+	<select id="findsurveylistByStudent" resultMap="BaseResultMap">
+       SELECT 
+       ts.course_id,
+	   ts.paper_id,
+	   tu.course_start_time,
+	   ts.survey_result,
+	   tu.course_end_time,
+       tc.course_cover_url,
+       tc.course_name,
+	   (select COUNT(user_id)  from t_test_question where user_id=#{userId} and t_test_question.paper_id=ts.paper_id)as exsituser,
+	   mc.usertotal,
+	   a.paper_name,
+       a.create_time,
+       mm.userWriteTotal
+	   from t_survey ts
+	  LEFT JOIN t_university_course tu on ts.university_id=tu.university_id and ts.course_id=tu.course_id
+	  LEFT JOIN (select count(user_id)as usertotal ,course_id from t_my_course  where user_id in(select user_id from t_user where user_type='0'and university_id=#{universityId}) GROUP BY course_id ) mc   ON ts.course_id = mc.course_id 
+      LEFT JOIN t_my_course tm on tm.course_id=ts.course_id
+      LEFT JOIN t_course tc on tc.course_id=ts.course_id
+      LEFT JOIN t_paper a on ts.paper_id=a.paper_id 
+      LEFT JOIN t_course_class c on c.course_id=ts.course_id  and c.university_id=ts.university_id and c.course_start='1'
+      LEFT JOIN(SELECT  COUNT(DISTINCT user_id)as userWriteTotal,paper_id from t_test_question GROUP BY paper_id ) mm on mm.paper_id=ts.paper_id
+	  where tm.user_id=#{userId}and ts.university_id=#{universityId}
+	</select>
+	<!-- 平台后台调查问卷列表 -->
+	<select id="findAdminsurvey" resultMap="BaseResultMap">
+     select 
+     tp.paper_id,
+     tp.chapter_id,
+     tp.paper_name,
+     tp.create_time
+     from t_paper tp
+     where tp.test_type='2'  
+	</select>
+	<select id="selectopationTotal" resultType="Integer" parameterType="Map">
+	SELECT count(user_answer) from t_test_question  tt
+   LEFT JOIN t_my_course tm on tm.user_id=tt.user_id and tm.class_id=#{classId}
+  <where>
+	<if test="userAnswer!= null and userAnswer!=''">
+	tt.user_answer like CONCAT('%',#{userAnswer},'%') and
+ </if>
+    tt.paper_id=#{paperId} and tt.question_id=#{questionId}	
+    </where>
+	</select>
+	<!-- 查询该学生未填写的调查问卷的个数 -->
+	<select id="findtotalwritesurvey" resultType="Integer" parameterType="com.cy.model.Survey">
+	     SELECT 
+		 COUNT(tm.course_id) as surveytotal
+	     from t_my_course tm
+         LEFT JOIN t_survey ts on ts.course_id=tm.course_id and ts.university_id=#{universityId}
+         <where>
+         <if test="courseId!=null and courseId!=''">
+         ts.course_id=#{courseId}and
+         </if>
+        tm.user_id=#{userId} and ts.paper_id not  in (SELECT paper_id from t_test  where  user_id=#{userId})and ts.survey_type='0'
+        </where>
+	</select>
+	<!-- 插入平台的调查问卷 -->
+	<insert id="addsurveyPlatform"  parameterType="com.cy.model.Survey">
+	  INSERT into t_survey  (id,paper_id,survey_type,survey_state) VALUE(#{Id},#{paperId},'1','0')
+	</insert>
+	<!-- 插入paper关联表t_survey_paper -->
+	<insert id="addcourseChapter"  parameterType="com.cy.model.Survey">
+	  INSERT into t_survey_paper (id,course_id,chapter_id,paper_id,create_time)VALUE(#{Id},#{courseId},#{chapterId},#{paperId},#{createTime})
+	</insert>
+	<!-- 平台调查问卷列表 8-26-->
+	<select id="findPlatformsurvey" resultMap="BaseResultMap">
+		select 
+		ts.paper_id, 
+		mc.userWriteTotal,
+		ts.survey_result,
+		a.paper_name,
+	    (SELECT 
+	    count(user_id)
+	    from t_user)as usertotal,
+	    (select 
+	    COUNT(user_id) 
+	    from t_test_question 
+	    where user_id=#{userId} and t_test_question.paper_id=ts.paper_id)as exsituser,
+	    tp.create_time from t_survey ts
+	    LEFT JOIN t_paper tp on tp.paper_id=ts.paper_id and tp.test_type='2' 
+	    LEFT JOIN(SELECT  COUNT(DISTINCT user_id)as userWriteTotal,paper_id from t_test_question GROUP BY paper_id ) mc on mc.paper_id=ts.paper_id
+	    LEFT JOIN t_paper a on ts.paper_id=a.paper_id 
+	   where  ts.course_id is NULL
+	</select>
+	<!-- 查询平台未填写的调查问卷的个数 -->	
+	<select id="findsurveyWrite" resultType="Integer" parameterType="com.cy.model.Survey">
+	    SELECT 
+	    count(ts.paper_id)
+	    from t_survey ts 
+	    where ts.course_id is NULL AND
+        ts.paper_id not  in (SELECT paper_id from t_test  where  user_id=#{userId})and ts.survey_type='1'
+	</select>
+	<select id="findSurveypost" resultType="int">
+	SELECT count(tp.course_id)as count from t_survey_paper tp
+     RIGHT  JOIN t_paper tt on tt.paper_id=tp.paper_id where tp.course_id=#{courseId}
+	</select>
+	<!-- 插入星级等级 -->	
+	<update id="insertpaperDegree" parameterType="Map">
+	     update 
+	     t_survey 
+	     <set>
+	     <if test="surveyResult != null">
+	     survey_result=#{surveyResult}
+	     </if>
+	     </set>
+	     <where>
+	    <if test="universityId != null">
+	      university_id=#{universityId} and 
+	      </if>
+	      <if test="paperId != null">
+	        paper_id=#{paperId}
+	     </if>
+	     </where>
+	</update>
+	<select id="findSurveyType" resultType="Integer" parameterType="java.lang.String">
+	select survey_type from t_survey where paper_id=#{paperId}limit 1
+	</select>
+	
+	</mapper>
+	

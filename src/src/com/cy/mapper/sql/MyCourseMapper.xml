@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cy.mapper.MyCourseMapper">
+	<!-- 实体类 - 数据库映射 2015-07-02 14:06:35. -->
+	<resultMap id="BaseResultMap" type="MyCourse">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="user_id" property="userId" jdbcType="INTEGER" />
+		<result column="course_id" property="courseId" jdbcType="INTEGER" />
+		<result column="course_name" property="courseName" jdbcType="CHAR" />
+		<result column="course_cover_url" property="courseCoverUrl"
+			jdbcType="CHAR" />
+		<result column="course_author" property="courseAuthor"
+			jdbcType="CHAR" />
+		<result column="course_schedule" property="courseSchedule"
+			jdbcType="REAL" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="creator" property="creator" jdbcType="CHAR" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="updator" property="updator" jdbcType="CHAR" />
+		<result column="my_course_complete" property="myCourseComplete"
+			jdbcType="INTEGER" />
+		<result column="class_id" property="classId" jdbcType="CHAR" />
+		<result column="class_name" property="className" jdbcType="CHAR" />
+		<result column="course_type" property="type" jdbcType="CHAR" />
+		<result column="my_cource_complete" property="myCourceComplete"
+			jdbcType="CHAR" />
+		<result column="course_term" property="courseTerm" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段 2015-07-02 14:06:35. -->
+	<sql id="Base_Column_List">
+		id, user_id, course_id, course_name,
+		course_cover_url, course_author, course_schedule,
+		create_time, creator, update_time, updator, my_course_complete, class_id, class_name, type,
+		my_cource_complete
+	</sql>
+
+	<!-- 按主键查询 2015-07-02 14:06:35. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_my_course
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<resultMap type="java.util.HashMap" id="countStudent">
+		<result column="course_id" property="courseId" />
+		<result column="counts" property="stus" />
+	</resultMap>
+
+	<select id="countStudents" resultMap="countStudent">
+		SELECT course_id, COUNT(1) counts FROM t_my_course GROUP BY course_id
+	</select>
+	
+	
+	<!-- 按主键删除 2015-07-02 14:06:35. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from t_my_course
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+		
+	<delete id="deleteclassId" parameterType="com.cy.model.MyCourse">
+	 DELETE 
+	 from 
+	 t_my_course 
+	 where 
+	 class_id in 
+	 (SELECT class_id 
+	  from t_course_class 
+	  where university_course_id in 
+	  (SELECT id from t_university_course where course_id=#{courseId}and university_id=#{universityId} and course_term=#{courseTerm}))
+  </delete>
+	
+	<!-- 插入 - 全字段保存 2015-07-02 14:06:35. -->
+	<insert id="insert" parameterType="com.cy.model.MyCourse">
+		<selectKey resultType="java.lang.Integer" keyProperty="id"
+			order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into t_my_course (user_id, course_id, course_name,
+		course_cover_url, course_author, course_schedule,
+		create_time, creator, update_time,
+		updator, my_course_complete, class_id,
+		type, my_cource_complete)
+		values (#{userId,jdbcType=INTEGER},
+		#{courseId,jdbcType=INTEGER}, #{courseName,jdbcType=CHAR},
+		#{courseCoverUrl,jdbcType=CHAR}, #{courseAuthor,jdbcType=CHAR},
+		#{courseSchedule,jdbcType=REAL},
+		#{createTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=CHAR}, #{updateTime,jdbcType=TIMESTAMP},
+		#{updator,jdbcType=CHAR}, #{myCourseComplete,jdbcType=INTEGER},
+		#{classId,jdbcType=INTEGER},
+		#{type,jdbcType=CHAR}, #{myCourceComplete,jdbcType=CHAR})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2015-07-02 14:06:35. -->
+	<insert id="insertSelective" parameterType="com.cy.model.MyCourse">
+		<selectKey resultType="java.lang.Integer" keyProperty="id"
+			order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into t_my_course
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="courseId != null">
+				course_id,
+			</if>
+			<if test="courseName != null">
+				course_name,
+			</if>
+			<if test="courseCoverUrl != null">
+				course_cover_url,
+			</if>
+			<if test="courseAuthor != null">
+				course_author,
+			</if>
+			<if test="courseSchedule != null">
+				course_schedule,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="creator != null">
+				creator,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="updator != null">
+				updator,
+			</if>
+			<if test="myCourseComplete != null">
+				my_course_complete,
+			</if>
+			<if test="classId != null">
+				class_id,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="myCourceComplete != null">
+				my_cource_complete,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				#{userId,jdbcType=INTEGER},
+			</if>
+			<if test="courseId != null">
+				#{courseId,jdbcType=INTEGER},
+			</if>
+			<if test="courseName != null">
+				#{courseName,jdbcType=CHAR},
+			</if>
+			<if test="courseCoverUrl != null">
+				#{courseCoverUrl,jdbcType=CHAR},
+			</if>
+			<if test="courseAuthor != null">
+				#{courseAuthor,jdbcType=CHAR},
+			</if>
+			<if test="courseSchedule != null">
+				#{courseSchedule,jdbcType=REAL},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creator != null">
+				#{creator,jdbcType=CHAR},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updator != null">
+				#{updator,jdbcType=CHAR},
+			</if>
+			<if test="myCourseComplete != null">
+				#{myCourseComplete,jdbcType=INTEGER},
+			</if>
+			<if test="classId != null">
+				#{classId,jdbcType=INTEGER},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=CHAR},
+			</if>
+			<if test="myCourceComplete != null">
+				#{myCourceComplete,jdbcType=CHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2015-07-02 14:06:35. -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.cy.model.MyCourse">
+		update t_my_course
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=INTEGER},
+			</if>
+			<if test="courseId != null">
+				course_id =
+				#{courseId,jdbcType=INTEGER},
+			</if>
+			<if test="courseName != null">
+				course_name =
+				#{courseName,jdbcType=CHAR},
+			</if>
+			<if test="courseCoverUrl != null">
+				course_cover_url =
+				#{courseCoverUrl,jdbcType=CHAR},
+			</if>
+			<if test="courseAuthor != null">
+				course_author =
+				#{courseAuthor,jdbcType=CHAR},
+			</if>
+			<if test="courseSchedule != null">
+				course_schedule =
+				#{courseSchedule,jdbcType=REAL},
+			</if>
+			<if test="createTime != null">
+				create_time =
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creator != null">
+				creator = #{creator,jdbcType=CHAR},
+			</if>
+			<if test="updateTime != null">
+				update_time =
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updator != null">
+				updator = #{updator,jdbcType=CHAR},
+			</if>
+			<if test="myCourseComplete != null">
+				my_course_complete =
+				#{myCourseComplete,jdbcType=INTEGER},
+			</if>
+			<if test="classId != null">
+				class_id = #{classId,jdbcType=INTEGER},
+			</if>
+			<if test="type != null">
+				type = #{type,jdbcType=CHAR},
+			</if>
+			<if test="myCourceComplete != null">
+				my_cource_complete =
+				#{myCourceComplete,jdbcType=CHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	
+	<!-- 更新 - 仅更新给定实体类中非null的字段 2015-08-18 14:06:35. -->
+	<update id="updateByUserIdSelective" parameterType="com.cy.model.MyCourse">
+		update t_my_course
+		<set>
+			<if test="courseId != null">
+				course_id =
+				#{courseId,jdbcType=INTEGER},
+			</if>
+			<if test="courseName != null">
+				course_name =
+				#{courseName,jdbcType=CHAR},
+			</if>
+			<if test="courseCoverUrl != null">
+				course_cover_url =
+				#{courseCoverUrl,jdbcType=CHAR},
+			</if>
+			<if test="courseAuthor != null">
+				course_author =
+				#{courseAuthor,jdbcType=CHAR},
+			</if>
+			<if test="courseSchedule != null">
+				course_schedule =
+				#{courseSchedule,jdbcType=REAL},
+			</if>
+			<if test="createTime != null">
+				create_time =
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creator != null">
+				creator = #{creator,jdbcType=CHAR},
+			</if>
+			<if test="updateTime != null">
+				update_time =
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updator != null">
+				updator = #{updator,jdbcType=CHAR},
+			</if>
+			<if test="myCourseComplete != null">
+				my_course_complete =
+				#{myCourseComplete,jdbcType=INTEGER},
+			</if>
+			<if test="type != null">
+				course_type = #{type,jdbcType=CHAR},
+			</if>
+		</set>
+		where user_id = #{userId,jdbcType=CHAR}
+		AND class_id = #{classId,jdbcType=CHAR}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2015-07-02 14:06:35. -->
+	<update id="updateByPrimaryKey" parameterType="com.cy.model.MyCourse">
+		update t_my_course
+		set user_id = #{userId,jdbcType=INTEGER},
+		course_id = #{courseId,jdbcType=INTEGER},
+		course_name = #{courseName,jdbcType=CHAR},
+		course_cover_url = #{courseCoverUrl,jdbcType=CHAR},
+		course_author = #{courseAuthor,jdbcType=CHAR},
+		course_schedule = #{courseSchedule,jdbcType=REAL},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		creator = #{creator,jdbcType=CHAR},
+		update_time = #{updateTime,jdbcType=TIMESTAMP},
+		updator = #{updator,jdbcType=CHAR},
+		my_course_complete = #{myCourseComplete,jdbcType=INTEGER},
+		class_id = #{classId,jdbcType=INTEGER},
+		course_type = #{type,jdbcType=CHAR},
+		my_cource_complete = #{myCourceComplete,jdbcType=CHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2015-07-02 14:06:35. <select id="selectByCriteria" 
+		resultMap="BaseResultMap" parameterType="Criteria" > select <include refid="Base_Column_List" 
+		/> from t_my_course <where > <include refid="Criteria.Filter" /> </where> 
+		<include refid="Criteria.Order" /> </select> -->
+
+	<!-- 按 Criteria 条件查询记录数 2015-07-02 14:06:35. <select id="selectCountByCriteria" 
+		resultType="long" parameterType="com.cy.model.MyCourseCriteria" > select 
+		count(1) from t_my_course <if test="_parameter != null" > <include refid="Example_Where_Clause" 
+		/> </if> </select> -->
+
+
+	<!-- EXCLE导入批量插入数据 -->
+	<insert id="insertMyCourseList" parameterType="java.util.List">
+		<!-- <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" 
+			> SELECT LAST_INSERT_ID() </selectKey> -->
+		insert into t_my_course (id,user_id, course_id, course_name,
+		course_cover_url, course_author, course_schedule,
+		create_time, creator, update_time,
+		updator, my_course_complete, class_id,
+		course_type)
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.id,jdbcType=CHAR},#{item.userId,jdbcType=CHAR}, #{item.courseId,jdbcType=CHAR}, #{item.courseName,jdbcType=CHAR},
+			#{item.courseCoverUrl,jdbcType=CHAR},
+			#{item.courseAuthor,jdbcType=CHAR},
+			#{item.courseSchedule,jdbcType=REAL},
+			#{item.createTime,jdbcType=TIMESTAMP}, #{item.creator,jdbcType=CHAR},
+			#{item.updateTime,jdbcType=TIMESTAMP},
+			#{item.updator,jdbcType=CHAR}, #{item.myCourseComplete,jdbcType=INTEGER},
+			#{item.classId,jdbcType=INTEGER},
+			#{item.type,jdbcType=CHAR})
+		</foreach>
+	</insert>
+
+
+
+
+	<resultMap type="java.lang.String" id="findcourseidlist">
+		<result column="course_id" property="courseId" />
+	</resultMap>
+
+	<!-- 按主键查询 2015-06-08 16:37:51. -->
+	<select id="findcourseid" resultMap="findcourseidlist" parameterType="java.lang.String" >
+		select course_id  from t_my_course where user_id = #{userId,jdbcType=CHAR}
+	</select>
+
+
+</mapper>

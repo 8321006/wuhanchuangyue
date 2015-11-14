@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cy.mapper.MyCourseScoreMapper">
+	<!-- 实体类 - 数据库映射 2015-07-08 14:27:56. -->
+	<resultMap id="BaseResultMap" type="MyCourseScore">
+		<id column="id" property="id" jdbcType="CHAR" />
+		<result column="user_id" property="userId" jdbcType="CHAR" />
+		<result column="real_name" property="realName" jdbcType="CHAR" />
+		<result column="university_id" property="universityId"
+			jdbcType="CHAR" />
+		<result column="university_name" property="universityName"
+			jdbcType="CHAR" />
+		<result column="student_id" property="studentId" jdbcType="CHAR" />
+		<result column="subject_name" property="subjectName" jdbcType="CHAR" />
+		<result column="college_name" property="collegeName" jdbcType="CHAR" />
+		<result column="course_id" property="courseId" jdbcType="CHAR" />
+		<result column="course_name" property="courseName" jdbcType="CHAR" />
+		<result column="task_score" property="taskScore" jdbcType="REAL" />
+		<result column="exam_score" property="examScore" jdbcType="REAL" />
+		<result column="video_scroe" property="videoScroe" jdbcType="REAL" />
+		<result column="comment_score" property="commentScore"
+			jdbcType="REAL" />
+		<result column="quiz_score" property="quizScore" jdbcType="REAL" />
+		<result column="final_score" property="finalScore" jdbcType="REAL" />
+		<result column="course_complete" property="courseComplete"
+			jdbcType="INTEGER" />
+		<result column="if_pass" property="ifPass" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段 2015-07-08 14:27:56. -->
+	<sql id="Base_Column_List">
+		id, user_id, real_name, university_id,
+		university_name, student_id, subject_name,
+		college_name, course_id, course_name, task_score, exam_score, video_scroe,
+		comment_score,
+		quiz_score, final_score, course_complete, if_pass
+	</sql>
+
+	<!-- 按主键查询 2015-07-08 14:27:56. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from t_my_course_score
+		where id = #{id,jdbcType=CHAR}
+	</select>
+
+	<!-- 按主键删除 2015-07-08 14:27:56. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from t_my_course_score
+		where id = #{id,jdbcType=CHAR}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2015-07-08 14:27:56. -->
+	<insert id="insert" parameterType="com.cy.model.MyCourseScore">
+		insert into t_my_course_score (id, user_id, real_name,
+		university_id, university_name, student_id,
+		subject_name, college_name, course_id,
+		course_name, task_score, exam_score,
+		video_scroe, comment_score, quiz_score,
+		final_score, course_complete, if_pass
+		)
+		values (#{id,jdbcType=CHAR}, #{userId,jdbcType=CHAR},
+		#{realName,jdbcType=CHAR},
+		#{universityId,jdbcType=CHAR}, #{universityName,jdbcType=CHAR}, #{studentId,jdbcType=CHAR},
+		#{subjectName,jdbcType=CHAR}, #{collegeName,jdbcType=CHAR},
+		#{courseId,jdbcType=CHAR},
+		#{courseName,jdbcType=CHAR}, #{taskScore,jdbcType=REAL}, #{examScore,jdbcType=REAL},
+		#{videoScroe,jdbcType=REAL}, #{commentScore,jdbcType=REAL},
+		#{quizScore,jdbcType=REAL},
+		#{finalScore,jdbcType=REAL}, #{courseComplete,jdbcType=INTEGER}, #{ifPass,jdbcType=INTEGER}
+		)
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2015-07-08 14:27:56. -->
+	<insert id="insertSelective" parameterType="com.cy.model.MyCourseScore">
+		insert into t_my_course_score
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="realName != null">
+				real_name,
+			</if>
+			<if test="universityId != null">
+				university_id,
+			</if>
+			<if test="universityName != null">
+				university_name,
+			</if>
+			<if test="studentId != null">
+				student_id,
+			</if>
+			<if test="subjectName != null">
+				subject_name,
+			</if>
+			<if test="collegeName != null">
+				college_name,
+			</if>
+			<if test="courseId != null">
+				course_id,
+			</if>
+			<if test="courseName != null">
+				course_name,
+			</if>
+			<if test="taskScore != null">
+				task_score,
+			</if>
+			<if test="examScore != null">
+				exam_score,
+			</if>
+			<if test="videoScroe != null">
+				video_scroe,
+			</if>
+			<if test="commentScore != null">
+				comment_score,
+			</if>
+			<if test="quizScore != null">
+				quiz_score,
+			</if>
+			<if test="finalScore != null">
+				final_score,
+			</if>
+			<if test="courseComplete != null">
+				course_complete,
+			</if>
+			<if test="ifPass != null">
+				if_pass,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=CHAR},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=CHAR},
+			</if>
+			<if test="realName != null">
+				#{realName,jdbcType=CHAR},
+			</if>
+			<if test="universityId != null">
+				#{universityId,jdbcType=CHAR},
+			</if>
+			<if test="universityName != null">
+				#{universityName,jdbcType=CHAR},
+			</if>
+			<if test="studentId != null">
+				#{studentId,jdbcType=CHAR},
+			</if>
+			<if test="subjectName != null">
+				#{subjectName,jdbcType=CHAR},
+			</if>
+			<if test="collegeName != null">
+				#{collegeName,jdbcType=CHAR},
+			</if>
+			<if test="courseId != null">
+				#{courseId,jdbcType=CHAR},
+			</if>
+			<if test="courseName != null">
+				#{courseName,jdbcType=CHAR},
+			</if>
+			<if test="taskScore != null">
+				#{taskScore,jdbcType=REAL},
+			</if>
+			<if test="examScore != null">
+				#{examScore,jdbcType=REAL},
+			</if>
+			<if test="videoScroe != null">
+				#{videoScroe,jdbcType=REAL},
+			</if>
+			<if test="commentScore != null">
+				#{commentScore,jdbcType=REAL},
+			</if>
+			<if test="quizScore != null">
+				#{quizScore,jdbcType=REAL},
+			</if>
+			<if test="finalScore != null">
+				#{finalScore,jdbcType=REAL},
+			</if>
+			<if test="courseComplete != null">
+				#{courseComplete,jdbcType=INTEGER},
+			</if>
+			<if test="ifPass != null">
+				#{ifPass,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2015-07-08 14:27:56. -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.cy.model.MyCourseScore">
+		update t_my_course_score
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=CHAR},
+			</if>
+			<if test="realName != null">
+				real_name = #{realName,jdbcType=CHAR},
+			</if>
+			<if test="universityId != null">
+				university_id =
+				#{universityId,jdbcType=CHAR},
+			</if>
+			<if test="universityName != null">
+				university_name =
+				#{universityName,jdbcType=CHAR},
+			</if>
+			<if test="studentId != null">
+				student_id =
+				#{studentId,jdbcType=CHAR},
+			</if>
+			<if test="subjectName != null">
+				subject_name =
+				#{subjectName,jdbcType=CHAR},
+			</if>
+			<if test="collegeName != null">
+				college_name =
+				#{collegeName,jdbcType=CHAR},
+			</if>
+			<if test="courseId != null">
+				course_id = #{courseId,jdbcType=CHAR},
+			</if>
+			<if test="courseName != null">
+				course_name =
+				#{courseName,jdbcType=CHAR},
+			</if>
+			<if test="taskScore != null">
+				task_score =
+				#{taskScore,jdbcType=REAL},
+			</if>
+			<if test="examScore != null">
+				exam_score =
+				#{examScore,jdbcType=REAL},
+			</if>
+			<if test="videoScroe != null">
+				video_scroe =
+				#{videoScroe,jdbcType=REAL},
+			</if>
+			<if test="commentScore != null">
+				comment_score =
+				#{commentScore,jdbcType=REAL},
+			</if>
+			<if test="quizScore != null">
+				quiz_score =
+				#{quizScore,jdbcType=REAL},
+			</if>
+			<if test="finalScore != null">
+				final_score =
+				#{finalScore,jdbcType=REAL},
+			</if>
+			<if test="courseComplete != null">
+				course_complete =
+				#{courseComplete,jdbcType=INTEGER},
+			</if>
+			<if test="ifPass != null">
+				if_pass = #{ifPass,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=CHAR}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2015-07-08 14:27:56. -->
+	<update id="updateByPrimaryKey" parameterType="com.cy.model.MyCourseScore">
+		update t_my_course_score
+		set user_id = #{userId,jdbcType=CHAR},
+		real_name = #{realName,jdbcType=CHAR},
+		university_id = #{universityId,jdbcType=CHAR},
+		university_name = #{universityName,jdbcType=CHAR},
+		student_id = #{studentId,jdbcType=CHAR},
+		subject_name = #{subjectName,jdbcType=CHAR},
+		college_name = #{collegeName,jdbcType=CHAR},
+		course_id = #{courseId,jdbcType=CHAR},
+		course_name = #{courseName,jdbcType=CHAR},
+		task_score = #{taskScore,jdbcType=REAL},
+		exam_score = #{examScore,jdbcType=REAL},
+		video_scroe = #{videoScroe,jdbcType=REAL},
+		comment_score = #{commentScore,jdbcType=REAL},
+		quiz_score = #{quizScore,jdbcType=REAL},
+		final_score = #{finalScore,jdbcType=REAL},
+		course_complete = #{courseComplete,jdbcType=INTEGER},
+		if_pass = #{ifPass,jdbcType=INTEGER}
+		where id = #{id,jdbcType=CHAR}
+	</update>
+
+	<resultMap id="selectPageResult" extends="BaseResultMap"
+		type="com.cy.model.MyCourseScore">
+		<!-- <association property="" column="" javaType=""> <id column="" property="" 
+			jdbcType="" /> <result column="" property="" jdbcType="" /> </association> -->
+	</resultMap>
+
+	<!-- <sql id="select_by_page_outter_where_sql">
+		<if test="oredCriteria.size>0">
+			<if test="_parameter != null">
+				<include refid="Example_Where_Clause" />
+			</if>
+			and
+		</if>
+		<if test="oredCriteria.size==0"> where   </if>
+	</sql>
+
+	<sql id="select_by_page_inner_where_and_orderby_sql">
+		<if test="oredCriteria.size>0">
+			<if test="_parameter != null">
+				<include refid="Example_Where_Clause" />
+			</if>
+		</if>
+		<if test="orderByClause != null"> order by ${orderByClause}   </if>
+	</sql>
+
+	<sql id="select_by_page_outter_orderby_sql">
+		<if test="orderByClause != null"> order by ${orderByClause}   </if>
+	</sql>
+
+	<select id="selectPage" resultMap="selectPageResult"
+		parameterType="com.cy.model.MyCourseScore">
+		select a.* from t_my_course_score a where a.id in
+		(select top ${pageSize} id from t_my_course_score
+		<include refid="select_by_page_outter_where_sql" />
+		id not in (select top ${skipRecordCount} id from t_my_course_score
+		<include refid="select_by_page_inner_where_and_orderby_sql" />
+		)
+		<include refid="select_by_page_outter_orderby_sql" />
+		)
+	</select>
+
+	按 Criteria 条件查询, 支持分页 2015-07-08 14:27:56. <select id="selectByCriteria" 
+		resultMap="BaseResultMap" parameterType="Criteria" > select <include refid="Base_Column_List" 
+		/> from t_my_course_score <where > <include refid="Criteria.Filter" /> </where> 
+		<include refid="Criteria.Order" /> </select>
+
+	按 Criteria 条件查询记录数 2015-07-08 14:27:56.
+	<select id="selectCountByCriteria" resultType="long"
+		parameterType="com.cy.model.MyCourseScore">
+		select count(1)
+		from t_my_course_score
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select> -->
+
+</mapper>

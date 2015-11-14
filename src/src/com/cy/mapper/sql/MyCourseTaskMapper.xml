@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cy.mapper.MyCourseTaskMapper">
+	<!-- 实体类 - 数据库映射 2015-07-08 14:27:56. -->
+	<resultMap id="BaseResultMap" type="MyCourseTask">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="task_id" property="taskId" jdbcType="INTEGER" />
+		<result column="task_file" property="taskFile" jdbcType="VARCHAR" />
+		<result column="student_id" property="studentId" jdbcType="INTEGER" />
+		<result column="student_name" property="studentName" jdbcType="VARCHAR" />
+		<result column="course_id" property="courseId" jdbcType="INTEGER" />
+		<result column="course_name" property="courseName" jdbcType="VARCHAR" />
+		<result column="teacher_id" property="teacherId" jdbcType="INTEGER" />
+		<result column="teacher_name" property="teacherName" jdbcType="VARCHAR" />
+		<result column="complete_time" property="completeTime"
+			jdbcType="TIMESTAMP" />
+		<result column="task_status" property="taskStatus" jdbcType="INTEGER" />
+		<result column="task_score" property="taskScore" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段 2015-07-08 14:27:56. -->
+	<sql id="Base_Column_List">
+		id, task_id, task_file, student_id,
+		student_name, course_id, course_name, teacher_id,
+		teacher_name, complete_time, task_status, task_score
+	</sql>
+
+	<!-- 按主键查询 2015-07-08 14:27:56. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_my_course_task
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<resultMap type="java.util.HashMap" id="countTask">
+		<result column="course_id" property="courseId" />
+		<result column="tasks" property="tasks" />
+	</resultMap>
+
+	<select id="countTaskByCourse" resultMap="countTask"
+		parameterType="int">
+		SELECT course_id,COUNT(1) tasks FROM t_my_course_task
+		WHERE task_status = #{status} GROUP BY course_id
+	</select>
+
+	<!-- 按主键删除 2015-07-08 14:27:56. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from t_my_course_task
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2015-07-08 14:27:56. -->
+	<insert id="insert" parameterType="com.cy.model.MyCourseTask">
+		insert into t_my_course_task (id, task_id, task_file,
+		student_id, student_name, course_id,
+		course_name, teacher_id, teacher_name,
+		complete_time, task_status, task_score
+		)
+		values (#{id,jdbcType=INTEGER}, #{taskId,jdbcType=INTEGER},
+		#{taskFile,jdbcType=VARCHAR},
+		#{studentId,jdbcType=INTEGER}, #{studentName,jdbcType=VARCHAR}, #{courseId,jdbcType=INTEGER},
+		#{courseName,jdbcType=VARCHAR}, #{teacherId,jdbcType=INTEGER},
+		#{teacherName,jdbcType=VARCHAR},
+		#{completeTime,jdbcType=TIMESTAMP}, #{taskStatus,jdbcType=INTEGER}, #{taskScore,jdbcType=INTEGER}
+		)
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2015-07-08 14:27:56. -->
+	<insert id="insertSelective" parameterType="com.cy.model.MyCourseTask">
+		insert into t_my_course_task
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="taskId != null">
+				task_id,
+			</if>
+			<if test="taskFile != null">
+				task_file,
+			</if>
+			<if test="studentId != null">
+				student_id,
+			</if>
+			<if test="studentName != null">
+				student_name,
+			</if>
+			<if test="courseId != null">
+				course_id,
+			</if>
+			<if test="courseName != null">
+				course_name,
+			</if>
+			<if test="teacherId != null">
+				teacher_id,
+			</if>
+			<if test="teacherName != null">
+				teacher_name,
+			</if>
+			<if test="completeTime != null">
+				complete_time,
+			</if>
+			<if test="taskStatus != null">
+				task_status,
+			</if>
+			<if test="taskScore != null">
+				task_score,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="taskId != null">
+				#{taskId,jdbcType=INTEGER},
+			</if>
+			<if test="taskFile != null">
+				#{taskFile,jdbcType=VARCHAR},
+			</if>
+			<if test="studentId != null">
+				#{studentId,jdbcType=INTEGER},
+			</if>
+			<if test="studentName != null">
+				#{studentName,jdbcType=VARCHAR},
+			</if>
+			<if test="courseId != null">
+				#{courseId,jdbcType=INTEGER},
+			</if>
+			<if test="courseName != null">
+				#{courseName,jdbcType=VARCHAR},
+			</if>
+			<if test="teacherId != null">
+				#{teacherId,jdbcType=INTEGER},
+			</if>
+			<if test="teacherName != null">
+				#{teacherName,jdbcType=VARCHAR},
+			</if>
+			<if test="completeTime != null">
+				#{completeTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="taskStatus != null">
+				#{taskStatus,jdbcType=INTEGER},
+			</if>
+			<if test="taskScore != null">
+				#{taskScore,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2015-07-08 14:27:56. -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.cy.model.MyCourseTask">
+		update t_my_course_task
+		<set>
+			<if test="taskId != null">
+				task_id = #{taskId,jdbcType=INTEGER},
+			</if>
+			<if test="taskFile != null">
+				task_file =
+				#{taskFile,jdbcType=VARCHAR},
+			</if>
+			<if test="studentId != null">
+				student_id =
+				#{studentId,jdbcType=INTEGER},
+			</if>
+			<if test="studentName != null">
+				student_name =
+				#{studentName,jdbcType=VARCHAR},
+			</if>
+			<if test="courseId != null">
+				course_id =
+				#{courseId,jdbcType=INTEGER},
+			</if>
+			<if test="courseName != null">
+				course_name =
+				#{courseName,jdbcType=VARCHAR},
+			</if>
+			<if test="teacherId != null">
+				teacher_id =
+				#{teacherId,jdbcType=INTEGER},
+			</if>
+			<if test="teacherName != null">
+				teacher_name =
+				#{teacherName,jdbcType=VARCHAR},
+			</if>
+			<if test="completeTime != null">
+				complete_time =
+				#{completeTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="taskStatus != null">
+				task_status =
+				#{taskStatus,jdbcType=INTEGER},
+			</if>
+			<if test="taskScore != null">
+				task_score =
+				#{taskScore,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2015-07-08 14:27:56. -->
+	<update id="updateByPrimaryKey" parameterType="com.cy.model.MyCourseTask">
+		update t_my_course_task
+		set task_id = #{taskId,jdbcType=INTEGER},
+		task_file = #{taskFile,jdbcType=VARCHAR},
+		student_id = #{studentId,jdbcType=INTEGER},
+		student_name = #{studentName,jdbcType=VARCHAR},
+		course_id = #{courseId,jdbcType=INTEGER},
+		course_name = #{courseName,jdbcType=VARCHAR},
+		teacher_id = #{teacherId,jdbcType=INTEGER},
+		teacher_name = #{teacherName,jdbcType=VARCHAR},
+		complete_time = #{completeTime,jdbcType=TIMESTAMP},
+		task_status = #{taskStatus,jdbcType=INTEGER},
+		task_score = #{taskScore,jdbcType=INTEGER}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<resultMap id="selectPageResult" extends="BaseResultMap"
+		type="com.cy.model.MyCourseTask">
+		<!-- <association property="" column="" javaType=""> <id column="" property="" 
+			jdbcType="" /> <result column="" property="" jdbcType="" /> </association> -->
+	</resultMap>
+
+	<!-- <sql id="select_by_page_outter_where_sql" > <if test="oredCriteria.size>0"> 
+		<if test="_parameter != null" > <include refid="Example_Where_Clause"/> </if> 
+		and </if> <if test="oredCriteria.size==0"> where </if> </sql> <sql id="select_by_page_inner_where_and_orderby_sql" 
+		> <if test="oredCriteria.size>0"> <if test="_parameter != null" > <include 
+		refid="Example_Where_Clause"/> </if> </if> <if test="orderByClause != null"> 
+		order by ${orderByClause} </if> </sql> <sql id="select_by_page_outter_orderby_sql" 
+		> <if test="orderByClause != null"> order by ${orderByClause} </if> </sql> 
+		<select id="selectPage" resultMap="selectPageResult" parameterType="com.cy.model.MyCourseTask" 
+		> select a.* from t_my_course_task a where a.id in (select top ${pageSize} 
+		id from t_my_course_task <include refid="select_by_page_outter_where_sql"/> 
+		id not in (select top ${skipRecordCount} id from t_my_course_task <include 
+		refid="select_by_page_inner_where_and_orderby_sql"/> ) <include refid="select_by_page_outter_orderby_sql"/> 
+		) </select> -->
+
+	<!-- 按 Criteria 条件查询, 支持分页 2015-07-08 14:27:56. <select id="selectByCriteria" 
+		resultMap="BaseResultMap" parameterType="Criteria" > select <include refid="Base_Column_List" 
+		/> from t_my_course_task <where > <include refid="Criteria.Filter" /> </where> 
+		<include refid="Criteria.Order" /> </select> -->
+
+	<!-- 按 Criteria 条件查询记录数 2015-07-08 14:27:56. -->
+	<!-- <select id="selectCountByCriteria" resultType="long" parameterType="com.cy.model.MyCourseTask" 
+		> select count(1) from t_my_course_task <if test="_parameter != null" > <include 
+		refid="Example_Where_Clause" /> </if> </select> -->
+
+</mapper>

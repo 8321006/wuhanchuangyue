@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cy.mapper.CourseMapper" >
+	<!-- 实体类 - 数据库映射 2015-06-08 15:47:16. -->
+	<resultMap id="BaseResultMap" type="Course" >
+		<id column="course_id" property="courseId" jdbcType="CHAR" />
+		<result column="course_name" property="courseName" jdbcType="CHAR" />
+		<result column="course_author" property="courseAuthor" jdbcType="CHAR" />
+		<result column="course_author_detail" property="courseAuthorDetail" jdbcType="LONGVARCHAR" />
+		<result column="course_cover_url" property="courseCoverUrl" jdbcType="CHAR" />
+		<result column="course_create_time" property="courseCreateTime" jdbcType="TIMESTAMP" />
+		<result column="course_upload_time" property="courseUploadTime" jdbcType="TIMESTAMP" />
+		<result column="course_uploader" property="courseUploader" jdbcType="CHAR" />
+		<result column="course_task_id" property="courseTaskId" jdbcType="VARCHAR" />
+		<result column="course_exam_id" property="courceExamId" jdbcType="VARCHAR" />
+		<result column="course_desc" property="courseDesc" jdbcType="LONGVARCHAR" />
+		<result column="course_team" property="courseTeam" jdbcType="LONGVARCHAR" />
+		<result column="course_plan" property="coursePlan" jdbcType="LONGVARCHAR" />
+		<result column="course_outline" property="courseOutline" jdbcType="LONGVARCHAR" />
+		<result column="author_desc" property="authorDesc" jdbcType="LONGVARCHAR" />
+		<result column="study_start_time" property="studystarttime" jdbcType="TIMESTAMP" />
+		<result column="study_end_time" property="studyendtime" jdbcType="TIMESTAMP" />
+		<result column="course_type" property="courseType" jdbcType="INTEGER" />
+		<result column="num" property="num" jdbcType="INTEGER" />
+		<result column="class_id" property="classId" jdbcType="CHAR" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2015-06-08 15:47:16. -->
+	<!-- 用于 SELECT 语句的所有字段  2015-06-08 15:47:16. -->
+	<sql id="Base_Column_List" >
+		course_id, course_name, course_author, course_cover_url, course_create_time, course_upload_time, 
+		course_uploader, course_task_id, course_exam_id,course_desc, course_team, course_plan, course_outline, author_desc,course_author_detail,course_type
+	</sql>
+
+	<!-- 按主键查询 2015-06-08 15:47:16. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+		select 
+		<include refid="Base_Column_List" />
+		,(select count(*) from t_my_course where course_id = #{courseId,jdbcType=CHAR} ) as num
+		from t_course
+		where course_id = #{courseId,jdbcType=CHAR}
+	</select>
+
+	<!-- 按主键删除 2015-06-08 15:47:16. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+		delete from t_course
+		where course_id = #{courseId,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2015-06-08 15:47:16. -->
+	<insert id="insert" parameterType="com.cy.model.Course" >
+		insert into t_course (course_id, course_name, course_author, 
+			course_cover_url, course_create_time, course_upload_time, 
+			course_uploader, course_task_id, course_exam_id, 
+			course_desc, course_team, course_plan, 
+			course_outline, author_desc)
+		values (#{courseId,jdbcType=INTEGER}, #{courseName,jdbcType=CHAR}, #{courseAuthor,jdbcType=INTEGER}, 
+			#{courseCoverUrl,jdbcType=CHAR}, #{courseCreateTime,jdbcType=TIMESTAMP}, #{courseUploadTime,jdbcType=TIMESTAMP}, 
+			#{courseUploader,jdbcType=CHAR}, #{courseTaskId,jdbcType=VARCHAR}, #{courceExamId,jdbcType=VARCHAR}, 
+			#{courseDesc,jdbcType=LONGVARCHAR}, #{courseTeam,jdbcType=LONGVARCHAR}, #{coursePlan,jdbcType=LONGVARCHAR}, 
+			#{courseOutline,jdbcType=LONGVARCHAR}, #{authorDesc,jdbcType=LONGVARCHAR})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2015-06-08 15:47:16. -->
+	<insert id="insertSelective" parameterType="com.cy.model.Course" >
+		insert into t_course
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="courseId != null" >
+				course_id,
+			</if>
+			<if test="courseName != null" >
+				course_name,
+			</if>
+			<if test="courseAuthor != null" >
+				course_author,
+			</if>
+			<if test="courseAuthorDetail != null" >
+				course_author_detail,
+			</if>
+			<if test="courseCoverUrl != null" >
+				course_cover_url,
+			</if>
+			<if test="courseCreateTime != null" >
+				course_create_time,
+			</if>
+			<if test="courseUploadTime != null" >
+				course_upload_time,
+			</if>
+			<if test="courseUploader != null" >
+				course_uploader,
+			</if>
+			<if test="courseTaskId != null" >
+				course_task_id,
+			</if>
+			<if test="courceExamId != null" >
+				course_exam_id,
+			</if>
+			<if test="courseDesc != null" >
+				course_desc,
+			</if>
+			<if test="courseTeam != null" >
+				course_team,
+			</if>
+			<if test="coursePlan != null" >
+				course_plan,
+			</if>
+			<if test="courseOutline != null" >
+				course_outline,
+			</if>
+			<if test="authorDesc != null" >
+				author_desc,
+			</if>
+			<if test="courseType != null" >
+				course_type,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="courseId != null" >
+				#{courseId,jdbcType=CHAR},
+			</if>
+			<if test="courseName != null" >
+				#{courseName,jdbcType=CHAR},
+			</if>
+			<if test="courseAuthor != null" >
+				#{courseAuthor,jdbcType=CHAR},
+			</if>
+			<if test="courseAuthorDetail != null" >
+				#{courseAuthorDetail,jdbcType=CHAR},
+			</if>
+			<if test="courseCoverUrl != null" >
+				#{courseCoverUrl,jdbcType=CHAR},
+			</if>
+			<if test="courseCreateTime != null" >
+				#{courseCreateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="courseUploadTime != null" >
+				#{courseUploadTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="courseUploader != null" >
+				#{courseUploader,jdbcType=CHAR},
+			</if>
+			<if test="courseTaskId != null" >
+				#{courseTaskId,jdbcType=VARCHAR},
+			</if>
+			<if test="courceExamId != null" >
+				#{courceExamId,jdbcType=VARCHAR},
+			</if>
+			<if test="courseDesc != null" >
+				#{courseDesc,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="courseTeam != null" >
+				#{courseTeam,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="coursePlan != null" >
+				#{coursePlan,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="courseOutline != null" >
+				#{courseOutline,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="authorDesc != null" >
+				#{authorDesc,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="courseType != null" >
+				#{courseType,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2015-06-08 15:47:16. -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.cy.model.Course" >
+		update t_course
+		<set >
+			<if test="courseName != null" >
+				course_name = #{courseName,jdbcType=CHAR},
+			</if>
+			<if test="courseAuthor != null" >
+				course_author = #{courseAuthor,jdbcType=INTEGER},
+			</if>
+			<if test="courseCoverUrl != null" >
+				course_cover_url = #{courseCoverUrl,jdbcType=CHAR},
+			</if>
+			<if test="courseCreateTime != null" >
+				course_create_time = #{courseCreateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="courseUploadTime != null" >
+				course_upload_time = #{courseUploadTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="courseUploader != null" >
+				course_uploader = #{courseUploader,jdbcType=CHAR},
+			</if>
+			<if test="courseTaskId != null" >
+				course_task_id = #{courseTaskId,jdbcType=VARCHAR},
+			</if>
+			<if test="courceExamId != null" >
+				course_exam_id = #{courceExamId,jdbcType=VARCHAR},
+			</if>
+			<if test="courseDesc != null" >
+				course_desc = #{courseDesc,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="courseTeam != null" >
+				course_team = #{courseTeam,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="coursePlan != null" >
+				course_plan = #{coursePlan,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="courseOutline != null" >
+				course_outline = #{courseOutline,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="authorDesc != null" >
+				author_desc = #{authorDesc,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where course_id = #{courseId,jdbcType=INTEGER}
+	</update>
+
+	<!--  2015-06-08 15:47:16. -->
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.cy.model.Course" >
+		update t_course
+		set course_name = #{courseName,jdbcType=CHAR},
+			course_author = #{courseAuthor,jdbcType=INTEGER},
+			course_cover_url = #{courseCoverUrl,jdbcType=CHAR},
+			course_create_time = #{courseCreateTime,jdbcType=TIMESTAMP},
+			course_upload_time = #{courseUploadTime,jdbcType=TIMESTAMP},
+			course_uploader = #{courseUploader,jdbcType=CHAR},
+			course_task_id = #{courseTaskId,jdbcType=VARCHAR},
+			course_exam_id = #{courceExamId,jdbcType=VARCHAR},
+			course_desc = #{courseDesc,jdbcType=LONGVARCHAR},
+			course_team = #{courseTeam,jdbcType=LONGVARCHAR},
+			course_plan = #{coursePlan,jdbcType=LONGVARCHAR},
+			course_outline = #{courseOutline,jdbcType=LONGVARCHAR},
+			author_desc = #{authorDesc,jdbcType=LONGVARCHAR}
+		where course_id = #{courseId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2015-06-08 15:47:16. -->
+	<update id="updateByPrimaryKey" parameterType="com.cy.model.Course" >
+		update t_course
+		set course_name = #{courseName,jdbcType=CHAR},
+			course_author = #{courseAuthor,jdbcType=INTEGER},
+			course_cover_url = #{courseCoverUrl,jdbcType=CHAR},
+			course_create_time = #{courseCreateTime,jdbcType=TIMESTAMP},
+			course_upload_time = #{courseUploadTime,jdbcType=TIMESTAMP},
+			course_uploader = #{courseUploader,jdbcType=CHAR},
+			course_task_id = #{courseTaskId,jdbcType=VARCHAR},
+			course_exam_id = #{courceExamId,jdbcType=VARCHAR}
+		where course_id = #{courseId,jdbcType=INTEGER}
+	</update>
+	
+	<select id="findmyIncourse" resultMap="BaseResultMap" parameterType="Map" >
+		select c.*,t.class_id as classId from t_my_course t left join  t_course c on t.course_id = c.course_id inner join t_course_class cc on t.class_id = cc.class_id where t.user_id = #{userId}  
+		and cc.course_start = '1'
+		<if test="type != null" >
+		and t.course_type = #{type}
+		</if>
+	</select>
+	
+	<select id="countcourseById" resultType="Integer" parameterType="String" >
+		select count(*) from t_my_course tmc inner join t_user tu on tmc.user_id=tu.user_id where 
+		tmc.course_id = #{courseId} and tu.user_type = '0'
+	</select>
+	
+	<select id="countcourseByCondition" resultType="Integer" parameterType="Map" >
+		select count(*) from t_my_course tmc inner join t_user tu on tmc.user_id = tu.user_id where 
+		tmc.course_id = #{courseId} and tmc.course_type = '0' and class_id = #{classId} and tu.user_type ='0'
+	</select>
+	
+	<!-- 行事历学习课程查询 -->
+	<select id="findByxsl" resultMap="BaseResultMap" parameterType="java.util.Date" >
+		select 
+		<include refid="Base_Column_List" />
+		from t_course
+		where study_end_time = #{studyendtime,jdbcType=TIMESTAMP}
+	</select>
+	
+	<insert id="insertCourseChapters" parameterType="com.cy.model.CourseChapter" >
+		insert into t_course_chapter (chapter_id,chapter_name,chapter_desc,chapter_video_file,course_id,creat_time,creator,update_time,updator,`index`,chapter_index,outline,plan,plantotal,status)
+			values
+		<foreach collection="list" item="item" index="index" separator="," >
+				(#{item.chapterId},#{item.chapterName},#{item.chapterDesc},#{item.chapterVideoFile},#{item.courseId},#{item.creatTime},#{item.creator},#{item.updateTime},#{item.updator},#{item.index},#{item.chapterIndex},#{item.outline},#{item.plan},#{item.plantotal},#{item.status})
+		</foreach>
+	</insert>
+	
+	<insert id="insertCourseResource" parameterType="com.cy.model.CourseResource" >
+		insert into t_course_resource (course_id,resource_id)
+			values
+		<foreach collection="list" item="item" index="index" separator="," >
+				(#{item.courseId},#{item.resourceId})
+		</foreach>
+	</insert>
+	
+	<select id="findCourseType" resultType="com.cy.model.Course" parameterType="String" >
+		select type_name as courseTypeName,id as courseType from t_course_type where type_name = #{typename}
+	</select>
+	
+	<select id="findAllCourses" resultType="com.cy.model.Course">
+		 select
+		 c.course_id as courseId,
+		 c.course_author as courseAuthor,
+		 c.course_cover_url as courseCoverUrl,
+		 c.course_name as courseName,
+		 t.id as courseType,
+		 t.type_name as courseTypeName,
+		 c.course_create_time as courseCreateTime
+		 from t_course c join t_course_type t on c.course_type = t.id order by courseType
+	</select>
+	
+	<select id="findCourseByType" resultType="com.cy.model.Course" parameterType="String">
+		select c.course_id as courseId,c.course_author as courseAuthor,c.course_cover_url as courseCoverUrl,c.course_name as courseName,c.course_desc as courseDesc,COUNT(*) as num
+		from t_course c left join t_my_course t on c.course_id = t.course_id  where c.course_type = #{type} GROUP BY courseId limit 6
+	</select>
+	
+	<select id="findCourseByName" resultType="com.cy.model.Course" parameterType="String" >
+		select course_id as courseId from t_course where course_name = #{courseName} limit 1
+	</select>
+	
+	<select id="findCourseTypeById" resultType="com.cy.model.Course" parameterType="String" >
+		select type_name as courseTypeName,id as courseType from t_course_type where id = #{typeId}
+	</select>
+	
+	<select id="findMyNotes" resultType="com.cy.model.CourseNote" parameterType="Map" >
+		select note_id as noteId,note_title noteTitle,note_content as noteContent,course_id as courseId,
+		chapter_id as chapterId,create_time as noteTime ,creator from t_my_course_note
+		where creator = #{userId} and course_id = #{courseId} order by create_time
+	</select>
+	
+	<select id="searchCourse" resultType="com.cy.model.Course" parameterType="String">
+		select 
+		c.course_id as courseId,
+		c.course_author as courseAuthor,
+		c.course_cover_url as courseCoverUrl,
+		c.course_name as courseName,
+		c.course_desc as courseDesc
+		from t_course c where c.course_name like CONCAT('%',#{searchname},'%' ) or c.course_desc like CONCAT('%',#{searchname},'%' ) or c.course_author like CONCAT('%',#{searchname},'%' )
+	</select>
+	
+	<insert id="insertVideoHistory" parameterType="com.cy.model.Video" >
+		insert into t_video (id,chapter_id,video_id,start_time,end_time,view_time,user_id,course_id,class_id)
+			values
+				(#{id},#{chapterId},#{videoId},#{startTime},#{endTime},#{viewTime},#{userId},#{courseId},#{classId})
+	</insert>
+	
+	<select id="findLatestVideoHistory" resultType="com.cy.model.Video" parameterType="com.cy.model.Video">
+		select id,chapter_id as chapterId,video_id as videoId,start_time as startTime,end_time as endTime,view_time as viewTime,user_id as userId,course_id as courseId
+		from t_video where user_id= #{userId} and course_id=#{courseId} order by end_time desc limit 1
+	</select>
+	
+	<insert id="addnote" parameterType="com.cy.model.CourseNote" >
+		insert into t_my_course_note (note_id,note_content,course_id,chapter_id,create_time,creator)
+			values
+		(#{noteId},#{noteContent},#{courseId},#{chapterId},#{noteTime},#{creator})
+	</insert>
+	
+	<insert id="addmycourse" parameterType="com.cy.model.MyCourse" >
+		insert into t_my_course (id,user_id,course_id,course_name,class_id,course_type)
+			values
+		(#{id},#{userId},#{courseId},#{courseName},#{classId},"0")
+	</insert>
+	<!-- 删除该课程负责人的数据 pear-->
+	<delete id="deleteCourseId" parameterType="java.lang.String" >
+    delete from t_my_course  where user_id  in(SELECT user_id from t_user where user_type='1')
+		and  course_id=#{courseId} and class_id=#{classId}
+	</delete>
+	
+	<select id="countcourse" resultType="com.cy.model.CourseCount" parameterType="String">
+		select (select count(*) from t_my_course t inner join t_course_class cc on t.class_id = cc.class_id where user_id = #{userId} and cc.course_start = '1' and t.course_type='0' ) as learncount,
+		(select count(*) from t_my_course where t_my_course.user_id = #{userId} and t_my_course.course_type='1') as collectcount,
+		(select count(*) from t_my_course where t_my_course.user_id = #{userId} and t_my_course.course_type='2') as overcount
+	</select>
+	
+	<select id="countcoursevideos" resultType="Integer" parameterType="String">
+		select count(*) from t_course_chapter where course_id = #{courseId} and chapter_video_file is not null
+	</select>
+	<select id="courseSelect" resultType="Integer" parameterType="String">
+	SELECT count(*)from t_course where course_name=#{courseName}
+	</select>
+
+</mapper>

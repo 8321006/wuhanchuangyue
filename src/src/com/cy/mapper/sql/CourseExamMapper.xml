@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cy.mapper.CourseExamMapper">
+	<!-- 实体类 - 数据库映射 2015-07-08 14:27:56. -->
+	<resultMap id="BaseResultMap" type="CourseExam">
+		<id column="exam_id" property="examId" jdbcType="CHAR" />
+		<result column="course_id" property="courseId" jdbcType="CHAR" />
+		<result column="exam_name" property="examName" jdbcType="CHAR" />
+		<result column="exam_desc" property="examDesc" jdbcType="CHAR" />
+		<result column="exam_file" property="examFile" jdbcType="CHAR" />
+		<result column="exam_complete_time" property="examCompleteTime"
+			jdbcType="INTEGER" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="creator" property="creator" jdbcType="CHAR" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="updator" property="updator" jdbcType="CHAR" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段 2015-07-08 14:27:56. -->
+	<sql id="Base_Column_List">
+		exam_id, course_id, exam_name,
+		exam_desc, exam_file, exam_complete_time, create_time,
+		creator, update_time, updator
+	</sql>
+
+	<!-- 按主键查询 2015-07-08 14:27:56. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from t_course_exam
+		where exam_id = #{examId,jdbcType=CHAR}
+	</select>
+
+	<!-- 按主键删除 2015-07-08 14:27:56. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from t_course_exam
+		where exam_id = #{examId,jdbcType=CHAR}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2015-07-08 14:27:56. -->
+	<insert id="insert" parameterType="com.cy.model.CourseExam">
+		insert into t_course_exam (exam_id, course_id, exam_name,
+		exam_desc, exam_file, exam_complete_time,
+		create_time, creator, update_time,
+		updator)
+		values (#{examId,jdbcType=CHAR}, #{courseId,jdbcType=CHAR},
+		#{examName,jdbcType=CHAR},
+		#{examDesc,jdbcType=CHAR}, #{examFile,jdbcType=CHAR}, #{examCompleteTime,jdbcType=INTEGER},
+		#{createTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=CHAR},
+		#{updateTime,jdbcType=TIMESTAMP},
+		#{updator,jdbcType=CHAR})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2015-07-08 14:27:56. -->
+	<insert id="insertSelective" parameterType="com.cy.model.CourseExam">
+		insert into t_course_exam
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="examId != null">
+				exam_id,
+			</if>
+			<if test="courseId != null">
+				course_id,
+			</if>
+			<if test="examName != null">
+				exam_name,
+			</if>
+			<if test="examDesc != null">
+				exam_desc,
+			</if>
+			<if test="examFile != null">
+				exam_file,
+			</if>
+			<if test="examCompleteTime != null">
+				exam_complete_time,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="creator != null">
+				creator,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="updator != null">
+				updator,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="examId != null">
+				#{examId,jdbcType=CHAR},
+			</if>
+			<if test="courseId != null">
+				#{courseId,jdbcType=CHAR},
+			</if>
+			<if test="examName != null">
+				#{examName,jdbcType=CHAR},
+			</if>
+			<if test="examDesc != null">
+				#{examDesc,jdbcType=CHAR},
+			</if>
+			<if test="examFile != null">
+				#{examFile,jdbcType=CHAR},
+			</if>
+			<if test="examCompleteTime != null">
+				#{examCompleteTime,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creator != null">
+				#{creator,jdbcType=CHAR},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updator != null">
+				#{updator,jdbcType=CHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2015-07-08 14:27:56. -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.cy.model.CourseExam">
+		update t_course_exam
+		<set>
+			<if test="courseId != null">
+				course_id = #{courseId,jdbcType=CHAR},
+			</if>
+			<if test="examName != null">
+				exam_name = #{examName,jdbcType=CHAR},
+			</if>
+			<if test="examDesc != null">
+				exam_desc = #{examDesc,jdbcType=CHAR},
+			</if>
+			<if test="examFile != null">
+				exam_file = #{examFile,jdbcType=CHAR},
+			</if>
+			<if test="examCompleteTime != null">
+				exam_complete_time =
+				#{examCompleteTime,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				create_time =
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creator != null">
+				creator = #{creator,jdbcType=CHAR},
+			</if>
+			<if test="updateTime != null">
+				update_time =
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updator != null">
+				updator = #{updator,jdbcType=CHAR},
+			</if>
+		</set>
+		where exam_id = #{examId,jdbcType=CHAR}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2015-07-08 14:27:56. -->
+	<update id="updateByPrimaryKey" parameterType="com.cy.model.CourseExam">
+		update t_course_exam
+		set course_id = #{courseId,jdbcType=CHAR},
+		exam_name = #{examName,jdbcType=CHAR},
+		exam_desc = #{examDesc,jdbcType=CHAR},
+		exam_file = #{examFile,jdbcType=CHAR},
+		exam_complete_time = #{examCompleteTime,jdbcType=INTEGER},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		creator = #{creator,jdbcType=CHAR},
+		update_time = #{updateTime,jdbcType=TIMESTAMP},
+		updator = #{updator,jdbcType=CHAR}
+		where exam_id = #{examId,jdbcType=CHAR}
+	</update>
+
+	
+
+</mapper>

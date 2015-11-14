@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cy.mapper.CourseCommentAnalysisMapper">
+	<!-- 实体类 - 数据库映射 2015-07-09 14:58:36. -->
+	<resultMap id="BaseResultMap" type="CourseCommentAnalysis">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="course_id" property="courseId" jdbcType="CHAR" />
+		<result column="course_name" property="courseName" jdbcType="CHAR" />
+		<result column="class_id" property="classId" jdbcType="CHAR" />
+		<result column="class_name" property="className" jdbcType="CHAR" />
+		<result column="university_id" property="universityId"
+			jdbcType="CHAR" />
+		<result column="analysis_time" property="analysisTime"
+			jdbcType="TIMESTAMP" />
+		<result column="course_student_count" property="courseStudentCount"
+			jdbcType="INTEGER" />
+		<result column="teacher_id" property="teacherId" jdbcType="CHAR" />
+		<result column="teacher_name" property="teacherName" jdbcType="CHAR" />
+		<result column="post_count" property="postCount" jdbcType="INTEGER" />
+		<result column="replay_count" property="replayCount" jdbcType="INTEGER" />
+		<result column="university_name" property="universityName"
+			jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段 2015-07-09 14:58:36. -->
+	<sql id="Base_Column_List">
+		id, course_id, course_name, class_id,
+		class_name, university_id, analysis_time, course_student_count,
+		teacher_id, teacher_name, post_count, replay_count, university_name
+	</sql>
+
+	<!-- 按主键查询 2015-07-09 14:58:36. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_course_comment_analysis
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<resultMap type="java.util.HashMap" id="countPost">
+		<result column="course_id" property="courseId" />
+		<result column="posts" property="posts" />
+	</resultMap>
+
+	<select id="countCommentPostsByCourse" resultMap="countPost">
+		SELECT course_id,COUNT(1) posts FROM t_course_comment WHERE parent_comment_id IS NULL GROUP BY course_id
+	</select>
+	
+	<resultMap type="java.util.HashMap" id="countReply">
+		<result column="course_id" property="courseId" />
+		<result column="replys" property="replys" />
+	</resultMap>
+
+	<select id="countCommentReplysByCourse" resultMap="countReply">
+		SELECT course_id,COUNT(1) replys FROM t_course_comment WHERE parent_comment_id IS NOT NULL GROUP BY course_id
+	</select>
+
+	<!-- 按主键删除 2015-07-09 14:58:36. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from t_course_comment_analysis
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2015-07-09 14:58:36. -->
+	<insert id="insert" parameterType="com.cy.model.CourseCommentAnalysis">
+		insert into t_course_comment_analysis (id, course_id, course_name,
+		class_id, class_name, university_id,
+		analysis_time, course_student_count, teacher_id,
+		teacher_name, post_count, replay_count,
+		university_name)
+		values (#{id,jdbcType=INTEGER}, #{courseId,jdbcType=CHAR},
+		#{courseName,jdbcType=CHAR},
+		#{classId,jdbcType=CHAR}, #{className,jdbcType=CHAR}, #{universityId,jdbcType=CHAR},
+		#{analysisTime,jdbcType=TIMESTAMP},
+		#{courseStudentCount,jdbcType=INTEGER}, #{teacherId,jdbcType=CHAR},
+		#{teacherName,jdbcType=CHAR}, #{postCount,jdbcType=INTEGER},
+		#{replayCount,jdbcType=INTEGER},
+		#{universityName,jdbcType=VARCHAR})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2015-07-09 14:58:36. -->
+	<insert id="insertSelective" parameterType="com.cy.model.CourseCommentAnalysis">
+		insert into t_course_comment_analysis
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="courseId != null">
+				course_id,
+			</if>
+			<if test="courseName != null">
+				course_name,
+			</if>
+			<if test="classId != null">
+				class_id,
+			</if>
+			<if test="className != null">
+				class_name,
+			</if>
+			<if test="universityId != null">
+				university_id,
+			</if>
+			<if test="analysisTime != null">
+				analysis_time,
+			</if>
+			<if test="courseStudentCount != null">
+				course_student_count,
+			</if>
+			<if test="teacherId != null">
+				teacher_id,
+			</if>
+			<if test="teacherName != null">
+				teacher_name,
+			</if>
+			<if test="postCount != null">
+				post_count,
+			</if>
+			<if test="replayCount != null">
+				replay_count,
+			</if>
+			<if test="universityName != null">
+				university_name,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="courseId != null">
+				#{courseId,jdbcType=CHAR},
+			</if>
+			<if test="courseName != null">
+				#{courseName,jdbcType=CHAR},
+			</if>
+			<if test="classId != null">
+				#{classId,jdbcType=CHAR},
+			</if>
+			<if test="className != null">
+				#{className,jdbcType=CHAR},
+			</if>
+			<if test="universityId != null">
+				#{universityId,jdbcType=CHAR},
+			</if>
+			<if test="analysisTime != null">
+				#{analysisTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="courseStudentCount != null">
+				#{courseStudentCount,jdbcType=INTEGER},
+			</if>
+			<if test="teacherId != null">
+				#{teacherId,jdbcType=CHAR},
+			</if>
+			<if test="teacherName != null">
+				#{teacherName,jdbcType=CHAR},
+			</if>
+			<if test="postCount != null">
+				#{postCount,jdbcType=INTEGER},
+			</if>
+			<if test="replayCount != null">
+				#{replayCount,jdbcType=INTEGER},
+			</if>
+			<if test="universityName != null">
+				#{universityName,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2015-07-09 14:58:36. -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.cy.model.CourseCommentAnalysis">
+		update t_course_comment_analysis
+		<set>
+			<if test="courseId != null">
+				course_id = #{courseId,jdbcType=CHAR},
+			</if>
+			<if test="courseName != null">
+				course_name =
+				#{courseName,jdbcType=CHAR},
+			</if>
+			<if test="classId != null">
+				class_id = #{classId,jdbcType=CHAR},
+			</if>
+			<if test="className != null">
+				class_name =
+				#{className,jdbcType=CHAR},
+			</if>
+			<if test="universityId != null">
+				university_id =
+				#{universityId,jdbcType=CHAR},
+			</if>
+			<if test="analysisTime != null">
+				analysis_time =
+				#{analysisTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="courseStudentCount != null">
+				course_student_count =
+				#{courseStudentCount,jdbcType=INTEGER},
+			</if>
+			<if test="teacherId != null">
+				teacher_id =
+				#{teacherId,jdbcType=CHAR},
+			</if>
+			<if test="teacherName != null">
+				teacher_name =
+				#{teacherName,jdbcType=CHAR},
+			</if>
+			<if test="postCount != null">
+				post_count =
+				#{postCount,jdbcType=INTEGER},
+			</if>
+			<if test="replayCount != null">
+				replay_count =
+				#{replayCount,jdbcType=INTEGER},
+			</if>
+			<if test="universityName != null">
+				university_name =
+				#{universityName,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2015-07-09 14:58:36. -->
+	<update id="updateByPrimaryKey" parameterType="com.cy.model.CourseCommentAnalysis">
+		update t_course_comment_analysis
+		set course_id =
+		#{courseId,jdbcType=CHAR},
+		course_name = #{courseName,jdbcType=CHAR},
+		class_id = #{classId,jdbcType=CHAR},
+		class_name = #{className,jdbcType=CHAR},
+		university_id = #{universityId,jdbcType=CHAR},
+		analysis_time = #{analysisTime,jdbcType=TIMESTAMP},
+		course_student_count = #{courseStudentCount,jdbcType=INTEGER},
+		teacher_id = #{teacherId,jdbcType=CHAR},
+		teacher_name = #{teacherName,jdbcType=CHAR},
+		post_count = #{postCount,jdbcType=INTEGER},
+		replay_count = #{replayCount,jdbcType=INTEGER},
+		university_name = #{universityName,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+</mapper>

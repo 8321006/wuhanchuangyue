@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cy.mapper.MyCourseQuizMapper">
+	<!-- 实体类 - 数据库映射 2015-07-08 14:27:56. -->
+	<resultMap id="BaseResultMap" type="MyCourseQuiz">
+		<id column="id" property="id" jdbcType="CHAR" />
+		<result column="user_id" property="userId" jdbcType="CHAR" />
+		<result column="user_name" property="userName" jdbcType="VARCHAR" />
+		<result column="course_id" property="courseId" jdbcType="CHAR" />
+		<result column="course_name" property="courseName" jdbcType="VARCHAR" />
+		<result column="teacher_id" property="teacherId" jdbcType="CHAR" />
+		<result column="teacher_name" property="teacherName" jdbcType="VARCHAR" />
+		<result column="quiz_content" property="quizContent" jdbcType="VARCHAR" />
+		<result column="quiz_answer" property="quizAnswer" jdbcType="VARCHAR" />
+		<result column="quiz_time" property="quizTime" jdbcType="TIMESTAMP" />
+		<result column="answer_time" property="answerTime" jdbcType="TIMESTAMP" />
+		<result column="quiz_status" property="quizStatus" jdbcType="INTEGER" />
+		<result column="class_id" property="classId" jdbcType="CHAR" />		
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段 2015-07-08 14:27:56. -->
+	<sql id="Base_Column_List">
+		id, user_id, user_name, course_id,
+		course_name, teacher_id,
+		teacher_name, quiz_content,
+		quiz_answer, quiz_time, answer_time,
+		quiz_status,class_id
+	</sql>
+
+	<resultMap type="java.util.HashMap" id="countQuizs">
+		<result column="course_id" property="courseId" />
+		<result column="quizs" property="quizs" />
+	</resultMap>
+
+	<resultMap type="java.util.HashMap" id="countReplys">
+		<result column="course_id" property="courseId" />
+		<result column="replys" property="replys" />
+	</resultMap>
+
+	<select id="countQuizsByCourse" resultMap="countQuizs">
+		SELECT course_id, COUNT(1) quizs FROM t_my_course_quiz GROUP BY course_id
+	</select>
+
+		<select id="findteacherId" resultType="String">
+		select DISTINCT teacher_id
+		from t_my_course tmc,t_course_class tcc where tcc.class_id = tmc.class_id and tmc.class_id=#{0}
+	</select>
+	
+
+	<select id="countReplysByCourse" resultMap="countReplys">
+		SELECT course_id, COUNT(1) replys FROM t_my_course_quiz WHERE quiz_status = 1 GROUP BY course_id
+	</select>
+
+
+	<!-- 按id查询 2015-07-08 14:27:56. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from t_my_course_quiz
+		where id = #{Id,jdbcType=CHAR}
+	</select>
+
+  <!--查询评论的消息
+  <select id="getquList" resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List" />
+		from t_my_course_quiz
+		where chapter_id = #{chapterId,jdbcType=CHAR} ORDER BY quiz_time DESC				
+	</select>
+-->
+	
+	
+	 <!--查询评论的消息-->
+	<select id="getquList" resultType="java.util.HashMap">
+		select cq.quiz_time quizTime,cq.question_type questionType,tu.real_name realName,cq.quiz_content quizContent
+		from t_my_course_quiz cq,t_user tu
+		WHERE cq.user_id = tu.user_id 
+		and cq.user_id = #{userId,jdbcType=VARCHAR}
+		 and cq.chapter_id = #{chapterId,jdbcType=CHAR}	ORDER BY cq.quiz_time DESC		
+	</select>
+	
+	 <!--查询评论的消息-->
+	<select id="getquwidList" resultType="java.util.HashMap">
+		select cq.quiz_time quizTime,cq.question_type questionType,tu.real_name realName,cq.quiz_content quizContent,
+		date_format(cq.quiz_time,"%Y-%m-%d %H:%i:%s") as quizTimeString
+		from t_my_course_quiz cq,t_user tu
+		WHERE cq.user_id = tu.user_id 
+		 and cq.chapter_id = #{chapterId,jdbcType=CHAR}	ORDER BY cq.quiz_time DESC		
+	</select>
+
+	<!-- 按主键删除 2015-07-08 14:27:56. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		t_my_course_quiz
+		where id = #{id,jdbcType=CHAR}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2015-07-08 14:27:56. -->
+	<insert id="insert" parameterType="com.cy.model.MyCourseQuiz">
+		insert into t_my_course_quiz
+		(id, user_id, user_name,
+		course_id, course_name, teacher_id,
+		teacher_name, quiz_content, quiz_answer,
+		quiz_time, answer_time,
+		quiz_status,chapter_id,question_type,
+		parent_id,university_id,class_id
+		)
+		values (#{id,jdbcType=CHAR}, #{userId,jdbcType=CHAR},
+		#{userName,jdbcType=VARCHAR},
+		#{courseId,jdbcType=CHAR},
+		#{courseName,jdbcType=VARCHAR}, #{teacherId,jdbcType=CHAR},
+		#{teacherName,jdbcType=VARCHAR}, #{quizContent,jdbcType=VARCHAR},
+		#{quizAnswer,jdbcType=VARCHAR},
+		#{quizTime,jdbcType=TIMESTAMP},
+		#{answerTime,jdbcType=TIMESTAMP}, #{quizStatus,jdbcType=INTEGER},
+		#{chapterId,jdbcType=CHAR},#{questionType,jdbcType=INTEGER},
+		#{parentId,jdbcType=CHAR},#{universityId,jdbcType=CHAR},
+		#{classId,jdbcType=CHAR}
+		)
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2015-07-08 14:27:56. -->
+	<insert id="insertSelective" parameterType="com.cy.model.MyCourseQuiz">
+		insert into t_my_course_quiz
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="userName != null">
+				user_name,
+			</if>
+			<if test="courseId != null">
+				course_id,
+			</if>
+			<if test="courseName != null">
+				course_name,
+			</if>
+			<if test="teacherId != null">
+				teacher_id,
+			</if>
+			<if test="teacherName != null">
+				teacher_name,
+			</if>
+			<if test="quizContent != null">
+				quiz_content,
+			</if>
+			<if test="quizAnswer != null">
+				quiz_answer,
+			</if>
+			<if test="quizTime != null">
+				quiz_time,
+			</if>
+			<if test="answerTime != null">
+				answer_time,
+			</if>
+			<if test="quizStatus != null">
+				quiz_status,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=CHAR},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=CHAR},
+			</if>
+			<if test="userName != null">
+				#{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="courseId != null">
+				#{courseId,jdbcType=CHAR},
+			</if>
+			<if test="courseName != null">
+				#{courseName,jdbcType=VARCHAR},
+			</if>
+			<if test="teacherId != null">
+				#{teacherId,jdbcType=CHAR},
+			</if>
+			<if test="teacherName != null">
+				#{teacherName,jdbcType=VARCHAR},
+			</if>
+			<if test="quizContent != null">
+				#{quizContent,jdbcType=VARCHAR},
+			</if>
+			<if test="quizAnswer != null">
+				#{quizAnswer,jdbcType=VARCHAR},
+			</if>
+			<if test="quizTime != null">
+				#{quizTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="answerTime != null">
+				#{answerTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="quizStatus != null">
+				#{quizStatus,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2015-07-08 14:27:56. -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.cy.model.MyCourseQuiz">
+		update t_my_course_quiz
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=CHAR},
+			</if>
+			<if test="userName != null">
+				user_name =
+				#{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="courseId != null">
+				course_id = #{courseId,jdbcType=CHAR},
+			</if>
+			<if test="courseName != null">
+				course_name =
+				#{courseName,jdbcType=VARCHAR},
+			</if>
+			<if test="teacherId != null">
+				teacher_id =
+				#{teacherId,jdbcType=CHAR},
+			</if>
+			<if test="teacherName != null">
+				teacher_name =
+				#{teacherName,jdbcType=VARCHAR},
+			</if>
+			<if test="quizContent != null">
+				quiz_content =
+				#{quizContent,jdbcType=VARCHAR},
+			</if>
+			<if test="quizAnswer != null">
+				quiz_answer =
+				#{quizAnswer,jdbcType=VARCHAR},
+			</if>
+			<if test="quizTime != null">
+				quiz_time =
+				#{quizTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="answerTime != null">
+				answer_time =
+				#{answerTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="quizStatus != null">
+				quiz_status =
+				#{quizStatus,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=CHAR}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2015-07-08 14:27:56. -->
+	<update id="updateByPrimaryKey" parameterType="com.cy.model.MyCourseQuiz">
+		update
+		t_my_course_quiz
+		set user_id = #{userId,jdbcType=CHAR},
+		user_name =
+		#{userName,jdbcType=VARCHAR},
+		course_id = #{courseId,jdbcType=CHAR},
+		course_name = #{courseName,jdbcType=VARCHAR},
+		teacher_id =
+		#{teacherId,jdbcType=CHAR},
+		teacher_name =
+		#{teacherName,jdbcType=VARCHAR},
+		quiz_content =
+		#{quizContent,jdbcType=VARCHAR},
+		quiz_answer =
+		#{quizAnswer,jdbcType=VARCHAR},
+		quiz_time =
+		#{quizTime,jdbcType=TIMESTAMP},
+		answer_time =
+		#{answerTime,jdbcType=TIMESTAMP},
+		quiz_status =
+		#{quizStatus,jdbcType=INTEGER}
+		where id = #{id,jdbcType=CHAR}
+	</update>
+
+	<resultMap id="selectPageResult" extends="BaseResultMap"
+		type="com.cy.model.MyCourseQuiz">
+		<!-- <association property="" column="" javaType=""> <id column="" property="" 
+			jdbcType="" /> <result column="" property="" jdbcType="" /> </association> -->
+	</resultMap>
+
+	<select id="findMyCourseQuiz" resultMap="BaseResultMap" parameterType="Map" >
+		select id,user_id,user_name,course_id,course_name,teacher_id,teacher_name,
+		quiz_content,quiz_answer,quiz_time,answer_time,quiz_status,chapter_id,
+		question_type,parent_id,university_id,class_id,
+		date_format(answer_time,"%Y-%m-%d %H:%i") as answerTimeString
+		from t_my_course_quiz
+		where course_id = #{courseId} and class_id=#{classId} and user_id = #{userId} 
+		order by quiz_time
+	</select>
+	
+	<select id="findMyCourseQuizTeacher" resultMap="BaseResultMap" parameterType="Map" >
+		select id,user_id,user_name,course_id,course_name,teacher_id,teacher_name,
+		quiz_content,quiz_answer,quiz_time,answer_time,quiz_status,chapter_id,
+		question_type,parent_id,university_id,class_id,
+		date_format(answer_time,"%Y-%m-%d %H:%i") as answerTimeString
+		from t_my_course_quiz
+		where course_id = #{courseId} and class_id=#{classId} and teacher_id = #{userId} 
+		order by quiz_time
+	</select>
+
+	<update id="updateAnwser" parameterType="java.lang.String">
+	    update
+		t_my_course_quiz
+		set quiz_answer=#{1},answer_time=#{2}
+		where id = #{0}
+	</update>
+	
+
+	<select id="getquizcount" parameterType="String" resultType="Integer">		
+		select COUNT(*)
+		from t_my_course_quiz
+		WHERE chapter_id = #{chapterId,jdbcType=CHAR}	
+	</select>
+
+
+
+
+</mapper>

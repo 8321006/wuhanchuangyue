@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cy.mapper.TestMapper">
+	<!-- 实体类 - 数据库映射 2015-07-15 09:27:26. -->
+	<resultMap id="BaseResultMap" type="Test">
+		<id column="test_id" property="testId" jdbcType="VARCHAR" />
+		<result column="paper_id" property="paperId" jdbcType="VARCHAR" />
+		<result column="paper_name" property="paperName" jdbcType="VARCHAR" />
+		<result column="class_id" property="classId" jdbcType="VARCHAR" />
+		<result column="school_id" property="universityId" jdbcType="VARCHAR" />
+		<result column="user_id" property="userId" jdbcType="VARCHAR" />
+		<result column="user_answer_cost_time" property="userAnswerCostTime"
+			jdbcType="INTEGER" />
+		<result column="userScore" property="userScore" jdbcType="REAL" />
+		<result column="submit_time" property="submitTime" jdbcType="TIMESTAMP" />
+		<result column="start_answer_time" property="startAnswerTime"
+			jdbcType="TIMESTAMP" />
+		<result column="end_answer_time" property="endAnswerTime"
+			jdbcType="TIMESTAMP" />
+		<result column="mark_status" property="markStatus" jdbcType="INTEGER" />
+		<result column="check_status" property="checkStatus" jdbcType="INTEGER" />
+		<result column="test_times" property="testTimes" jdbcType="INTEGER" />
+		<result column="test_type" property="testType" jdbcType="INTEGER" />
+		<result column="teacher_id" property="teacherId" jdbcType="VARCHAR" />
+		<result column="teacher_name" property="teacherName" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 2015-07-15 09:27:26. -->
+	<resultMap id="ResultMapWithBLOBs" type="com.cy.model.Test"
+		extends="BaseResultMap">
+		<result column="content" property="content" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	
+	
+	<!-- 按主键查询 -->
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from t_test
+		where test_id = #{testId,jdbcType=VARCHAR}
+	</select>
+
+	<!-- 插入 - 全字段保存 2015-06-08 15:47:16. -->
+	<insert id="insertTestRecord" parameterType="com.cy.model.Test" >
+		insert into t_test (test_id,paper_id, class_id, 
+			 school_id,submit_time,
+			user_answer_cost_time, userScore,
+			user_id, mark_status,test_type,content)
+		values (#{testId,jdbcType=VARCHAR},#{paperId,jdbcType=VARCHAR}, #{classId,jdbcType=INTEGER},
+			 #{universityId,jdbcType=INTEGER}, #{submitTime,jdbcType=TIMESTAMP}, 
+			#{userAnswerCostTime,jdbcType=INTEGER}, #{userScore,jdbcType=DOUBLE}, 
+			#{userId,jdbcType=VARCHAR}, 
+			 (SELECT is_subjective FROM t_paper WHERE paper_id = #{paperId,jdbcType=VARCHAR}), 
+			 (SELECT test_type FROM t_paper WHERE paper_id = #{paperId,jdbcType=VARCHAR}), 
+			#{content,jdbcType=LONGVARCHAR})
+	</insert>
+	
+	<!-- 老师查询某班级，某次考试的批阅列表  -->
+	<select id="getMarkingList" resultType="com.cy.model.Marking"
+		parameterType="com.cy.model.Test">
+		SELECT t.test_id as testId,t.paper_id as paperId,t.userScore,t.mark_status as markStatus,
+			 t.test_times as testTimes,t.test_type as testType,t.makeUp_status as makeUpStatus,
+			 mcu.user_id as userId,mcu.real_name as userName
+		FROM 
+		(
+			SELECT mc.user_id,u.real_name FROM t_my_course mc 
+			LEFT JOIN t_user u
+			ON mc.user_id = u.user_id
+			WHERE mc.class_id =#{classId,jdbcType=VARCHAR} AND u.user_type='0'
+		) mcu
+		LEFT JOIN
+		(
+			SELECT * FROM t_test  WHERE paper_id =#{paperId,jdbcType=VARCHAR} AND class_id = #{classId,jdbcType=VARCHAR} 
+		) t 
+		ON mcu.user_id = t.user_id 
+	</select>
+	<select id="exportMarkingList" resultType="com.cy.model.Marking"
+		parameterType="com.cy.model.Test">
+		SELECT t.test_id as testId,t.paper_id as paperId,t.userScore,t.mark_status as markStatus,
+			 t.test_times as testTimes,t.test_type as testType,t.makeUp_status as makeUpStatus,
+			 mcu.user_id as userId,t.mcu.real_name as userName,t.paper_name as paperName,t.class_name as className,t.teacher_id as teacherId,t.teacher_name as teacherName
+		FROM 
+		(
+			SELECT mc.user_id,u.real_name FROM t_my_course mc 
+			LEFT JOIN t_user u
+			ON mc.user_id = u.user_id
+			WHERE mc.class_id =#{classId,jdbcType=VARCHAR} AND u.user_type='0'
+		) mcu
+		LEFT JOIN
+		(
+		  SELECT tt.*,tp.paper_name ,cc.class_name ,cc.teacher_id,cc.teacher_name FROM t_test tt
+	      LEFT JOIN t_paper tp on  tt.paper_id=tp.paper_id
+	      LEFT JOIN t_course_class cc  on tt.class_id=cc.class_id
+	      WHERE tt.paper_id =#{paperId,jdbcType=VARCHAR} AND tt.class_id =#{classId,jdbcType=VARCHAR}
+		) t 
+		ON mcu.user_id = t.user_id 
+		
+		
+		</select>
+	
+	<!-- 查询单个课程的学生对应的试卷、考试列表  -->
+	<select id="getTestList" resultMap="BaseResultMap"
+		parameterType="com.cy.model.Test">
+		SELECT pc.paper_id,pc.test_type,paper_name,test_id,userScore,mark_status,check_status,
+			   date_add(date_format(course_start_time,'%Y-%m-%d'), interval (plantotal-1) day) end_answer_time,
+			   date_add(date_format(course_start_time,'%Y-%m-%d'), interval (plantotal-plan) day) start_answer_time
+		FROM
+			(SELECT 
+			p.paper_id,
+			p.test_type,
+			p.score,
+			p.chapter_id,
+			p.subject_id,
+			p.school_id,
+			p.answer_cost_time,
+			p.creator,
+			p.description,
+			c.`index`,
+			c.plan, c.plantotal,
+			(SELECT date_format(course_start_time,'%Y-%m-%d') FROM t_course_class WHERE class_id = #{classId,jdbcType=VARCHAR}) course_start_time,
+			CONCAT(IFNULL(c.chapter_index,''),c.chapter_name) as paper_name
+			FROM t_paper p LEFT JOIN 
+			t_course_chapter c ON
+			p.chapter_id = c.chapter_id
+			WHERE
+			p.chapter_id IN 
+			(SELECT c.chapter_id FROM t_course_chapter c WHERE c.course_id = #{paperId,jdbcType=VARCHAR})
+			ORDER BY
+			c.`index`) pc 
+		LEFT JOIN 
+			(SELECT test_id,check_status,paper_id,userScore,mark_status FROM t_test WHERE user_id = #{userId,jdbcType=VARCHAR}) t
+		ON t.paper_id = pc.paper_id
+		WHERE
+		(pc.chapter_id != (SELECT chapter_id FROM t_course_paper WHERE class_id = #{classId,jdbcType=VARCHAR}) 
+		or pc.paper_id = (SELECT paper_id FROM t_course_paper WHERE class_id = #{classId,jdbcType=VARCHAR}))
+		ORDER BY pc.`index`
+	</select>
+	
+	<!-- 查询单个课程的老师对应的试卷、考试列表，包含批阅及交卷详情  -->
+	<select id="getTestListForTea" resultType="com.cy.model.TestResult"
+		parameterType="com.cy.model.Test">
+		SELECT pc.paper_id as paperId,paper_name as paperName,IFNULL(test_total,0) as testTotal,IFNULL(mark_total,0) markTotal,IFNULL(test_delay,0) testDelay,
+			(
+				SELECT COUNT(*) FROM t_my_course mc 
+				LEFT JOIN t_user u
+				ON mc.user_id = u.user_id
+				WHERE mc.class_id =#{classId,jdbcType=VARCHAR} AND u.user_type='0'
+			) total ,
+			(SELECT date_format(course_start_time,'%Y-%m-%d') from t_course_class WHERE class_id = #{classId,jdbcType=VARCHAR} ) courseTime,
+			date_add(date_format((SELECT date_format(course_start_time,'%Y-%m-%d') FROM t_course_class WHERE class_id = #{classId,jdbcType=VARCHAR} ),'%Y-%m-%d'), interval (plantotal-plan) day) as startTime,
+			date_add(date_format((SELECT date_format(course_start_time,'%Y-%m-%d') FROM t_course_class WHERE class_id = #{classId,jdbcType=VARCHAR} ),'%Y-%m-%d'), interval (plantotal-1) day) as endTime,
+			plan,plantotal
+		from
+		(SELECT 
+		p.paper_id,p.chapter_id,p.score,p.subject_id,p.school_id,p.answer_cost_time,p.creator,p.description,c.`index`,c.plan,c.plantotal,
+		CONCAT(IFNULL(c.chapter_index,''),c.chapter_name) as paper_name
+		from t_paper p LEFT JOIN 
+		t_course_chapter c ON
+		p.chapter_id = c.chapter_id
+		WHERE
+		p.chapter_id IN 
+		(SELECT c.chapter_id from t_course_chapter c WHERE c.course_id = #{paperId,jdbcType=VARCHAR})
+		ORDER BY
+		c.`index`) pc 
+		LEFT JOIN 
+		(
+			SELECT t.paper_id,test_total,mark_total,test_delay,end_time,start_time from
+				(SELECT COUNT(test_id) test_total ,paper_id from t_test WHERE class_id= #{classId,jdbcType=VARCHAR} GROUP BY paper_id) t
+			LEFT JOIN 
+				(SELECT COUNT(test_id) mark_total,paper_id from t_test  WHERE class_id= #{classId,jdbcType=VARCHAR} AND mark_status = 1 GROUP BY paper_id) m
+			ON t.paper_id = m.paper_id
+			LEFT JOIN
+				(
+					SELECT COUNT(*) test_delay, t.paper_id,end_time,start_time from t_test t 
+					LEFT JOIN 
+						(
+						SELECT * , date_add(date_format(term_start_time,'%Y-%m-%d'), interval plantotal day) end_time,date_add(date_format(term_start_time,'%Y-%m-%d'), interval plan day) start_time from 
+						(SELECT 
+						p.paper_id,c.plan,c.plantotal,(SELECT date_format(course_start_time,'%Y-%m-%d') from t_course_class WHERE class_id = #{classId,jdbcType=VARCHAR}) term_start_time
+						from t_paper p LEFT JOIN 
+						t_course_chapter c ON
+						p.chapter_id = c.chapter_id
+						WHERE
+						p.chapter_id IN 
+						(SELECT c.chapter_id from t_course_chapter c WHERE c.course_id = #{paperId,jdbcType=VARCHAR})) pc
+						) tpc
+					ON t.paper_id = tpc.paper_id
+					WHERE class_id= #{classId,jdbcType=VARCHAR} 
+					AND submit_time > end_time
+					GROUP BY t.paper_id
+				) n
+			ON t.paper_id = n.paper_id
+		) tm
+		ON tm.paper_id = pc.paper_id
+		WHERE
+		(pc.chapter_id != (SELECT chapter_id FROM t_course_paper WHERE class_id = #{classId,jdbcType=VARCHAR}) 
+		or pc.paper_id = (SELECT paper_id FROM t_course_paper WHERE class_id = #{classId,jdbcType=VARCHAR}))
+		ORDER BY
+		pc.`index`
+	</select>
+	
+	<!-- 按用户查询 -->
+	<select id="getScoreByCourseAndUser" resultType="com.cy.model.CourseScoreResult"
+		parameterType="map">
+		SELECT
+		(
+		SELECT count(*)*100/(SELECT count(*) FROM t_course_chapter WHERE course_id = #{courseId} AND chapter_video_file IS NOT NULL) 
+		FROM
+			(
+			SELECT chapter_id FROM t_video WHERE class_id = #{classId} and user_id = #{userId}
+			GROUP BY chapter_id
+			) mv
+		) videoScore,
+		(
+		SELECT IFNULL(SUM(mt.userScore)*100/SUM(p.score),0) radio
+		FROM t_course_chapter cc 
+		LEFT JOIN t_paper p
+		ON p.chapter_id = cc.chapter_id
+		LEFT JOIN 
+		(SELECT * FROM t_test WHERE class_id = #{classId} AND user_id = #{userId}) mt
+		ON mt.paper_id = p.paper_id
+		WHERE cc.course_id = #{courseId}
+		AND p.paper_id IS NOT NULL
+		AND p.test_type = 0
+		) homeworkScore,
+		(
+		SELECT IFNULL(SUM(mt.userScore)*100/SUM(p.score),0) radio
+		FROM t_course_chapter cc 
+		LEFT JOIN t_paper p
+		ON p.chapter_id = cc.chapter_id
+		LEFT JOIN 
+		(SELECT * FROM t_test WHERE class_id = #{classId} AND user_id = #{userId}) mt
+		ON mt.paper_id = p.paper_id
+		WHERE cc.course_id = #{courseId} 
+		AND p.paper_id IS NOT NULL
+		AND p.test_type = 1
+		) paperScore
+		,video_ratio as videoRatio,work_ratio as workRatio,exam_ratio as examRatio
+		FROM t_university_course WHERE university_id = #{universityId} AND course_id = #{courseId}
+	</select>
+	
+	<!-- 按用户查询 -->
+	<select id="queryTestRecordByUserIdandPaperId" resultMap="BaseResultMap"
+		parameterType="map">
+		select 
+		test_id,
+		test_type,
+		check_status
+		from t_test 
+		where user_id = #{userId}
+		and class_id = #{classId}
+		<if test="paperId != null">
+			and paper_id = #{paperId}
+		</if>
+	</select>
+
+	<!-- 用于 SELECT 语句的所有字段 2015-07-15 09:27:26. -->
+	<sql id="Base_Column_List">
+		test_id, paper_id, class_id, 
+		school_id, user_id, user_answer_cost_time,
+		userScore, submit_time, start_answer_time, end_answer_time, mark_status,
+		test_times
+	</sql>
+
+	<!-- 2015-07-15 09:27:26. -->
+	<sql id="Blob_Column_List">
+		content
+	</sql>
+
+	<!-- 按主键删除 2015-07-15 09:27:26. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from t_test
+		where test_id = #{testId,jdbcType=VARCHAR}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2015-07-15 09:27:26. -->
+	<insert id="insert" parameterType="com.cy.model.Test">
+		insert
+		into t_test (test_id, paper_id, class_id,
+		school_id, user_id,
+		user_answer_cost_time, userScore, submit_time,
+		start_answer_time, end_answer_time, mark_status,
+		test_times, content)
+		values (#{testId,jdbcType=VARCHAR},
+		#{paperId,jdbcType=VARCHAR}, #{classId,jdbcType=INTEGER},
+		#{universityId,jdbcType=INTEGER},
+		#{userId,jdbcType=VARCHAR},
+		#{userAnswerCostTime,jdbcType=INTEGER}, #{userscore,jdbcType=REAL}, #{submitTime,jdbcType=TIMESTAMP},
+		#{startAnswerTime,jdbcType=TIMESTAMP},
+		#{endAnswerTime,jdbcType=TIMESTAMP}, #{markStatus,jdbcType=INTEGER},
+		#{testTimes,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2015-07-15 09:27:26. -->
+	<insert id="insertSelective" parameterType="com.cy.model.Test">
+		insert into t_test
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="testId != null">
+				test_id,
+			</if>
+			<if test="paperId != null">
+				paper_id,
+			</if>
+			<if test="classId != null">
+				class_id,
+			</if>
+			<if test="universityId != null">
+				school_id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="userAnswerCostTime != null">
+				user_answer_cost_time,
+			</if>
+			<if test="userscore != null">
+				userScore,
+			</if>
+			<if test="submitTime != null">
+				submit_time,
+			</if>
+			<if test="startAnswerTime != null">
+				start_answer_time,
+			</if>
+			<if test="endAnswerTime != null">
+				end_answer_time,
+			</if>
+			<if test="markStatus != null">
+				mark_status,
+			</if>
+			<if test="testTimes != null">
+				test_times,
+			</if>
+			<if test="content != null">
+				content,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="testId != null">
+				#{testId,jdbcType=VARCHAR},
+			</if>
+			<if test="paperId != null">
+				#{paperId,jdbcType=VARCHAR},
+			</if>
+			<if test="classId != null">
+				#{classId,jdbcType=INTEGER},
+			</if>
+			<if test="universityId != null">
+				#{universityId,jdbcType=INTEGER},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="userAnswerCostTime != null">
+				#{userAnswerCostTime,jdbcType=INTEGER},
+			</if>
+			<if test="userscore != null">
+				#{userscore,jdbcType=REAL},
+			</if>
+			<if test="submitTime != null">
+				#{submitTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="startAnswerTime != null">
+				#{startAnswerTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="endAnswerTime != null">
+				#{endAnswerTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="markStatus != null">
+				#{markStatus,jdbcType=INTEGER},
+			</if>
+			<if test="testTimes != null">
+				#{testTimes,jdbcType=INTEGER},
+			</if>
+			<if test="content != null">
+				#{content,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2015-07-15 09:27:26. -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.cy.model.Test">
+		update t_test
+		<set>
+			<if test="paperId != null">
+				paper_id = #{paperId,jdbcType=VARCHAR},
+			</if>
+			<if test="classId != null">
+				class_id = #{classId,jdbcType=INTEGER},
+			</if>
+			<if test="universityId != null">
+				school_id =
+				#{universityId,jdbcType=INTEGER},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="userAnswerCostTime != null">
+				user_answer_cost_time =
+				#{userAnswerCostTime,jdbcType=INTEGER},
+			</if>
+			<if test="userScore != null">
+				userScore =
+				#{userScore,jdbcType=REAL},
+			</if>
+			<if test="submitTime != null">
+				submit_time =
+				#{submitTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="startAnswerTime != null">
+				start_answer_time =
+				#{startAnswerTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="endAnswerTime != null">
+				end_answer_time =
+				#{endAnswerTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="markStatus != null">
+				mark_status =
+				#{markStatus,jdbcType=INTEGER},
+			</if>
+			<if test="checkStatus != null">
+				check_status =
+				#{checkStatus,jdbcType=INTEGER},
+			</if>
+			<if test="testTimes != null">
+				test_times =
+				#{testTimes,jdbcType=INTEGER},
+			</if>
+			<if test="content != null">
+				content =
+				#{content,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where test_id = #{testId,jdbcType=VARCHAR}
+	</update>
+
+	<!-- 2015-07-15 09:27:26. -->
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.cy.model.Test">
+		update t_test
+		set paper_id = #{paperId,jdbcType=VARCHAR},
+		class_id = #{classId,jdbcType=INTEGER},
+		school_id = #{universityId,jdbcType=INTEGER},
+		user_id = #{userId,jdbcType=VARCHAR},
+		user_answer_cost_time = #{userAnswerCostTime,jdbcType=INTEGER},
+		userScore = #{userscore,jdbcType=REAL},
+		submit_time = #{submitTime,jdbcType=TIMESTAMP},
+		start_answer_time = #{startAnswerTime,jdbcType=TIMESTAMP},
+		end_answer_time = #{endAnswerTime,jdbcType=TIMESTAMP},
+		mark_status = #{markStatus,jdbcType=INTEGER},
+		test_times = #{testTimes,jdbcType=INTEGER},
+		content = #{content,jdbcType=LONGVARCHAR}
+		where test_id =
+		#{testId,jdbcType=VARCHAR}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2015-07-15 09:27:26. -->
+	<update id="updateByPrimaryKey" parameterType="com.cy.model.Test">
+		update t_test
+		set paper_id = #{paperId,jdbcType=VARCHAR},
+		class_id = #{classId,jdbcType=INTEGER},
+		school_id = #{universityId,jdbcType=INTEGER},
+		user_id = #{userId,jdbcType=VARCHAR},
+		user_answer_cost_time = #{userAnswerCostTime,jdbcType=INTEGER},
+		userScore = #{userscore,jdbcType=REAL},
+		submit_time = #{submitTime,jdbcType=TIMESTAMP},
+		start_answer_time = #{startAnswerTime,jdbcType=TIMESTAMP},
+		end_answer_time = #{endAnswerTime,jdbcType=TIMESTAMP},
+		mark_status = #{markStatus,jdbcType=INTEGER},
+		test_times = #{testTimes,jdbcType=INTEGER}
+		where test_id =
+		#{testId,jdbcType=VARCHAR}
+	</update>
+
+	<resultMap id="selectPageResult" extends="BaseResultMap"
+		type="com.cy.model.Test">
+		<!-- <association property="" column="" javaType=""> <id column="" property="" 
+			jdbcType="" /> <result column="" property="" jdbcType="" /> </association> -->
+	</resultMap>
+	<!-- 统计该调查问卷的星级 -->
+	<select id="selectcountBypaperId" resultType="int" parameterType="com.cy.model.Test">
+		SELECT sum(userScore)as userWriteTotal from t_test  where  paper_id=#{paperId}
+	</select>
+<!-- 	<sql id="select_by_page_outter_where_sql">
+		<if test="oredCriteria.size>0">
+			<if test="_parameter != null">
+				<include refid="Example_Where_Clause" />
+			</if>
+			and
+		</if>
+		<if test="oredCriteria.size==0"> where   </if>
+	</sql>
+
+	<sql id="select_by_page_inner_where_and_orderby_sql">
+		<if test="oredCriteria.size>0">
+			<if test="_parameter != null">
+				<include refid="Example_Where_Clause" />
+			</if>
+		</if>
+		<if test="orderByClause != null"> order by ${orderByClause}   </if>
+	</sql>
+
+	<sql id="select_by_page_outter_orderby_sql">
+		<if test="orderByClause != null"> order by ${orderByClause}   </if>
+	</sql>
+
+	<select id="selectPage" resultMap="selectPageResult"
+		parameterType="com.cy.model.Test">
+		select a.* from t_test a where a.test_id in
+		(select top ${pageSize} test_id from t_test
+		<include refid="select_by_page_outter_where_sql" />
+		test_id not in (select top ${skipRecordCount} test_id from t_test
+		<include refid="select_by_page_inner_where_and_orderby_sql" />
+		)
+		<include refid="select_by_page_outter_orderby_sql" />
+		)
+	</select>
+
+	按 Criteria 条件查询记录数 2015-07-15 09:27:26.
+	<select id="selectCountByCriteria" resultType="long"
+		parameterType="com.cy.model.Test">
+		select count(1)
+		from t_test
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select> -->
+</mapper>

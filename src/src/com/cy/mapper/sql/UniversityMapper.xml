@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cy.mapper.UniversityMapper">
+
+	<!-- 实体类 - 数据库映射 2015-08-04 14:17:10. -->
+	<resultMap id="BaseResultMap" type="University">
+		<id column="university_id" property="universityId" jdbcType="CHAR" />
+		<result column="university_name" property="universityName"
+			jdbcType="CHAR" />
+		<result column="university_logo" property="universityLogo"
+			jdbcType="VARCHAR" />
+		<result column="classify" property="classify" jdbcType="VARCHAR" />
+		<result column="website" property="website" jdbcType="VARCHAR" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="fax" property="fax" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="introduction" property="introduction" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段 2015-08-04 14:17:10. -->
+	<sql id="Base_Column_List">
+		university_id, university_name,
+		university_logo, classify,
+		website, phone, fax, email,
+		address, introduction
+	</sql>
+
+	<select id="selectAll" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM t_university ORDER BY university_name DESC
+	</select>
+
+	<!-- 按主键查询 2015-08-04 14:17:10. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from t_university
+		where university_id = #{universityId,jdbcType=CHAR}
+	</select>
+
+	<!-- 按主键删除 2015-08-04 14:17:10. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		t_university
+		where university_id =
+		#{universityId,jdbcType=CHAR}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2015-08-04 14:17:10. -->
+	<insert id="insert" parameterType="com.cy.model.University">
+		insert into t_university
+		(university_id, university_name,
+		university_logo,
+		classify, website,
+		phone,
+		fax, email, address,
+		introduction)
+		values
+		(#{universityId,jdbcType=CHAR},
+		#{universityName,jdbcType=CHAR},
+		#{universityLogo,jdbcType=VARCHAR},
+		#{classify,jdbcType=VARCHAR},
+		#{website,jdbcType=VARCHAR},
+		#{phone,jdbcType=VARCHAR},
+		#{fax,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+		#{address,jdbcType=VARCHAR},
+		#{introduction,jdbcType=VARCHAR})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2015-08-04 14:17:10. -->
+	<insert id="insertSelective" parameterType="com.cy.model.University">
+		insert into t_university
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="universityId != null">
+				university_id,
+			</if>
+			<if test="universityName != null">
+				university_name,
+			</if>
+			<if test="universityLogo != null">
+				university_logo,
+			</if>
+			<if test="classify != null">
+				classify,
+			</if>
+			<if test="website != null">
+				website,
+			</if>
+			<if test="phone != null">
+				phone,
+			</if>
+			<if test="fax != null">
+				fax,
+			</if>
+			<if test="email != null">
+				email,
+			</if>
+			<if test="address != null">
+				address,
+			</if>
+			<if test="introduction != null">
+				introduction,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="universityId != null">
+				#{universityId,jdbcType=CHAR},
+			</if>
+			<if test="universityName != null">
+				#{universityName,jdbcType=CHAR},
+			</if>
+			<if test="universityLogo != null">
+				#{universityLogo,jdbcType=VARCHAR},
+			</if>
+			<if test="classify != null">
+				#{classify,jdbcType=VARCHAR},
+			</if>
+			<if test="website != null">
+				#{website,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				#{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="fax != null">
+				#{fax,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="introduction != null">
+				#{introduction,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2015-08-04 14:17:10. -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.cy.model.University">
+		update t_university
+		<set>
+			<if test="universityName != null">
+				university_name =
+				#{universityName,jdbcType=CHAR},
+			</if>
+			<if test="universityLogo != null">
+				university_logo =
+				#{universityLogo,jdbcType=VARCHAR},
+			</if>
+			<if test="classify != null">
+				classify =
+				#{classify,jdbcType=VARCHAR},
+			</if>
+			<if test="website != null">
+				website = #{website,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				phone = #{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="fax != null">
+				fax = #{fax,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				email = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				address = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="introduction != null">
+				introduction =
+				#{introduction,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where university_id = #{universityId,jdbcType=CHAR}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2015-08-04 14:17:10. -->
+	<update id="updateByPrimaryKey" parameterType="com.cy.model.University">
+		update
+		t_university
+		set university_name =
+		#{universityName,jdbcType=CHAR},
+		university_logo = #{universityLogo,jdbcType=VARCHAR},
+		classify =
+		#{classify,jdbcType=VARCHAR},
+		website = #{website,jdbcType=VARCHAR},
+		phone = #{phone,jdbcType=VARCHAR},
+		fax = #{fax,jdbcType=VARCHAR},
+		email
+		= #{email,jdbcType=VARCHAR},
+		address = #{address,jdbcType=VARCHAR},
+		introduction = #{introduction,jdbcType=VARCHAR}
+		where university_id =
+		#{universityId,jdbcType=CHAR}
+	</update>
+
+
+
+	<select id="findByUniversityName" resultType="com.cy.model.UniversityCourse"
+		parameterType="String">
+		select university_id as universityId from
+		t_university
+		where university_Name = #{universityName}
+	</select>
+
+
+</mapper>

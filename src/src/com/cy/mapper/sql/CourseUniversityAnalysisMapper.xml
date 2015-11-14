@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cy.mapper.CourseUniversityAnalysisMapper">
+	<!-- 实体类 - 数据库映射 2015-08-24 14:06:12. -->
+	<resultMap id="BaseResultMap" type="CourseUniversityAnalysis">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="university_id" property="universityId" jdbcType="CHAR" />
+		<result column="course_term" property="courseTerm" jdbcType="VARCHAR" />
+		<result column="course_id" property="courseId" jdbcType="CHAR" />
+		<result column="class_id" property="classId" jdbcType="CHAR" />
+		<result column="import_count" property="importCount" jdbcType="INTEGER" />
+		<result column="finish_count" property="finishCount" jdbcType="INTEGER" />
+		<result column="pass_count" property="passCount" jdbcType="INTEGER" />
+		<result column="fail_count" property="failCount" jdbcType="INTEGER" />
+		<result column="score_six" property="scoreSix" jdbcType="INTEGER" />
+		<result column="score_eight" property="scoreEight" jdbcType="INTEGER" />
+		<result column="score_ten" property="scoreTen" jdbcType="INTEGER" />
+		<result column="course_state" property="courseState" jdbcType="INTEGER" />
+		<result column="course_name" property="courseName" jdbcType="VARCHAR" />
+		<result column="teacher_id" property="teacherId" jdbcType="CHAR" />
+		<result column="teacher_name" property="teacherName" jdbcType="VARCHAR" />
+		<result column="class_name" property="className" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段 2015-08-24 14:06:12. -->
+	<sql id="Base_Column_List">
+		id, university_id, course_term,
+		course_id, class_id,
+		import_count, finish_count,
+		pass_count, fail_count, score_six,
+		score_eight, score_ten, course_state,
+		course_name,teacher_id,
+		teacher_name, class_name
+	</sql>
+
+	<select id="getAllByTerm" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM t_course_university_analysis WHERE course_term = #{courseTerm}
+	</select>
+
+	<select id="getTerms" resultType="java.lang.String">
+		SELECT DISTINCT course_term
+		FROM t_university_course
+	</select>
+
+	<select id="getAllUniversity" resultType="java.lang.String">
+		SELECT DISTINCT
+		university_id FROM t_university_course
+	</select>
+	<select id="getOneByClass" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM t_course_university_analysis WHERE class_id = #{classId} AND
+		university_id = #{universityId} and course_term = #{courseTerm}
+	</select>
+
+	<select id="getTotalStuByGroup" resultType="java.util.HashMap">
+		SELECT course_id
+		courseId,course_name courseName,SUM(import_count) counts
+		FROM
+		t_course_university_analysis WHERE university_id = 1 GROUP BY
+		course_id,course_name
+	</select>
+
+	<select id="getAllTerm" resultType="java.lang.String">
+		SELECT DISTINCT course_term
+		FROM t_university_course WHERE university_id =
+		#{universityId}
+	</select>
+
+	<select id="getAnalysisByTerm" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM t_course_university_analysis WHERE university_id =
+		#{universityId}
+		<if test="courseTerm != null and courseTerm != ''">
+			AND course_term = #{courseTerm}
+		</if>
+	</select>
+
+	<select id="getAllGroup" resultMap="BaseResultMap">
+		SELECT
+		uc.course_id,tc.course_name,cc.teacher_id,cc.teacher_name,uc.university_id,uc.course_term,cc.class_id,cc.class_name,uc.course_state
+		FROM
+		t_university_course uc , t_course_class cc ,t_course tc WHERE uc.id =
+		cc.university_course_id and uc.course_id = tc.course_id
+		<if test="universityId != null and universityId != ''">
+			AND uc.university_id = #{universityId}
+		</if>
+	</select>
+
+	<!-- 按主键查询 2015-08-24 14:06:12. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_course_university_analysis
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<!-- 按主键删除 2015-08-24 14:06:12. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		t_course_university_analysis
+		where id =
+		#{id,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2015-08-24 14:06:12. -->
+	<insert id="insert" parameterType="com.cy.model.CourseUniversityAnalysis">
+		insert into
+		t_course_university_analysis (id, university_id,
+		course_term,
+		course_id, class_id, import_count,
+		finish_count, pass_count,
+		fail_count,
+		score_six, score_eight, score_ten,
+		course_state,
+		course_name, teacher_id,
+		teacher_name, class_name)
+		values
+		(#{id,jdbcType=INTEGER},
+		#{universityId,jdbcType=CHAR},
+		#{courseTerm,jdbcType=VARCHAR},
+		#{courseId,jdbcType=CHAR},
+		#{classId,jdbcType=CHAR},
+		#{importCount,jdbcType=INTEGER},
+		#{finishCount,jdbcType=INTEGER}, #{passCount,jdbcType=INTEGER},
+		#{failCount,jdbcType=INTEGER},
+		#{scoreSix,jdbcType=INTEGER},
+		#{scoreEight,jdbcType=INTEGER},
+		#{scoreTen,jdbcType=INTEGER},
+		#{courseState,jdbcType=INTEGER}, #{courseName,jdbcType=VARCHAR},
+		#{teacherId,jdbcType=CHAR},
+		#{teacherName,jdbcType=VARCHAR},
+		#{className,jdbcType=VARCHAR})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2015-08-24 14:06:12. -->
+	<insert id="insertSelective" parameterType="com.cy.model.CourseUniversityAnalysis">
+		insert into t_course_university_analysis
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="universityId != null">
+				university_id,
+			</if>
+			<if test="courseTerm != null">
+				course_term,
+			</if>
+			<if test="courseId != null">
+				course_id,
+			</if>
+			<if test="classId != null">
+				class_id,
+			</if>
+			<if test="importCount != null">
+				import_count,
+			</if>
+			<if test="finishCount != null">
+				finish_count,
+			</if>
+			<if test="passCount != null">
+				pass_count,
+			</if>
+			<if test="failCount != null">
+				fail_count,
+			</if>
+			<if test="scoreSix != null">
+				score_six,
+			</if>
+			<if test="scoreEight != null">
+				score_eight,
+			</if>
+			<if test="scoreTen != null">
+				score_ten,
+			</if>
+			<if test="courseState != null">
+				course_state,
+			</if>
+			<if test="courseName != null">
+				course_name,
+			</if>
+			<if test="teacherId != null">
+				teacher_id,
+			</if>
+			<if test="teacherName != null">
+				teacher_name,
+			</if>
+			<if test="className != null">
+				class_name,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="universityId != null">
+				#{universityId,jdbcType=CHAR},
+			</if>
+			<if test="courseTerm != null">
+				#{courseTerm,jdbcType=VARCHAR},
+			</if>
+			<if test="courseId != null">
+				#{courseId,jdbcType=CHAR},
+			</if>
+			<if test="classId != null">
+				#{classId,jdbcType=CHAR},
+			</if>
+			<if test="importCount != null">
+				#{importCount,jdbcType=INTEGER},
+			</if>
+			<if test="finishCount != null">
+				#{finishCount,jdbcType=INTEGER},
+			</if>
+			<if test="passCount != null">
+				#{passCount,jdbcType=INTEGER},
+			</if>
+			<if test="failCount != null">
+				#{failCount,jdbcType=INTEGER},
+			</if>
+			<if test="scoreSix != null">
+				#{scoreSix,jdbcType=INTEGER},
+			</if>
+			<if test="scoreEight != null">
+				#{scoreEight,jdbcType=INTEGER},
+			</if>
+			<if test="scoreTen != null">
+				#{scoreTen,jdbcType=INTEGER},
+			</if>
+			<if test="courseState != null">
+				#{courseState,jdbcType=INTEGER},
+			</if>
+			<if test="courseName != null">
+				#{courseName,jdbcType=VARCHAR},
+			</if>
+			<if test="teacherId != null">
+				#{teacherId,jdbcType=CHAR},
+			</if>
+			<if test="teacherName != null">
+				#{teacherName,jdbcType=VARCHAR},
+			</if>
+			<if test="className != null">
+				#{className,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2015-08-24 14:06:12. -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.cy.model.CourseUniversityAnalysis">
+		update t_course_university_analysis
+		<set>
+			<if test="universityId != null">
+				university_id =
+				#{universityId,jdbcType=CHAR},
+			</if>
+			<if test="courseTerm != null">
+				course_term =
+				#{courseTerm,jdbcType=VARCHAR},
+			</if>
+			<if test="courseId != null">
+				course_id = #{courseId,jdbcType=CHAR},
+			</if>
+			<if test="classId != null">
+				class_id = #{classId,jdbcType=CHAR},
+			</if>
+			<if test="importCount != null">
+				import_count =
+				#{importCount,jdbcType=INTEGER},
+			</if>
+			<if test="finishCount != null">
+				finish_count =
+				#{finishCount,jdbcType=INTEGER},
+			</if>
+			<if test="passCount != null">
+				pass_count =
+				#{passCount,jdbcType=INTEGER},
+			</if>
+			<if test="failCount != null">
+				fail_count =
+				#{failCount,jdbcType=INTEGER},
+			</if>
+			<if test="scoreSix != null">
+				score_six =
+				#{scoreSix,jdbcType=INTEGER},
+			</if>
+			<if test="scoreEight != null">
+				score_eight =
+				#{scoreEight,jdbcType=INTEGER},
+			</if>
+			<if test="scoreTen != null">
+				score_ten =
+				#{scoreTen,jdbcType=INTEGER},
+			</if>
+			<if test="courseState != null">
+				course_state =
+				#{courseState,jdbcType=INTEGER},
+			</if>
+			<if test="courseName != null">
+				course_name =
+				#{courseName,jdbcType=VARCHAR},
+			</if>
+			<if test="teacherId != null">
+				teacher_id =
+				#{teacherId,jdbcType=CHAR},
+			</if>
+			<if test="teacherName != null">
+				teacher_name =
+				#{teacherName,jdbcType=VARCHAR},
+			</if>
+			<if test="className != null">
+				class_name =
+				#{className,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2015-08-24 14:06:12. -->
+	<update id="updateByPrimaryKey" parameterType="com.cy.model.CourseUniversityAnalysis">
+		update
+		t_course_university_analysis
+		set university_id =
+		#{universityId,jdbcType=CHAR},
+		course_term =
+		#{courseTerm,jdbcType=VARCHAR},
+		course_id = #{courseId,jdbcType=CHAR},
+		class_id = #{classId,jdbcType=CHAR},
+		import_count =
+		#{importCount,jdbcType=INTEGER},
+		finish_count =
+		#{finishCount,jdbcType=INTEGER},
+		pass_count =
+		#{passCount,jdbcType=INTEGER},
+		fail_count =
+		#{failCount,jdbcType=INTEGER},
+		score_six =
+		#{scoreSix,jdbcType=INTEGER},
+		score_eight =
+		#{scoreEight,jdbcType=INTEGER},
+		score_ten =
+		#{scoreTen,jdbcType=INTEGER},
+		course_state =
+		#{courseState,jdbcType=INTEGER},
+		course_name =
+		#{courseName,jdbcType=VARCHAR},
+		teacher_id =
+		#{teacherId,jdbcType=CHAR},
+		teacher_name =
+		#{teacherName,jdbcType=VARCHAR},
+		class_name =
+		#{className,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+
+</mapper>

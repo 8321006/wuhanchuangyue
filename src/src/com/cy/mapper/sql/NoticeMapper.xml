@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cy.mapper.NoticeMapper" >
+	<!-- 实体类 - 数据库映射 2015-07-27 11:56:21. -->
+	<resultMap id="BaseResultMap" type="Notice" >
+		<id column="notice_id" property="noticeId" jdbcType="VARCHAR" />
+		<result column="notice_time" property="noticeTime" jdbcType="TIMESTAMP" />
+		<result column="sender" property="sender" jdbcType="INTEGER" />
+		<result column="recevicer_range" property="recevicerRange" jdbcType="INTEGER" />
+		<result column="attachment" property="attachment" jdbcType="CHAR" />
+		<result column="university_id" property="universityId" jdbcType="CHAR" />
+		<result column="course_id" property="courseId" jdbcType="CHAR" />
+		<result column="class_id" property="classId" jdbcType="CHAR" />
+		<result column="user_id" property="userId" jdbcType="CHAR" />
+		<result column="notice_type" property="noticetype" jdbcType="INTEGER" />
+	</resultMap>
+	<!--  2015-07-27 11:56:21. -->
+	<resultMap id="ResultMapWithBLOBs" type="com.cy.model.NoticeWithBLOBs" extends="BaseResultMap" >
+		<result column="notice_title" property="noticeTitle" jdbcType="LONGVARCHAR" />
+		<result column="notice_content" property="noticeContent" jdbcType="LONGVARCHAR" />
+		<result column="notice_character" property="noticeCharacter" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2015-07-27 11:56:21. -->
+	<sql id="Base_Column_List" >
+		notice_id, notice_time, sender, recevicer_range, attachment, university_id, course_id, 
+		class_id, user_id,notice_type
+	</sql>
+
+	<!--  2015-07-27 11:56:21. -->
+	<sql id="Blob_Column_List" >
+		notice_title, notice_content,notice_character
+	</sql>
+
+	<!-- 按主键查询 2015-07-27 11:56:21. -->
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from t_notice
+		where notice_id = #{noticeId,jdbcType=VARCHAR}
+	</select>
+
+	<!-- 按主键删除 2015-07-27 11:56:21. -->
+	<delete id="delNotice" parameterType="java.lang.String" >
+		delete from t_notice
+		where notice_id = #{noticeId,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2015-07-27 11:56:21. -->
+	<insert id="insert" parameterType="com.cy.model.NoticeWithBLOBs" >
+		insert into t_notice (notice_id, notice_time, sender, 
+			recevicer_range, attachment, university_id, 
+			course_id, class_id, user_id, notice_title, 
+			notice_content)
+		values (#{noticeId,jdbcType=VARCHAR}, #{noticeTime,jdbcType=TIMESTAMP}, #{sender,jdbcType=INTEGER}, 
+			#{recevicerRange,jdbcType=INTEGER}, #{attachment,jdbcType=CHAR}, #{universityId,jdbcType=CHAR}, 
+			#{courseId,jdbcType=CHAR}, #{classId,jdbcType=CHAR}, #{userId,jdbcType=CHAR}, #{noticeTitle,jdbcType=LONGVARCHAR}, 
+			#{noticeContent,jdbcType=LONGVARCHAR})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2015-07-27 11:56:21. -->
+	<insert id="insertSelective" parameterType="com.cy.model.NoticeWithBLOBs" >
+		insert into t_notice
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="noticeId != null" >
+				notice_id,
+			</if>
+			<if test="noticeTime != null" >
+				notice_time,
+			</if>
+			<if test="sender != null" >
+				sender,
+			</if>
+			<if test="recevicerRange != null" >
+				recevicer_range,
+			</if>
+			<if test="attachment != null" >
+				attachment,
+			</if>
+			<if test="universityId != null" >
+				university_id,
+			</if>
+			<if test="courseId != null" >
+				course_id,
+			</if>
+			<if test="classId != null" >
+				class_id,
+			</if>
+			<if test="userId != null" >
+				user_id,
+			</if>
+			<if test="noticeTitle != null" >
+				notice_title,
+			</if>
+			<if test="noticeContent != null" >
+				notice_content,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="noticeId != null" >
+				#{noticeId,jdbcType=VARCHAR},
+			</if>
+			<if test="noticeTime != null" >
+				#{noticeTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="sender != null" >
+				#{sender,jdbcType=INTEGER},
+			</if>
+			<if test="recevicerRange != null" >
+				#{recevicerRange,jdbcType=INTEGER},
+			</if>
+			<if test="attachment != null" >
+				#{attachment,jdbcType=CHAR},
+			</if>
+			<if test="universityId != null" >
+				#{universityId,jdbcType=CHAR},
+			</if>
+			<if test="courseId != null" >
+				#{courseId,jdbcType=CHAR},
+			</if>
+			<if test="classId != null" >
+				#{classId,jdbcType=CHAR},
+			</if>
+			<if test="userId != null" >
+				#{userId,jdbcType=CHAR},
+			</if>
+			<if test="noticeTitle != null" >
+				#{noticeTitle,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="noticeContent != null" >
+				#{noticeContent,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2015-07-27 11:56:21. -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.cy.model.NoticeWithBLOBs" >
+		update t_notice
+		<set >
+			<if test="noticeTime != null" >
+				notice_time = #{noticeTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="sender != null" >
+				sender = #{sender,jdbcType=INTEGER},
+			</if>
+			<if test="recevicerRange != null" >
+				recevicer_range = #{recevicerRange,jdbcType=INTEGER},
+			</if>
+			<if test="attachment != null" >
+				attachment = #{attachment,jdbcType=CHAR},
+			</if>
+			<if test="universityId != null" >
+				university_id = #{universityId,jdbcType=CHAR},
+			</if>
+			<if test="courseId != null" >
+				course_id = #{courseId,jdbcType=CHAR},
+			</if>
+			<if test="classId != null" >
+				class_id = #{classId,jdbcType=CHAR},
+			</if>
+			<if test="userId != null" >
+				user_id = #{userId,jdbcType=CHAR},
+			</if>
+			<if test="noticeTitle != null" >
+				notice_title = #{noticeTitle,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="noticeContent != null" >
+				notice_content = #{noticeContent,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="noticeCharacter != null" >
+				notice_character = #{noticeCharacter,jdbcType=LONGVARCHAR},
+			</if>
+			
+		</set>
+		where notice_id = #{noticeId,jdbcType=VARCHAR}
+	</update>
+
+	<!--  2015-07-27 11:56:21. -->
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.cy.model.NoticeWithBLOBs" >
+		update t_notice
+		set notice_time = #{noticeTime,jdbcType=TIMESTAMP},
+			sender = #{sender,jdbcType=INTEGER},
+			recevicer_range = #{recevicerRange,jdbcType=INTEGER},
+			attachment = #{attachment,jdbcType=CHAR},
+			university_id = #{universityId,jdbcType=CHAR},
+			course_id = #{courseId,jdbcType=CHAR},
+			class_id = #{classId,jdbcType=CHAR},
+			user_id = #{userId,jdbcType=CHAR},
+			notice_title = #{noticeTitle,jdbcType=LONGVARCHAR},
+			notice_content = #{noticeContent,jdbcType=LONGVARCHAR}
+		where notice_id = #{noticeId,jdbcType=VARCHAR}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2015-07-27 11:56:21. -->
+	<update id="updateByPrimaryKey" parameterType="com.cy.model.Notice" >
+		update t_notice
+		set notice_time = #{noticeTime,jdbcType=TIMESTAMP},
+			sender = #{sender,jdbcType=INTEGER},
+			recevicer_range = #{recevicerRange,jdbcType=INTEGER},
+			attachment = #{attachment,jdbcType=CHAR},
+			university_id = #{universityId,jdbcType=CHAR},
+			course_id = #{courseId,jdbcType=CHAR},
+			class_id = #{classId,jdbcType=CHAR},
+			user_id = #{userId,jdbcType=CHAR}
+		where notice_id = #{noticeId,jdbcType=VARCHAR}
+	</update>
+
+
+	<!-- 查询系统全部通知 -->
+	<select id="findNoticeAll" resultMap="ResultMapWithBLOBs">
+		select 
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from t_notice where university_id=#{universityId}
+		ORDER BY  notice_character DESC, notice_time DESC 
+	</select>
+	
+	<!-- 查询学校的通知 -->
+	<select id="findNoticeCourse" resultMap="ResultMapWithBLOBs">
+		select 
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from t_notice where university_id=#{universityId} and notice_type=#{noticeType} ORDER BY  notice_time DESC,notice_character DESC
+	</select>
+	
+	<!-- 查询平台管理员方法-->
+	<select id="findcyadminNoticeAll" resultMap="ResultMapWithBLOBs" parameterType="map">
+		select 
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from t_notice where university_id=#{universityId}  and  notice_type=#{noticeType}  ORDER BY  notice_time DESC,notice_character DESC
+	</select>
+	
+
+	<!-- 按主键查询系统详情界面 -->
+	<select id="noticedetail" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+		select 
+		notice_id,date_format(notice_time,"%Y-%m-%d %H:%i:%s") as noticetimeString, sender, recevicer_range, attachment, university_id, course_id, 
+		class_id, user_id,notice_title, notice_content
+		from t_notice
+		where notice_id = #{noticeId,jdbcType=VARCHAR}
+	</select>
+	
+	
+	<!-- 发布系统公告 -->
+	<insert id="insertNotice" parameterType="com.cy.model.NoticeWithBLOBs" >
+		insert into t_notice (notice_id, notice_time, sender, 
+			recevicer_range, attachment, university_id, 
+			course_id, class_id, user_id, notice_title, 
+			notice_content,notice_type,notice_character)
+		values (#{noticeId,jdbcType=VARCHAR}, #{noticeTime,jdbcType=TIMESTAMP}, #{sender,jdbcType=INTEGER}, 
+			#{recevicerRange,jdbcType=INTEGER}, #{attachment,jdbcType=CHAR}, #{universityId,jdbcType=CHAR}, 
+			#{courseId,jdbcType=CHAR}, #{classId,jdbcType=CHAR}, #{userId,jdbcType=CHAR}, #{noticeTitle,jdbcType=LONGVARCHAR}, 
+			#{noticeContent,jdbcType=LONGVARCHAR},#{noticetype},#{noticeCharacter})
+	</insert>
+
+	<!-- 模糊查询 -->
+	<select id="findlikenotice" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String">
+		select 
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from t_notice where 1=1 and university_id=#{1} and notice_type=1
+		<if test = " _parameter!=null and _parameter!=''">
+		  and notice_title like  CONCAT(CONCAT('%',#{0}),'%')
+		</if>
+	</select>
+
+	
+	<!-- 创越内部平台发布公告的方法 -->
+	<insert id="insertsysNotice" parameterType="com.cy.model.NoticeWithBLOBs" >
+		insert into t_notice (notice_id, notice_time, sender, 
+			recevicer_range, attachment, university_id, 
+			course_id, class_id, user_id, notice_title, 
+			notice_content,notice_type)
+		values (#{noticeId,jdbcType=VARCHAR}, #{noticeTime,jdbcType=TIMESTAMP}, #{sender,jdbcType=INTEGER}, 
+			#{recevicerRange,jdbcType=INTEGER}, #{attachment,jdbcType=CHAR}, #{universityId,jdbcType=CHAR}, 
+			#{courseId,jdbcType=CHAR}, #{classId,jdbcType=CHAR}, #{userId,jdbcType=CHAR}, #{noticeTitle,jdbcType=LONGVARCHAR}, 
+			#{noticeContent,jdbcType=LONGVARCHAR},2)
+	</insert>
+
+	<!-- 模糊查询 -->
+	<select id="findlikesystemnotice" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String">
+		select 
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from t_notice where 1=1 and university_id=#{1} and notice_type=2
+		<if test = " _parameter!=null and _parameter!=''">
+		  and notice_title like  CONCAT(CONCAT('%',#{0}),'%')
+		</if>
+	</select>
+
+
+</mapper>

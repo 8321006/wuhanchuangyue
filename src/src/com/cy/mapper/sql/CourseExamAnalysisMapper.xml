@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cy.mapper.CourseExamAnalysisMapper">
+	<!-- 实体类 - 数据库映射 2015-07-09 14:58:36. -->
+	<resultMap id="BaseResultMap" type="CourseExamAnalysis">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="course_name" property="courseName" jdbcType="CHAR" />
+		<result column="teacher_name" property="teacherName" jdbcType="CHAR" />
+		<result column="course_student_count" property="courseStudentCount"
+			jdbcType="INTEGER" />
+		<result column="analysis_time" property="analysisTime"
+			jdbcType="TIMESTAMP" />
+		<result column="university_id" property="universityId"
+			jdbcType="CHAR" />
+		<result column="exam_submit_count" property="examSubmitCount"
+			jdbcType="INTEGER" />
+		<result column="exam_correct_count" property="examCorrectCount"
+			jdbcType="INTEGER" />
+		<result column="teacher_id" property="teacherId" jdbcType="CHAR" />
+		<result column="class_id" property="classId" jdbcType="CHAR" />
+		<result column="class_name" property="className" jdbcType="CHAR" />
+		<result column="course_id" property="courseId" jdbcType="CHAR" />
+		<result column="university_name" property="universityName"
+			jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段 2015-07-09 14:58:36. -->
+	<sql id="Base_Column_List">
+		id, course_name, teacher_name,
+		course_student_count,
+		analysis_time, university_id,
+		exam_submit_count, exam_correct_count,
+		teacher_id, class_id, class_name, course_id,
+		university_name
+	</sql>
+
+	<!-- 按主键查询 2015-07-09 14:58:36. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_course_exam_analysis
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<select id="countPublishExamsByCourse" parameterType="java.lang.String"
+		resultType="int">
+		SELECT COUNT(1) FROM t_paper WHERE chapter_id IN (SELECT chapter_id FROM
+		t_course_chapter WHERE course_id = #{courseId,jdbcType=CHAR})
+		AND test_type = 1
+	</select>
+
+	<select id="countExamsByCourse" parameterType="map" resultType="int">
+		SELECT COUNT(1) FROM
+		t_test WHERE paper_id IN (SELECT paper_id FROM
+		t_paper WHERE
+		chapter_id IN (SELECT chapter_id FROM t_course_chapter
+		WHERE course_id
+		= #{courseId,jdbcType=CHAR}))
+		<if test="testType != null">
+			AND test_type = #{testType,jdbcType=INTEGER}
+		</if>
+		<if test="markStatus != null">
+			AND mark_status = #{markStatus,jdbcType=INTEGER}
+		</if>
+	</select>
+
+	<!-- 按主键删除 2015-07-09 14:58:36. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		t_course_exam_analysis
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2015-07-09 14:58:36. -->
+	<insert id="insert" parameterType="com.cy.model.CourseExamAnalysis">
+		insert into
+		t_course_exam_analysis (id, course_name, teacher_name,
+		course_student_count, analysis_time, university_id,
+		exam_submit_count,
+		exam_correct_count, teacher_id,
+		class_id, class_name, course_id,
+		university_name)
+		values (#{id,jdbcType=INTEGER},
+		#{courseName,jdbcType=CHAR},
+		#{teacherName,jdbcType=CHAR},
+		#{courseStudentCount,jdbcType=INTEGER},
+		#{analysisTime,jdbcType=TIMESTAMP}, #{universityId,jdbcType=CHAR},
+		#{examSubmitCount,jdbcType=INTEGER},
+		#{examCorrectCount,jdbcType=INTEGER}, #{teacherId,jdbcType=CHAR},
+		#{classId,jdbcType=CHAR}, #{className,jdbcType=CHAR},
+		#{courseId,jdbcType=CHAR},
+		#{universityName,jdbcType=VARCHAR})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2015-07-09 14:58:36. -->
+	<insert id="insertSelective" parameterType="com.cy.model.CourseExamAnalysis">
+		insert into t_course_exam_analysis
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="courseName != null">
+				course_name,
+			</if>
+			<if test="teacherName != null">
+				teacher_name,
+			</if>
+			<if test="courseStudentCount != null">
+				course_student_count,
+			</if>
+			<if test="analysisTime != null">
+				analysis_time,
+			</if>
+			<if test="universityId != null">
+				university_id,
+			</if>
+			<if test="examSubmitCount != null">
+				exam_submit_count,
+			</if>
+			<if test="examCorrectCount != null">
+				exam_correct_count,
+			</if>
+			<if test="teacherId != null">
+				teacher_id,
+			</if>
+			<if test="classId != null">
+				class_id,
+			</if>
+			<if test="className != null">
+				class_name,
+			</if>
+			<if test="courseId != null">
+				course_id,
+			</if>
+			<if test="universityName != null">
+				university_name,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="courseName != null">
+				#{courseName,jdbcType=CHAR},
+			</if>
+			<if test="teacherName != null">
+				#{teacherName,jdbcType=CHAR},
+			</if>
+			<if test="courseStudentCount != null">
+				#{courseStudentCount,jdbcType=INTEGER},
+			</if>
+			<if test="analysisTime != null">
+				#{analysisTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="universityId != null">
+				#{universityId,jdbcType=CHAR},
+			</if>
+			<if test="examSubmitCount != null">
+				#{examSubmitCount,jdbcType=INTEGER},
+			</if>
+			<if test="examCorrectCount != null">
+				#{examCorrectCount,jdbcType=INTEGER},
+			</if>
+			<if test="teacherId != null">
+				#{teacherId,jdbcType=CHAR},
+			</if>
+			<if test="classId != null">
+				#{classId,jdbcType=CHAR},
+			</if>
+			<if test="className != null">
+				#{className,jdbcType=CHAR},
+			</if>
+			<if test="courseId != null">
+				#{courseId,jdbcType=CHAR},
+			</if>
+			<if test="universityName != null">
+				#{universityName,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2015-07-09 14:58:36. -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.cy.model.CourseExamAnalysis">
+		update t_course_exam_analysis
+		<set>
+			<if test="courseName != null">
+				course_name =
+				#{courseName,jdbcType=CHAR},
+			</if>
+			<if test="teacherName != null">
+				teacher_name =
+				#{teacherName,jdbcType=CHAR},
+			</if>
+			<if test="courseStudentCount != null">
+				course_student_count =
+				#{courseStudentCount,jdbcType=INTEGER},
+			</if>
+			<if test="analysisTime != null">
+				analysis_time =
+				#{analysisTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="universityId != null">
+				university_id =
+				#{universityId,jdbcType=CHAR},
+			</if>
+			<if test="examSubmitCount != null">
+				exam_submit_count =
+				#{examSubmitCount,jdbcType=INTEGER},
+			</if>
+			<if test="examCorrectCount != null">
+				exam_correct_count =
+				#{examCorrectCount,jdbcType=INTEGER},
+			</if>
+			<if test="teacherId != null">
+				teacher_id =
+				#{teacherId,jdbcType=CHAR},
+			</if>
+			<if test="classId != null">
+				class_id = #{classId,jdbcType=CHAR},
+			</if>
+			<if test="className != null">
+				class_name =
+				#{className,jdbcType=CHAR},
+			</if>
+			<if test="courseId != null">
+				course_id = #{courseId,jdbcType=CHAR},
+			</if>
+			<if test="universityName != null">
+				university_name =
+				#{universityName,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2015-07-09 14:58:36. -->
+	<update id="updateByPrimaryKey" parameterType="com.cy.model.CourseExamAnalysis">
+		update
+		t_course_exam_analysis
+		set course_name =
+		#{courseName,jdbcType=CHAR},
+		teacher_name = #{teacherName,jdbcType=CHAR},
+		course_student_count =
+		#{courseStudentCount,jdbcType=INTEGER},
+		analysis_time =
+		#{analysisTime,jdbcType=TIMESTAMP},
+		university_id =
+		#{universityId,jdbcType=CHAR},
+		exam_submit_count =
+		#{examSubmitCount,jdbcType=INTEGER},
+		exam_correct_count =
+		#{examCorrectCount,jdbcType=INTEGER},
+		teacher_id =
+		#{teacherId,jdbcType=CHAR},
+		class_id = #{classId,jdbcType=CHAR},
+		class_name = #{className,jdbcType=CHAR},
+		course_id =
+		#{courseId,jdbcType=CHAR},
+		university_name =
+		#{universityName,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+</mapper>

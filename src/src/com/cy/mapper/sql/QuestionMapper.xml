@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cy.mapper.QuestionMapper">
+	<resultMap id="BaseResultMap" type="com.cy.model.Question">
+		<id column="question_id" property="questionId" jdbcType="INTEGER" />
+		<result column="subject_id" property="subjectId" jdbcType="VARCHAR" />
+		<result column="content" property="content" jdbcType="LONGVARCHAR" />
+		<result column="question_type_id" property="questionTypeId"
+			jdbcType="INTEGER" />
+		<result column="name" property="questionTypeName" jdbcType="VARCHAR" />
+		<result column="score" property="points" jdbcType="FLOAT" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="creator" property="creator" jdbcType="VARCHAR" />
+		<result column="last_modify" property="lastModify" jdbcType="TIMESTAMP" />
+		<result column="answer" property="answer" jdbcType="LONGVARCHAR" />
+		<result column="answer_analysis" property="analysis" jdbcType="LONGVARCHAR" />
+		<result column="keyword" property="keyword" jdbcType="VARCHAR" />
+	</resultMap>
+	<!-- 用于 SELECT 语句的所有字段 2015-06-26 10:17:16. -->
+	<sql id="Base_Column_List">
+		question_id, subject_id, subject_name,
+		content, question_type_id, score, creator_time,
+		creator, last_modify,
+		answer,answer_content,answer_analysis,keyword,id,name,subjective
+	</sql>
+	<insert id="insertQuestion"  parameterType="java.util.List">  
+		insert into t_question
+		(question_id,subject_id,content,question_type_id,creator,create_time,score,last_modify,answer,answer_analysis,keyword)
+		values  
+		 <foreach collection="list" item="item" index="index" separator="," > 
+		(#{item.questionId},#{item.subjectId},#{item.content},#{item.questionTypeId},#{item.creator},#{item.createTime},#{item.points},#{item.lastModify},#{item.answer},#{item.analysis},#{item.keyword})
+	</foreach></insert>
+	<select id="getQuestionList" resultMap="BaseResultMap">
+		select a.*,d.name from
+		t_question a ,t_question_type d
+		where d.id=a.question_type_id order by a.last_modify desc
+	</select>
+
+	<select id="getQuestionTypeList" resultMap="BaseResultMap">
+		select
+		id,name,subjective from t_question_type
+	</select>
+	<select id="getQuestionByQuestionId" resultMap="BaseResultMap">
+		select a.*,d.name from t_question a ,t_question_type d
+		<where>
+			d.id=a.question_type_id and question_id =#{questionId}
+		</where>
+	</select>
+	<select id="getQuestionAnalysisListByIdList" resultMap="BaseResultMap">
+		select
+		a.question_id,a.answer_analysis,a.content,a.question_type_id,a.answer,d.name
+		from t_question a ,t_question_type d
+
+		<where>
+			d.id=a.question_type_id
+			<if test="array != null">
+				and
+				a.question_id in
+				<foreach collection="array" open="(" close=")" index="index"
+					item="item" separator=",">
+					#{item}
+				</foreach>
+			</if>
+		</where>
+		order by a.question_type_id
+	</select>
+</mapper>

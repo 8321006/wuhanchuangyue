@@ -1,0 +1,757 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cy.mapper.UniversityCourseMapper">
+	<!-- 实体类 - 数据库映射 2015-07-10 16:35:13. -->
+	<resultMap id="BaseResultMap" type="UniversityCourse">
+		<id column="id" property="id" jdbcType="CHAR" />
+		<result column="course_id" property="courseId" jdbcType="CHAR" />
+		<result column="course_name" property="courseName" jdbcType="CHAR" />
+		<result column="university_id" property="universityId"
+			jdbcType="CHAR" />
+		<result column="university_name" property="universityName"
+			jdbcType="CHAR" />
+		<result column="bussniss_type" property="bussnissType"
+			jdbcType="INTEGER" />
+		<result column="usertotal" property="userTotal" jdbcType="INTEGER" />
+		<result column="plantotal" property="period" jdbcType="INTEGER" />
+		<result column="course_state" property="courseState" jdbcType="INTEGER" />
+		<result column="course_extend_id" property="courseExtendId"
+			jdbcType="INTEGER" />
+		<result column="course_start_time" property="courseStartTime"
+			jdbcType="TIMESTAMP" />
+		<result column="course_end_time" property="courseEndTime"
+			jdbcType="TIMESTAMP" />
+		<result column="credit" property="credit" jdbcType="INTEGER" />
+		<result column="video_ratio" property="videoRatio" jdbcType="REAL" />
+		<result column="work_ratio" property="workRatio" jdbcType="REAL" />
+		<result column="exam_ratio" property="examRatio" jdbcType="REAL" />
+		<result column="question_ratio" property="questionRatio"
+			jdbcType="REAL" />
+		<result column="discuss_ratio" property="discussRatio"
+			jdbcType="REAL" />
+		<result column="term_start_time" property="termStartTime"
+			jdbcType="TIMESTAMP" />
+		<result column="term_end_time" property="termEndTime" jdbcType="TIMESTAMP" />
+		<result column="teacher_id" property="teacherId" jdbcType="CHAR" />
+		<result column="teacher_name" property="teacherName" jdbcType="CHAR" />
+		<result column="class_id" property="classId" jdbcType="CHAR" />
+		<result column="course_start" property="courseStart" jdbcType="INTEGER" />
+		<result column="course_cover_url" property="courseCoverUrl"
+			jdbcType="CHAR" />
+		<result column="course_term" property="courseTerm" jdbcType="VARCHAR" />
+		<result column="paper_name" property="paperName" jdbcType="VARCHAR" />
+		<result column="paper_id" property="paperId" jdbcType="VARCHAR" />
+		<result column="chapter_id" property="chapterId" jdbcType="VARCHAR" />
+		
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段 2015-07-10 16:35:13. -->
+	<sql id="Base_Column_List">
+		id, course_id, course_name,
+		university_id, university_name,
+		bussniss_type, course_state,
+		course_extend_id, course_start_time,
+		course_end_time, credit,
+		video_ratio, work_ratio,
+		exam_ratio,
+		question_ratio, discuss_ratio, term_start_time, term_end_time,
+		teacher_id,teacher_name
+	</sql>
+
+	<!-- 按主键查询 2015-07-10 16:35:13. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from t_university_course
+		where 
+		 course_term=#{courseTerm}and course_id=#{courseId}and university_id=#{universityId}
+	</select>
+	
+	<!-- 按主键查询 2015-07-10 16:35:13. -->
+	<select id="selectbyuniversityId" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from t_university_course
+		where university_id = #{universityId}
+	</select>
+	
+		<!-- 文件是否存在-->
+		<select id="selectbyfile" resultType="java.lang.String">
+				select id from t_university_course where 
+				university_id = #{universityName} 
+				and course_term = #{courseTerm} 
+				and course_id = #{courseName}
+		</select>
+	
+	<select id="selectbyname" resultType="java.lang.String">
+		select university_name from t_university_course where id=#{}
+	</select>
+	
+	<select id="selectbyterm" resultType="java.lang.String">
+		select course_term from t_university_course where university_id=#{universityId}
+	</select>
+	
+	<delete id="deletebyterm" parameterType="com.cy.model.UniversityCourse">
+	   DELETE 
+	   from t_university_course
+	   where course_id=#{courseId}and 
+	   university_id=#{universityId} and
+	   course_term=#{courseTerm}
+	</delete>
+
+	
+	<select id="searchCourseterm" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select DISTINCT course_term from t_university_course where university_id =
+		#{universityId,jdbcType=CHAR}
+	</select>
+
+	<select id="searchcourseName" resultMap="BaseResultMap">
+		select
+		tc.course_id courseId,tt.course_name courseName
+		from
+		t_university_course tc 
+		left join t_course tt on tc.course_id=tt.course_id
+		<where>
+	<if test="courseTerm != '' and courseTerm !=null">
+		tc.course_term = #{courseTerm}and
+		</if>
+		tc.university_id = #{universityId} 
+		</where>
+	</select>
+
+	<select id="searchTeachercoursename" resultMap="BaseResultMap">
+		 select
+		 tc.course_id courseId,
+		 tt.course_name courseName
+		 from
+		 t_university_course tc 
+	     LEFT JOIN t_course tt on tc.course_id=tt.course_id
+	     where tc.university_id =#{universityId}
+	</select>
+
+	<select id="teacherSearch" resultType="com.cy.model.User">
+		SELECT
+		tcu.real_name AS realName,
+		tcu.user_id AS userId,
+		tcu.sex AS sex,
+		tcu.university_name AS universityName,
+		tcu.phone AS phone,
+		tc.course_name AS courseName,
+		tc.course_term AS courseTerm
+		FROM
+		t_university_course tc,
+		t_course_class tcc,
+		t_user tcu
+		WHERE
+		tc.university_id = tcc.university_id
+		AND tcc.course_id = tc.course_id
+		AND tcc.teacher_id = tcu.user_id
+		and tc.university_id = #{universityId}
+		AND tcu.user_type = '1'
+		<if test="courseId != '' ">
+			and tc.course_id = #{courseId}
+		</if>
+		<if test="realName != null">
+			and tcu.real_name like #{realName}
+		</if>
+	</select>
+
+	<select id="searchResult" resultType="com.cy.model.User">
+		SELECT
+		tcu.real_name AS realName,
+		tcu.student_id AS studentId,
+		tcu.sex AS sex,
+		tcu.university_name AS universityName,
+		tcu.phone AS phone,
+		tc.course_name AS courseName,
+		tc.course_term AS courseTerm
+		FROM
+		t_university_course tc,
+		t_course_class tcc,
+		t_my_course tm,
+		t_user tcu
+		WHERE
+		tc.university_id = #{universityId}
+		AND tcc.university_course_id = tc.id
+		AND tcc.class_id = tm.class_id
+		AND tm.user_id = tcu.user_id
+		AND tcu.user_type = '0'
+		<if test="courseTerm !='' and courseTerm !=null">
+			AND tc.course_term = #{courseTerm}
+		</if>
+		<if test="courseId != '' and courseId != null ">
+			and tc.course_id = #{courseId}
+		</if>
+		<if test="realName != null and realName != ''">
+			and tcu.real_name like #{realName}
+		</if>
+	</select>
+
+	<select id="findLearningByCourse" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		SELECT * FROM t_university_course uc,t_course_class cc WHERE
+		uc.id = cc.university_course_id AND cc.class_id =
+		#{classId}
+	</select>
+	<!-- 按主键删除 2015-07-10 16:35:13. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		t_university_course
+		where id = #{id,jdbcType=CHAR}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2015-07-10 16:35:13. -->
+	<insert id="insert" parameterType="com.cy.model.UniversityCourse">
+		insert into
+		t_university_course (id, course_id, course_name,
+		university_id,
+		university_name, bussniss_type,
+		course_state, course_extend_id,
+		course_start_time,
+		course_end_time, credit, video_ratio,
+		work_ratio,
+		exam_ratio, question_ratio,
+		discuss_ratio, term_start_time,
+		term_end_time,
+		teacher_id,teacher_name)
+		values (#{id,jdbcType=CHAR},
+		#{courseId,jdbcType=CHAR},
+		#{courseName,jdbcType=CHAR},
+		#{universityId,jdbcType=CHAR}, #{universityName,jdbcType=CHAR},
+		#{bussnissType,jdbcType=INTEGER},
+		#{courseState,jdbcType=INTEGER},
+		#{courseExtendId,jdbcType=INTEGER},
+		#{courseStartTime,jdbcType=TIMESTAMP},
+		#{courseEndTime,jdbcType=TIMESTAMP}, #{credit,jdbcType=INTEGER},
+		#{videoRatio,jdbcType=REAL},
+		#{workRatio,jdbcType=REAL},
+		#{examRatio,jdbcType=REAL}, #{questionRatio,jdbcType=REAL},
+		#{discussRatio,jdbcType=REAL}, #{termStartTime,jdbcType=TIMESTAMP},
+		#{termEndTime,jdbcType=TIMESTAMP},
+		#{teacherId,jdbcType=CHAR},#{teacherName,jdbcType=CHAR})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2015-07-10 16:35:13. -->
+	<insert id="insertSelective" parameterType="com.cy.model.UniversityCourse">
+		insert into t_university_course
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="courseId != null">
+				course_id,
+			</if>
+			<if test="courseName != null">
+				course_name,
+			</if>
+			<if test="universityId != null">
+				university_id,
+			</if>
+			<if test="universityName != null">
+				university_name,
+			</if>
+			<if test="bussnissType != null">
+				bussniss_type,
+			</if>
+			<if test="courseState != null">
+				course_state,
+			</if>
+			<if test="courseExtendId != null">
+				course_extend_id,
+			</if>
+			<if test="courseStartTime != null">
+				course_start_time,
+			</if>
+			<if test="courseEndTime != null">
+				course_end_time,
+			</if>
+			<if test="credit != null">
+				credit,
+			</if>
+			<if test="videoRatio != null">
+				video_ratio,
+			</if>
+			<if test="workRatio != null">
+				work_ratio,
+			</if>
+			<if test="examRatio != null">
+				exam_ratio,
+			</if>
+			<if test="questionRatio != null">
+				question_ratio,
+			</if>
+			<if test="discussRatio != null">
+				discuss_ratio,
+			</if>
+			<if test="termStartTime != null">
+				term_start_time,
+			</if>
+			<if test="termEndTime != null">
+				term_end_time,
+			</if>
+			<if test="teacherId != null">
+				teacher_id,
+			</if>
+			<if test="teacherName != null">
+				teacher_name,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=CHAR},
+			</if>
+			<if test="courseId != null">
+				#{courseId,jdbcType=CHAR},
+			</if>
+			<if test="courseName != null">
+				#{courseName,jdbcType=CHAR},
+			</if>
+			<if test="universityId != null">
+				#{universityId,jdbcType=CHAR},
+			</if>
+			<if test="universityName != null">
+				#{universityName,jdbcType=CHAR},
+			</if>
+			<if test="bussnissType != null">
+				#{bussnissType,jdbcType=INTEGER},
+			</if>
+			<if test="courseState != null">
+				#{courseState,jdbcType=INTEGER},
+			</if>
+			<if test="courseExtendId != null">
+				#{courseExtendId,jdbcType=INTEGER},
+			</if>
+			<if test="courseStartTime != null">
+				#{courseStartTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="courseEndTime != null">
+				#{courseEndTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="credit != null">
+				#{credit,jdbcType=INTEGER},
+			</if>
+			<if test="videoRatio != null">
+				#{videoRatio,jdbcType=REAL},
+			</if>
+			<if test="workRatio != null">
+				#{workRatio,jdbcType=REAL},
+			</if>
+			<if test="examRatio != null">
+				#{examRatio,jdbcType=REAL},
+			</if>
+			<if test="questionRatio != null">
+				#{questionRatio,jdbcType=REAL},
+			</if>
+			<if test="discussRatio != null">
+				#{discussRatio,jdbcType=REAL},
+			</if>
+			<if test="termStartTime != null">
+				#{termStartTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="termEndTime != null">
+				#{termEndTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="teacherId != null">
+				#{teacherId,jdbcType=CHAR},
+			</if>
+			<if test="teacherName != null">
+				#{teacherName,jdbcType=CHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2015-07-10 16:35:13. -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.cy.model.UniversityCourse">
+		update t_university_course
+		<set>
+			<if test="courseId != null">
+				course_id = #{courseId,jdbcType=CHAR},
+			</if>
+			<if test="courseName != null">
+				course_name =
+				#{courseName,jdbcType=CHAR},
+			</if>
+			<if test="universityId != null">
+				university_id =
+				#{universityId,jdbcType=CHAR},
+			</if>
+			<if test="universityName != null">
+				university_name =
+				#{universityName,jdbcType=CHAR},
+			</if>
+			<if test="bussnissType != null">
+				bussniss_type =
+				#{bussnissType,jdbcType=INTEGER},
+			</if>
+			<if test="courseState != null">
+				course_state =
+				#{courseState,jdbcType=INTEGER},
+			</if>
+			<if test="courseExtendId != null">
+				course_extend_id =
+				#{courseExtendId,jdbcType=INTEGER},
+			</if>
+			<if test="courseStartTime != null">
+				course_start_time =
+				#{courseStartTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="courseEndTime != null">
+				course_end_time =
+				#{courseEndTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="credit != null">
+				credit = #{credit,jdbcType=INTEGER},
+			</if>
+			<if test="videoRatio != null">
+				video_ratio =
+				#{videoRatio,jdbcType=REAL},
+			</if>
+			<if test="workRatio != null">
+				work_ratio =
+				#{workRatio,jdbcType=REAL},
+			</if>
+			<if test="examRatio != null">
+				exam_ratio =
+				#{examRatio,jdbcType=REAL},
+			</if>
+			<if test="questionRatio != null">
+				question_ratio =
+				#{questionRatio,jdbcType=REAL},
+			</if>
+			<if test="discussRatio != null">
+				discuss_ratio =
+				#{discussRatio,jdbcType=REAL},
+			</if>
+			<if test="termStartTime != null">
+				term_start_time =
+				#{termStartTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="termEndTime != null">
+				term_end_time =
+				#{termEndTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="teacherId != null">
+				teacher_id =
+				#{teacherId,jdbcType=CHAR},
+			</if>
+			<if test="teacherName != null">
+				teacher_name =
+				#{teacherName,jdbcType=CHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=CHAR}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2015-07-10 16:35:13. -->
+	<update id="updateByPrimaryKey" parameterType="com.cy.model.UniversityCourse">
+		update
+		t_university_course
+		set credit = #{credit,jdbcType=INTEGER},
+		work_ratio
+		= #{workRatio,jdbcType=REAL},
+		exam_ratio =#{examRatio,jdbcType=REAL},
+		video_ratio=#{videoRatio,jdbcType=REAL}
+		where course_id =
+		#{courseId,jdbcType=CHAR}
+		and university_id=#{universityId}
+	</update>
+	<select id="selectAll" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM t_university_course
+	</select>
+	<!-- 查询本学校的课程列表 -pear -->
+	<select id="findAllByUniversity" resultMap="BaseResultMap">
+		select
+		uc.course_id,
+		a.course_name,
+		uc.university_id,
+		uc.credit,
+		uc.video_ratio,
+		uc.work_ratio,
+		uc.exam_ratio,
+		uc.course_term,
+		tc.term_start_time,
+		tc.term_end_time,
+		tc.class_id,
+		tc.class_name,
+		tc.course_start_time,
+		tc.course_end_time,
+		tc.course_start,
+		tc.teacher_id,
+		tc.teacher_name,
+		mc.usertotal,
+		cc.period,
+		a.course_cover_url
+		from t_university_course uc
+		LEFT JOIN t_course_class tc on uc.course_id=tc.course_id and
+		uc.university_id=tc.university_id
+		LEFT JOIN ( select count(user_id)as usertotal ,course_id from t_my_course
+		where user_id in(select user_id from t_user where user_type='0'and
+		university_id=#{universityId}) GROUP BY course_id ) mc ON uc.course_id
+		= mc.course_id
+		LEFT JOIN (SELECT max(plantotal)as period, course_id from t_course_chapter
+		GROUP BY course_id )cc on mc.course_id=cc.course_id
+		LEFT JOIN t_course a on a.course_id=tc.course_id
+		where tc.university_id=#{universityId}
+	</select>
+	<resultMap type="java.util.HashMap" id="findstarttime">
+		<result column="course_start_time" property="courseStartTime" />
+		<result column="plantotal" property="plantotal" />
+		<result column="chapter_name" property="chaptername" />
+	</resultMap>
+
+	<select id="finduniversityCourseDate" resultMap="findstarttime">
+		SELECT course_start_time,plantotal,chapter_name FROM
+		t_university_course uc,t_course_chapter cc
+		where uc.course_id=cc.course_id and uc.course_id in
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+	<update id="updatecourseTimeByCourseId" parameterType="com.cy.model.UniversityCourse">
+		update t_university_course
+		set course_start_time =
+		#{courseStartTime,jdbcType=TIMESTAMP},
+		course_end_time =
+		#{courseEndTime,jdbcType=TIMESTAMP}
+		where course_id =
+		#{courseId,jdbcType=CHAR} and university_id =#{universityId}
+	</update>
+	<select id="findcourseName" resultMap="BaseResultMap"
+		parameterType="com.cy.model.UniversityCourse">
+		select
+		uc.course_id,
+		a.course_name,
+		uc.university_id,
+		uc.credit,
+		uc.video_ratio,
+		uc.work_ratio,
+		uc.exam_ratio,
+		uc.course_term,
+		tc.term_start_time,
+		tc.term_end_time,
+		tc.class_id,
+		tc.class_name,
+		tc.course_start_time,
+		tc.course_end_time,
+		tc.course_start,
+		tc.teacher_id,
+		tc.teacher_name,
+		mc.usertotal,
+		cc.period,
+		a.course_cover_url
+		from t_university_course uc
+		LEFT JOIN t_course_class tc on uc.course_id=tc.course_id and
+		uc.university_id=tc.university_id
+		LEFT JOIN ( select count(user_id)as usertotal ,course_id from t_my_course
+		where user_id in
+		(select user_id from t_user where user_type='0'and
+		university_id=#{universityId}) GROUP BY course_id ) mc ON uc.course_id
+		= mc.course_id
+		LEFT JOIN (SELECT max(plantotal)as period, course_id from t_course_chapter
+		GROUP BY course_id )cc on mc.course_id=cc.course_id
+		LEFT JOIN t_course a on a.course_id=tc.course_id
+		<where>
+			<if test="courseName!= null and courseName!=''">
+				a.course_name like CONCAT('%',#{courseName},'%') and
+			</if>
+			tc.university_id =#{universityId}
+		</where>
+	</select>
+	<!-- 根据学期来搜索课程 -->
+	<select id="findtermtime" resultMap="BaseResultMap"
+		parameterType="com.cy.model.UniversityCourse">
+		select
+		uc.course_id,
+		a.course_name,
+		uc.university_id,
+		uc.credit,
+		uc.video_ratio,
+		uc.work_ratio,
+		uc.exam_ratio,
+		uc.course_term,
+		tc.term_start_time,
+		tc.term_end_time,
+		tc.class_id,
+		tc.class_name,
+		tc.course_start_time,
+		tc.course_end_time,
+		tc.course_start,
+		tc.teacher_id,
+		tc.teacher_name,
+		mc.usertotal,
+		cc.period,
+		a.course_cover_url
+		from t_university_course uc
+		LEFT JOIN t_course_class tc on uc.course_id=tc.course_id and
+		uc.university_id=tc.university_id
+		LEFT JOIN ( select count(user_id)as usertotal ,course_id from t_my_course
+		where user_id in
+		(select user_id from t_user where user_type='0'and
+		university_id=#{universityId}) GROUP BY course_id ) mc ON uc.course_id
+		= mc.course_id
+		LEFT JOIN (SELECT max(plantotal)as period, course_id from t_course_chapter
+		GROUP BY course_id )cc on mc.course_id=cc.course_id
+		LEFT JOIN t_course a on a.course_id=tc.course_id
+		<where>
+			<if test="courseTerm!= null and courseTerm!=''">
+				uc.course_term=#{courseTerm} and
+			</if>
+			tc.university_id =#{universityId}
+		</where>
+
+	</select>
+	<!-- 根据学期，课程名称,学校ID来搜索 -->
+	<select id="findCourseUniversity" resultType="String"
+		parameterType="Map">
+		SELECT count(id) FROM t_university_course
+		where course_name=#{courseName} and university_id=#{universityId} and
+		course_term=#{courseTerm}
+	</select>
+
+	<!--ADD学校课程关系数据 -->
+	<insert id="insertForImport" parameterType="Map">
+		insert into
+		t_university_course (id, course_id, course_name,
+		university_id,
+		university_name, course_state,course_term)
+		values (#{id},
+		#{courseId},
+		#{courseName},
+		#{universityId}, #{universityName},
+		0,
+		#{courseTerm})
+	</insert>
+	<!-- -查询学期 -->
+	<select id="findAllBycourseTerm" resultMap="BaseResultMap"
+		parameterType="com.cy.model.UniversityCourse">
+		select DISTINCT(course_term) from t_university_course where
+		university_id=#{universityId}
+	</select>
+	<!-- 查询本次的课程设置信息 pear -->
+	<select id="findThisBycourseTerm" resultMap="BaseResultMap"
+		parameterType="com.cy.model.UniversityCourse">
+		select
+		uc.course_id,
+		a.course_name,
+		uc.university_id,
+		uc.credit,
+		uc.video_ratio,
+		uc.work_ratio,
+		uc.exam_ratio,
+		uc.course_term,
+		tc.term_start_time,
+		tc.term_end_time,
+		tc.class_id,
+		tc.class_name,
+		tc.course_start_time,
+		tc.course_end_time,
+		tc.course_start,
+		tc.teacher_id,
+		tc.teacher_name,
+		cc.period,
+		pp.paper_id,
+        ap.paper_name,
+		a.course_cover_url
+		from t_university_course uc
+		LEFT JOIN t_course_class tc on uc.course_id=tc.course_id and
+		uc.university_id=tc.university_id
+		LEFT JOIN (SELECT max(plantotal)as period, course_id from t_course_chapter
+		GROUP BY course_id )cc on uc.course_id=cc.course_id
+		LEFT JOIN t_course a on a.course_id=tc.course_id
+		LEFT JOIN t_course_paper pp on tc.course_id=pp.course_id and tc.class_id=pp.class_id
+        LEFT JOIN t_paper ap on pp.paper_id=ap.paper_id
+		where uc.course_term=#{courseTerm} and tc.university_id =#{universityId}
+		and uc.course_id=#{courseId}
+	</select>
+
+<!-- 课程设置试卷列表 -->
+   <select id="findpaperBycourseId" resultMap="BaseResultMap"
+		parameterType="com.cy.model.UniversityCourse">
+		select
+		tp.paper_id,
+		tp.paper_name,
+		tc.course_id ,
+		tc.chapter_id,
+		tt.course_name 
+		from t_paper tp
+		left  join (SELECT chapter_id,course_id FROM t_course_chapter WHERE course_id = #{courseId} ORDER BY `index` DESC LIMIT 1  ) 
+		tc on tc.chapter_id=tp.chapter_id 
+		LEFT JOIN t_course  tt on tt.course_id=tc.course_id 
+		<where>
+			<if test="paperName!= null and paperName!=''">
+			tp.paper_name like CONCAT('%',#{paperName},'%') and
+			</if>
+			 tp.test_type='1'AND tc.course_id=#{courseId}
+			</where>
+		</select>
+		<!-- 删除该课程已经选择的试卷 -->
+		<delete id="deletecoursePaper" parameterType="java.lang.String" >
+		DELETE from  t_course_paper where course_id=#{courseId}and class_id=#{classId}
+		</delete>
+		<insert id="insertcoursePaper" parameterType="com.cy.model.UniversityCourse">
+		insert into t_course_paper(id,course_id,class_id,chapter_id,paper_id)values(#{id},#{courseId},#{classId},#{chapterId},#{paperId})
+		</insert>
+
+
+	<select id="findCourseIdByCondition" resultType="String"
+		parameterType="Map">
+		SELECT id FROM t_university_course
+		where course_name=#{courseName} and university_id=#{universityId} and
+		course_term=#{courseTerm} limit 1
+	</select>
+   <insert id="insertUniversitycourse" parameterType="com.cy.model.UniversityCourse" >
+		insert into
+		t_university_course
+		(id, 
+		course_id, 
+		university_id,
+		course_state,course_term)
+		values 
+	  <foreach collection="list" item="item" index="index" separator=",">
+		(#{item.id,jdbcType=INTEGER},#{item.courseId,jdbcType=CHAR}, 
+			#{item.universityId,jdbcType=CHAR},'0',#{item.courseTerm})
+	  </foreach>
+	</insert>
+	<select id="findAllCourse"  resultMap="BaseResultMap" parameterType="com.cy.model.UniversityCourse">
+		SELECT cc.course_start,
+		tc.course_name,
+		uc.course_term,
+		tt.university_name from t_course_class cc
+		LEFT JOIN t_course tc on cc.course_id=tc.course_id
+		LEFT JOIN t_university_course uc on cc.course_id=uc.course_id 
+		LEFT JOIN t_university  tt on cc.university_id=tt.university_id
+	</select>
+	<select id="courseStartStatus" resultType="Integer"
+		parameterType="Map">
+		select 
+		tc.course_start 
+	    from t_course_class tc 
+        LEFT JOIN t_university_course tt on tc.course_id=tt.course_id
+        where tc.course_id=#{courseId} and
+        tt.university_id=#{universityId} and 
+        tt.course_term=#{courseTerm}
+	</select>
+	
+		<!-- 学生考试列表 -->
+	<select id="examlist" resultMap="BaseResultMap" parameterType="java.lang.String">
+			select c.*,
+			t.class_id as classId,
+		   (
+			SELECT 
+			paper_name
+			from t_paper tp 
+			LEFT JOIN t_course_chapter  tc on tc.chapter_id=tp.chapter_id
+			LEFT JOIN t_my_course tm on tm.course_id=tc.course_id where  tm.user_id =#{userId}
+			 )as paperName
+			 from t_my_course t 
+			left join  t_course c on t.course_id = c.course_id 
+			inner join t_course_class cc on t.class_id = cc.class_id
+			 where t.user_id =#{userId}	and cc.course_start = '1'
+	</select>
+</mapper>

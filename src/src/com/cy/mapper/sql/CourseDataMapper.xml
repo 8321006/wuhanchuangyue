@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.cy.mapper.CourseDataMapper"> 
+	<resultMap id = "BaseResultMap" type = "CourseData">
+		<id column ="file_id" property = "fileId" jdbcType = "VARCHAR"></id>
+		<result column = "file_name" property = "fileName" jdbcType = "VARCHAR"></result>
+		<result column = "file_size" property = "fileSize" jdbcType = "INTEGER"></result>
+		<result column = "file_time" property = "fileTime" jdbcType = "TIMESTAMP"></result>
+		<result column = "file_suffix" property = "fileSuffix" jdbcType = "VARCHAR"></result>
+		<result column = "file_path" property = "filePath" jdbcType = "VARCHAR"></result>
+		<result column = "file_upload" property = "fileUpload" jdbcType = "VARCHAR"></result>
+		<result column = "file_remark" property = "fileRemark" jdbcType = "VARCHAR"></result>
+	</resultMap>
+	<sql id = "Base_Column_List">
+		file_id, file_name, file_size, file_time, file_suffix, file_path, file_upload, file_remark
+	</sql>
+	<select id ="selectByPrimaryKey" resultMap = "BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid = "Base_Column_List"></include>
+		from t_mcfile
+		where file_id = #{fileId, jdbcType = VARCHAR}
+	</select>
+	<resultMap id="BaseResultMapcourseData" type="java.util.HashMap" >
+		<id column="class_id" property="classId" jdbcType="CHAR" />
+		<result column="university_id" property="universityId" jdbcType="INTEGER" />
+		<result column="course_start" property="courseStart" jdbcType="INTEGER" />
+	</resultMap>
+	<!-- 查找该用户所选课程的courseId、courseName -pear -->
+	<select id="findAllCourseIdByuserId" resultType="com.cy.model.CourseData" parameterType="String">
+         select 
+		 tt.course_name as courseName,
+		 tc.course_id as courseId
+		 from t_my_course tc 
+         LEFT JOIN t_course tt on tt.course_id=tc.course_id
+         LEFT JOIN  t_course_class  cc on  tc.course_id=cc.course_id 
+         where tc.user_id =#{userId} and cc.university_id=#{universityId}and cc.course_start='1'
+	</select>
+	
+	<select id = "findCourseDatasByCourseId" resultType="com.cy.model.CourseData" parameterType="String">
+		select b.file_id as fileId, b.file_name as fileName, b.file_path as filePath, b.file_remark as fileMark, 
+					b.file_size as fileSize, b.file_suffix as fileSuffix, b.file_time as fileTime, b.file_upload as fileUpload 
+			 		from t_course_resource a join t_mcfile b on a.resource_id = b.file_id 
+			 		where a.course_id = #{courseId, jdbcType = VARCHAR};
+	</select>
+	
+	<select id="findAllCourseIdByUniversityId" resultType="com.cy.model.CourseData" parameterType="String">
+		select course_id as courseId, course_term as courseTerm, course_name as courseName from t_university_course
+		where university_id in (select tuc.university_id from t_user tuc where user_id = #{userId,jdbcType = VARCHAR});
+	</select>
+</mapper>

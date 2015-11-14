@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cy.mapper.UserLoggerMapper">
+	<!-- 实体类 - 数据库映射 2015-08-28 14:42:22. -->
+	<resultMap id="BaseResultMap" type="UserLogger">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="user_id" property="userId" jdbcType="CHAR" />
+		<result column="university_id" property="universityId"
+			jdbcType="CHAR" />
+		<result column="log_time" property="logTime" jdbcType="TIMESTAMP" />
+		<result column="log_type" property="logType" jdbcType="INTEGER" />
+		<result column="log_ip" property="logIp" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段 2015-08-28 14:42:22. -->
+	<sql id="Base_Column_List">
+		id, user_id,university_id, log_time, log_type, log_ip
+	</sql>
+
+	<select id="getAllLogCurrMonth" resultType="java.util.HashMap">
+		SELECT
+		DATE_FORMAT(log_time,'%m-%d') logTime,COUNT(1) counts FROM
+		t_user_logger WHERE log_type = 1
+		AND
+		DATE_FORMAT(log_time,'%Y-%m') =
+		DATE_FORMAT(NOW(),'%Y-%m') GROUP BY DATE_FORMAT(log_time,'%Y-%m-%d')
+	</select>
+	<select id="getLogCurrMonth" parameterType="java.lang.String"
+		resultType="java.util.HashMap">
+		SELECT DATE_FORMAT(NOW(), '%Y-%m') logTime,count(1)
+		counts FROM t_user_logger WHERE log_type = 1
+		AND
+		DATE_FORMAT(log_time,'%Y-%m') = DATE_FORMAT(NOW(),'%Y-%m') AND
+		university_id = #{universityId}
+	</select>
+	<select id="countUserOnline" resultType="java.lang.Long">
+		SELECT COUNT(1) FROM
+		t_user_logger WHERE log_type = 0 AND
+		DATE_FORMAT(log_time,'%Y-%m-%d')
+		=DATE_FORMAT(NOW(),'%Y-%m-%d') AND
+		user_id NOT IN (SELECT user_id FROM
+		t_user_logger WHERE log_type = 1
+		AND DATE_FORMAT(log_time,'%Y-%m-%d')
+		=DATE_FORMAT(NOW(),'%Y-%m-%d'))
+	</select>
+
+	<!-- 按主键查询 2015-08-28 14:42:22. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_user_logger
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<!-- 按主键删除 2015-08-28 14:42:22. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		t_user_logger
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2015-08-28 14:42:22. -->
+	<insert id="insert" parameterType="com.cy.model.UserLogger">
+		insert into t_user_logger (id,
+		user_id,university_id, log_time,
+		log_type, log_ip)
+		values
+		(#{id,jdbcType=INTEGER},
+		#{userId,jdbcType=CHAR},#{universityId,jdbcType=CHAR},
+		#{logTime,jdbcType=TIMESTAMP},
+		#{logType,jdbcType=INTEGER},
+		#{logIp,jdbcType=VARCHAR})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2015-08-28 14:42:22. -->
+	<insert id="insertSelective" parameterType="com.cy.model.UserLogger">
+		insert into t_user_logger
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="universityId != null">
+				university_id,
+			</if>
+			<if test="logTime != null">
+				log_time,
+			</if>
+			<if test="logType != null">
+				log_type,
+			</if>
+			<if test="logIp != null">
+				log_ip,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=CHAR},
+			</if>
+			<if test="universityId != null">
+				#{universityId,jdbcType=CHAR},
+			</if>
+			<if test="logTime != null">
+				#{logTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="logType != null">
+				#{logType,jdbcType=INTEGER},
+			</if>
+			<if test="logIp != null">
+				#{logIp,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2015-08-28 14:42:22. -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.cy.model.UserLogger">
+		update t_user_logger
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=CHAR},
+			</if>
+			<if test="universityId != null">
+				university_id = #{universityId,jdbcType=CHAR},
+			</if>
+			<if test="logTime != null">
+				log_time =
+				#{logTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="logType != null">
+				log_type = #{logType,jdbcType=INTEGER},
+			</if>
+			<if test="logIp != null">
+				log_ip = #{logIp,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2015-08-28 14:42:22. -->
+	<update id="updateByPrimaryKey" parameterType="com.cy.model.UserLogger">
+		update
+		t_user_logger
+		set user_id = #{userId,jdbcType=CHAR},university_id =
+		#{universityId,jdbcType=CHAR},
+		log_time =
+		#{logTime,jdbcType=TIMESTAMP},
+		log_type = #{logType,jdbcType=INTEGER},
+		log_ip = #{logIp,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+</mapper>
