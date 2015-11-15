@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:ehcache="http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+		http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring 
+		http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring/ehcache-spring-1.2.xsd
+		">
+	
+	<context:annotation-config />
+	
+	<context:component-scan base-package="com.cy">
+	</context:component-scan>
+	
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+	
+	<!-- 加载数据配置文件  -->
+	<bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	    <property name="locations">
+	        <list>
+	           <value>classpath:jdbc.properties</value>
+	           <!-- <value>classpath:system.properties</value> -->
+	        </list>
+	    </property>
+	</bean>
+	
+	<!-- 该 BeanPostProcessor 将自动起作用，对标注 @Autowired 的 Bean 进行自动注入 -->  
+    <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/> 
+    
+    <!-- ehcache 缓存配置 -->
+     <bean id="ehCacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="shared" value="true" />
+	</bean>
+	
+    <!-- 支持上传文件 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	<property name="defaultEncoding" value="UTF-8"></property>
+	<property name="maxUploadSize" value="10240000000"></property>
+	</bean>
+	
+	<bean class="com.cy.common.util.listener.RequestEndListener"/>
+	<!-- WAP_MENU 中保存验证码使用的ehcache缓存 -->
+<!-- 	<bean id="wapMenuCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+		<property name="cacheManager" ref="ehCacheManager" />
+		<property name="cacheName" value="WAP_MENU_CACHE" />
+	</bean>  -->
+	<!-- <bean id="wapMenuUtil" class="com.show.test.content.util.WapMenuCacheUtil"
+		factory-method="getInstance">
+		<property name="wapMenuCache">
+		 	<ref local="wapMenuCache" />
+		</property>
+	</bean> -->
+	
+    
+    
+	<!-- <bean id="pageService" class="com.show.test.common.page.PageService">
+		<property name="sqlDao" ref="sqlDao" />
+	</bean> -->
+    
+<!-- 	<bean id="httpUtil" class="com.hongyi.common.util.HttpUtil"></bean> -->
+	
+    
+    	
+    <!-- <bean id="ContextRerouse" class="com.show.test.content.util.ContextRerouse">
+    	<property name="androidVer"><value>${android.ver}</value></property>
+    	<property name="iosVer"><value>${ios.ver}</value></property>
+    	<property name="loginKeyUrl"><value>${login_key_url}</value></property>
+    	<property name="pucUrl"><value>${puc.url}</value></property>
+    	<property name="downloadUrl"><value>${download_url}</value></property>
+    	<property name="visitorUrl"><value>${visitor_url}</value></property>
+    </bean> -->
+    
+</beans>
