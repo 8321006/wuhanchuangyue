@@ -1,0 +1,218 @@
+@charset "utf-8";
+
+/*学生调查问卷*/
+
+/*****头部中间区域****/
+.questionnaire_con{
+	width:960px;
+	margin:0 auto;
+	text-align:center;	
+	padding-top:87px;
+	padding-bottom:65px;
+	position:relative;
+}
+
+
+.questionnaire_title{
+	width:100%;
+	text-indent:15px;	
+	color:#1a1a1a;
+	text-align:left;
+	font-weight:bold;
+	font-size:16px;
+	padding:40px 0 8px 0;
+	border-bottom:2px solid #ccc;
+}
+.questionnaire_info{
+	width:100%;
+	padding:16px 32px 16px 20px;
+	border-bottom:1px dashed #ccc;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-ms-box-sizing:border-box;box-sizing:border-box;
+	-o-box-sizing:border-box;
+	box-sizing:border-box;
+}
+.questionnaire_info_course_img_left{
+	float:left;	
+}
+.questionnaire_info_course_img{
+	width:201px;
+	height:128px;
+}
+.questionnaire_info_content_degree{
+	float:left;
+	margin-left:20px;
+	padding-top:35px;
+}
+.questionnaire_info_content_degree_txt{
+	float:left;
+	color:#333;
+	height:32px;
+	line-height:35px;
+	font-size:14px;
+	margin-right:10px;
+}
+.questionnaire_info_content_degree_star{
+	float:left;
+	height:32px;
+	line-height:32px;
+}
+.questionnaire_info_content_degree_star li{
+	float:left;
+	width:32px;
+	height:32px;
+	cursor:pointer;
+	text-indent:-9999px;
+	background:url(../images/questionnaire/star.png) 0 0 no-repeat;
+	margin-right:3px;
+}
+.questionnaire_info_content_degree_star li.on{
+	background-position:0 -32px;
+}
+
+
+
+.questionnaire_subject{
+	width:960px;
+	text-align:left;
+	margin-top:35px;
+	position:relative;
+}
+.questionnaire_sub_title{
+	width:100%;
+	color:#1a1a1a;
+	text-align:left;
+	font-weight:bold;
+	font-size:16px;
+}
+.questionnaire_sub_chose_con{
+	width:100%;
+	padding-top:20px;
+}
+.questionnaire_sub_chose{
+	float:left;
+	width:450px;
+	text-align:left;
+}
+.questionnaire_sub_chosebox{
+	float:left;
+	width:16px;
+	height:16px;
+	background:url(../images/exam/chosebox_ico.png) no-repeat;
+}
+.questionnaire_sub_chosebox_selected{
+	float:left;
+	width:16px;
+	height:16px;
+	background:url(../images/exam/chosebox_ico_selected.png) no-repeat;
+}
+.questionnaire_sub_chose_tit{
+	float:left;
+	width:420px;
+	line-height:16px;
+	color:#333;
+	font-size:14px;
+	margin-left:10px;
+}
+
+.questionnaire_sub_right_progess{
+	float:right;
+	width:435px;
+}
+.questionnaire_sub_right_progess_name{
+	float:left;
+	width:65px;
+	height:16px;
+	line-height:16px;
+	color:#1a1a1a;
+	font-size:14px;
+}
+.questionnaire_sub_right_progess_line{
+	float:left;
+	width:305px;
+	height:16px;
+	background:#ebebeb;
+	margin:0 20px 0 10px;
+	-moz-border-radius:16px;
+	-webkit-border-radius:16px;
+	-border-radius:16px;
+	-o-border-radius:16px;
+	border-radius:16px;
+	position:relative;
+}
+.questionnaire_sub_right_progess_line_used{
+	position:absolute;
+	left:0;
+	top:0;
+	height:16px;
+	-moz-border-radius:16px;
+	-webkit-border-radius:16px;
+	-border-radius:16px;
+	-o-border-radius:16px;
+	border-radius:16px;
+}
+.bg_ffda81{
+	background-color:#ffda81;
+}
+.bg_9cd554{
+	background-color:#9cd554;
+}
+.bg_ff8f81{
+	background-color:#ff8f81;
+}
+.bg_73bdec{
+	background-color:#73bdec;
+}
+.bg_d479ec{
+	background-color:#d479ec;
+}
+
+
+.questionnaire_sub_right_progess_total{
+	float:left;
+	color:#1a1a1a;
+	height:15px;
+	line-height:15px;
+	font-size:14px;
+}
+
+
+.questionnaire_ask_textarea{
+	width:950px;
+	height:290px;
+	text-align:left;
+	resize:none;
+	overflow-y:auto;
+	border:1px solid #999;
+	margin-top:25px;
+	padding:10px;
+}
+
+
+.questionnaire_submit_btn_con{
+	width:100%;
+}
+.questionnaire_submit_btn_con{
+	display:inline-block;
+	width:200px;
+	height:40px;
+	line-height:40px;
+	background:#4dd8fb;
+	color:#fff;
+	text-align:center;
+	font-size:16px;
+	margin-top:32px;
+	cursor:pointer;
+}.questionnaire_submit_btn_con:hover{
+	display:inline-block;
+	width:200px;
+	height:40px;
+	line-height:40px;
+	background:#39c8ec;
+	color:#fff;
+	text-align:center;
+	font-size:16px;
+	margin-top:32px;
+	cursor:pointer;
+}

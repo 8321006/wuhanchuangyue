@@ -1,0 +1,67 @@
+@charset "utf-8";
+
+/*上传学生名单*/
+
+.student_list_upload_zone{
+	width:100%;
+	background:#eff2f7;
+	padding:10px 0 10px 20px;
+	margin-top:20px;
+	position:relative;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	box-sizing:border-box;
+}
+.student_list_upload_zone .slist_upload_looksearch_btn {
+	float:left;
+    display: inline-block;
+	width:110px;
+	height:30px;
+    line-height:30px;
+    background:#6ad7f2;  
+    color:#fff;
+	text-align:center;
+	overflow:hidden;
+	position:relative;
+	font-size:12px;
+}
+.slist_upload_looksearch_btn input.pers_upload_img_zone_filebtn{
+    position:absolute;
+    right:0;
+    top:0;
+	filter:alpha(opacity=40);
+    opacity:0;
+	-moz-opacity:0;
+	-webkit-opacity:0;
+	-o-opacity:0
+}
+
+.student_list_upload_zone .pers_upload_img_zone_file{
+	float:left;
+	width:370px;
+	height:28px;
+	line-height:28px;
+	color:#333;
+	text-align:left;
+	padding-left:8px;
+	font-size:12px;
+	border:1px solid #ccc;
+	margin-left:5px;
+}
+
+.student_list_upload_zone .student_list_upload_btn{
+	float:left;
+	width:110px;
+	height:30px;
+    line-height:30px;
+    background:#6ad7f2;  
+    color:#fff;
+	text-align:center;
+	overflow:hidden;
+	position:relative;
+	font-size:12px;
+	margin-left:32px;
+	cursor:pointer;
+}

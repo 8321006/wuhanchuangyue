@@ -1,0 +1,952 @@
+@charset "utf-8";
+
+
+/*****学习的课程 中间区域****/
+.container .my_course_con{
+	width:1200px;
+	margin:0 auto;
+	text-align:center;	
+	padding:55px 0;	
+}
+.container_index .my_course_con{
+	width:1200px;
+	margin:0 auto;
+	text-align:center;	
+	padding:55px 0;	
+}
+.my_course_con .my_course_con_left{
+	float:left;
+	width:789px;
+}
+.my_course_con .my_course_con_left .mycourse_cl_tit{
+	width:789px;
+	height:40px;
+	line-height:40px;
+	color:#1a1a1a;
+	text-align:left;
+	text-indent:25px;
+	font-weight:bold;
+	font-size:16px;
+	border-bottom:2px solid #ccc;
+	position:relative;
+}
+.mycourse_cl_tit a{
+	color:#4dd8fb;
+	position:absolute;
+	right:16px;
+	top:0;
+	font-weight:normal;
+	font-size:14px;
+	cursor:pointer;
+}
+.my_course_con .my_course_con_left .mycourse_cl_table{
+	width:789px;
+}
+.my_course_con .my_course_con_left .mycourse_cl_table tr td{
+	text-align:left;
+	font-size:14px;
+	padding:25px 0;
+	border-bottom:1px solid #ccc;	
+}
+.my_course_con .my_course_con_left .mycourse_cl_table tr td:nth-child(1){
+	width:45%;	
+}
+.my_course_con .my_course_con_left .mycourse_cl_table tr td:nth-child(2){
+	width:30%;
+}
+.my_course_con .my_course_con_left .mycourse_cl_table tr td:nth-child(3){
+	width:25%;
+	text-align:right;
+}
+.my_course_con .my_course_con_left .mycourse_cl_table tr td .mycourse_learn_btn{
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	width:91px;
+	height:30px;
+	line-height:30px;
+	color:#fff;
+	text-align:center;
+	font-size:14px;
+}
+.bg_color_4dd8fb{
+	background:#4dd8fb;
+}
+.bg_color_4dd8fb:hover{
+	background:#39c8ec;
+}
+.bg_color_ff7373{
+	background:#ff7373;
+}
+.my_course_con .my_course_con_left .mycourse_cl_detail_txt{
+	width:764px;
+	padding:25px 0 20px 25px;
+	border-bottom:1px solid #ccc;
+}
+.my_course_con .my_course_con_left .mycourse_cl_detail_txt p{
+	width:764px;
+	line-height:22px;
+	text-align:left;
+	color:#4c4c4c;
+	font-size:14px;
+}
+.my_course_con .my_course_con_left .mycourse_cl_detail_txt .mycourse_cl_lookwhole{
+	width:764px;
+	padding-top:22px;
+}
+.my_course_con_left .mycourse_cl_detail_txt .mycourse_cl_lookwhole a{
+	float:right;
+	width:91px;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	color:#fff;
+	font-size:14px;
+	cursor:pointer;
+}
+.my_course_con_left .mycourse_cl_detail_txt .mycourse_cl_detail_txt_bigtit{
+	width:764px;
+	color:#333;
+	text-align:left;
+	font-size:14px;
+}
+.my_course_con .my_course_con_left .mycourse_cl_detail_txt p b{
+	font-weight:bold;
+	color:#333;
+	font-size:12px;
+}
+.my_course_con .my_course_con_left .mycourse_cl_exam_table{
+	width:789px;
+}
+.my_course_con .my_course_con_left .mycourse_cl_exam_table tr td{
+	width:25%;
+	text-align:left;
+	font-size:12px;
+	padding:25px 0;
+	border-bottom:1px solid #ccc;	
+}
+.my_course_con .my_course_con_left .mycourse_cl_exam_table tr td span{
+	font-size:14px;	
+}
+.my_course_con .my_course_con_left .mycourse_cl_exam_table tr td b{
+	color:#4dd8fb;
+	font-size:14px;		
+}
+.my_course_con .my_course_con_left .mycourse_cl_chart_con{
+	width:764px;
+	padding-left:25px;
+	padding-top:65px;
+}
+.my_course_con .my_course_con_left .mycourse_cl_chart_con .mycourse_cl_chart{
+	width:764px;
+}
+.my_course_con .my_course_con_left .mycourse_cl_chart_con .mycourse_cl_chart li{
+	float:left;
+	width:135px;
+	margin-right:74px;
+}
+.my_course_con .my_course_con_left .mycourse_cl_chart_con .mycourse_cl_chart li.end{
+	margin-right:0
+	
+}
+.my_course_con .my_course_con_left .mycourse_cl_chart .mycourse_cl_chart_detail{
+	width:127px;
+	height:127px;
+	line-height:127px;
+	color:#666;
+	text-align:center;
+	font-size:20px;
+	-wekbit-border-radius:127px;
+	-moz-border-radius:127px;
+	-0-border-radius:127px;
+	border-radius:127px;
+	border:4px solid #e6e6e6;
+}
+.my_course_con .my_course_con_left .mycourse_cl_chart .mycourse_cl_chart_detail.mycourse_cl_chart_detail1{
+	width:127px;
+	height:127px;
+	line-height:127px;
+	color:#666;
+	text-align:center;
+	font-size:20px;
+	-wekbit-border-radius:127px;
+	-moz-border-radius:127px;
+	-0-border-radius:127px;
+	border-radius:127px;
+	border:4px solid #0000ff;
+}
+.my_course_con .my_course_con_left .mycourse_cl_chart_con .mycourse_cl_chart li p{
+	width:135px;
+	text-align:center;
+	font-size:12px;
+	color:#666;
+	margin-top:18px;
+}
+.my_course_con .my_course_con_left .mycourse_cl_chart .mycourse_cl_chart_detail span{
+	font-size:12px;
+}
+
+
+
+
+/******随堂笔记弹出框****/
+.pop_msg_bg_course, .pop_msg_bg_course1{ 
+	width:100%; 
+	height:100%; 
+	background:rgba(0,0,0,0.5); 
+	position:fixed; 
+	top:0; 
+	left:0;
+	z-index:15; 
+	display:none;
+}
+.pop_msg_course, .pop_msg_course1{ 
+	width:879px; 
+	height:704px;
+	background:#fff;
+	position:fixed;
+	z-index:16; 
+	display:none;
+}
+.pop_msg_course .course_pop_tit, .pop_msg_course1 .course_pop_tit{
+	width:879px;
+	height:40px;
+	line-height:40px;
+	border-bottom:1px solid #ccc;
+}
+.course_pop_tit .course_pop_tit_left{
+	float:left;
+	height:40px;
+	line-height:40px;
+	color:#333;
+	margin-left:30px;
+	font-size:14px;
+}
+.course_pop_tit .course_pop_tit_close{
+	float:right;
+	width:30px;
+	height:30px;
+	background:url(../images/exam/exam_pop_close.png) no-repeat;
+	margin:8px 8px 0 0;
+	cursor:pointer;
+}
+
+.pop_msg_course .course_pop_note{
+	width:799px;
+	height:640px;
+	padding:0 40px;
+	overflow-y:auto;
+	overflow-x:hidden;
+}
+.course_pop_note_list{
+	width:799px;
+	padding:25px 0 18px 0;
+	border-bottom:1px solid #ccc;	
+}
+.course_pop_note_list .course_pop_note_txt{
+	width:774px;
+	color:#4c4c4c;
+	line-height:22px;
+	font-size:12px;
+	text-align:left;
+	padding-left:25px;
+}
+.course_pop_note_list .course_pop_note_time{
+	float:right;
+	margin-top:10px;
+	color:#4c4c4c;
+	font-size:12px;
+}
+
+.pop_msg_course1 .course_pop_ask{
+	width:799px;
+	height:640px;
+	padding:0 40px;
+	overflow-y:auto;
+	overflow-x:hidden;
+}
+.course_pop_ask_list{
+	width:799px;
+	padding:25px 0 18px 0;
+	border-bottom:1px solid #ccc;
+	position:relative;	
+}
+.course_pop_ask_list img.not_answer_ico{
+	width:19px;
+	height:36px;
+	position:absolute;
+	left:-1px;
+	top:1px;
+}
+.course_pop_ask_list .course_pop_ask_title{
+	width:774px;
+	color:#333;
+	line-height:22px;
+	text-align:left;
+	font-size:14px;
+	padding-left:25px;
+}
+
+.course_pop_ask_title .course_pop_ask_btn{
+	float:right;
+	width:75px;
+	height:22px;
+	line-height:22px;
+	text-align:center;
+	background:#4dd8fb;
+	color:#fff;
+	font-size:12px;
+}
+.course_pop_ask_textarea{
+	width:100%;
+	text-align:left;
+	padding-left:25px;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	box-sizing:border-box;
+	display:none;	
+}
+
+.course_pop_ask_textarea textarea{
+	width:100%;
+	height:80px;
+	color:#4c4c4c;
+	line-height:20px;
+	text-align:left;
+	padding:10px;
+	margin-top:10px;
+	border:1px solid #ccc;
+	resize:none;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	box-sizing:border-box;	
+	font-size:12px;	
+}
+
+.course_pop_ask_textarea_submit{
+	width:100%;
+	text-align:left;
+	padding-left:25px;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	box-sizing:border-box;
+}
+.course_pop_ask_textarea_submit a{
+	float:right;
+	width:85px;
+	height:22px;
+	line-height:22px;
+	text-align:center;
+	background:#4dd8fb;
+	color:#fff;
+	font-size:12px;
+	margin-top:10px;
+}
+
+.course_pop_ask_list .course_pop_ask_txt{
+	width:774px;
+	color:#4c4c4c;
+	line-height:22px;
+	text-align:left;
+	font-size:12px;
+	padding-left:25px;
+	margin-top:5px;
+}
+.course_pop_ask_list .course_pop_ask_txt b{
+	color:#333;
+	font-weight:bold;
+}
+.course_pop_ask_list .course_pop_ask_time{
+	float:right;
+	margin-top:10px;
+	color:#4c4c4c;
+	font-size:12px;
+}
+
+
+
+/****老师页面随堂作业批阅****/
+.my_course_con .my_course_con_left .mycourse_cl_teacher_table{
+	width:789px;
+}
+.mycourse_cl_teacher_table tr td{
+	text-align:left;
+	font-size:12px;
+	padding:10px 0;
+	border-bottom:1px solid #ccc;	
+}
+.mycourse_cl_teacher_table tr td:nth-child(1){
+	width:22%;	
+}
+.mycourse_cl_teacher_table tr td:nth-child(1) .teacher_homework_circle_con{
+	width:105px;
+	height:80px;
+	margin-left:25px;
+	padding:6px 0;
+}
+.teacher_homework_circle_con .teacher_homework_circle{
+	width:56px;
+	height:56px;
+	line-height:56px;
+	text-align:center;
+	color:#4dd8fb;
+	font-size:12px;
+	-moz-border-radius:56px;
+	-webkit-border-radius:56px;
+	-o-border-radius:56px;
+	border-radius:56px;
+	margin-left:24px;
+	position:relative;
+}
+.teacher_homework_circle .teacher_homework_circle_txt{
+	width:56px;
+	height:56px;
+	line-height:56px;
+	text-align:center;
+	position:absolute;
+	top:0;
+	left:0;
+}
+
+.teacher_homework_circle_con .teacher_homework_circle_detail{
+	width:105px;
+	text-align:center;
+	padding-top:6px;
+}
+
+.color_4dd8fb{
+	color:#4dd8fb;
+}
+.color_e85b5b{
+	color:#e85b5b;
+}
+
+.my_course_con .my_course_con_left .mycourse_cl_teacher_table tr td:nth-child(2){
+	width:50%;	
+}
+.mycourse_cl_teacher_table tr td:nth-child(2) .teacher_homework_detail{
+	width:100%;
+	text-align:left;
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	box-sizing:border-box;
+}
+.teacher_homework_detail .teacher_homework_detail_tit{
+	width:100%;
+	color:#333;
+	text-align:left;
+	font-size:14px;
+}
+.teacher_homework_detail .teacher_homework_detail_list{
+	width:100%;
+	color:#4c4c4c;
+	text-align:left;
+	font-size:12px;
+	padding-top:12px;
+}
+.teacher_homework_detail_list .teacher_homework_detail_list_left{
+	float:left;
+	text-align:left;
+	width:43%;
+}
+.teacher_homework_detail_list .teacher_homework_detail_list_right{
+	float:left;
+	width:57%;
+	text-align:left;
+	padding-left:60px;
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	box-sizing:border-box;
+}
+.teacher_homework_detail_list_right b{
+	font-weight:normal;
+	color:#e85b5b;
+}
+.my_course_con .my_course_con_left .mycourse_cl_teacher_table tr td:nth-child(3){
+	width:28%;
+	text-align:right;
+}
+.my_course_con .my_course_con_left .mycourse_cl_teacher_table tr td .mycourse_learn_btn{
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	width:91px;
+	height:30px;
+	line-height:30px;
+	color:#fff;
+	text-align:center;
+	font-size:14px;
+	cursor:pointer;
+}
+.bg_color_4dd8fb{
+	background:#4dd8fb;
+}
+.bg_color_ff7373{
+	background:#ff7373;
+}
+.bg_color_ff7373:hover{
+	background:#ff4a4a;
+}
+
+
+
+/*****教学计划弹出框***/
+.pop_msg_bg_teachplan{ 
+	width:100%; 
+	height:100%; 
+	background:rgba(0,0,0,0.5); 
+	position:fixed; 
+	top:0; 
+	left:0;
+	z-index:15; 
+	display:none;
+}
+.pop_msg_teachplan{ 
+	width:950px; 
+	height:520px;
+	background:#fff;
+	padding:30px 50px 30px 50px;
+	position:absolute;
+	z-index:22; 
+	display:none;
+}
+.pop_msg_teachplan .pop_msg_teachplan_close{
+	width:22px;
+	height:22px;
+	position:absolute;
+	top:10px;
+	right:15px;
+	cursor:pointer;
+	opacity:0.5;
+}
+.pop_msg_teachplan .pop_msg_teachplan_close:hover{
+	width:22px;
+	height:22px;
+	position:absolute;
+	top:10px;
+	right:15px;
+	cursor:pointer;
+	opacity:1;
+}
+.pop_msg_teachplan .pop_msg_teachplan_titdetail{
+	width:100%;
+	text-align:left;
+	padding-bottom:30px;
+}
+.pop_msg_teachplan_titdetail .teachplan_titdetail_first{
+	float:left;
+	color:#333;
+	font-size:14px;	
+}
+.pop_msg_teachplan_titdetail .teachplan_titdetail_second{
+	float:left;
+	color:#333;
+	font-size:14px;
+	margin-left:120px;
+}
+
+.pop_msg_teachplan .pop_msg_teachplan_tab{
+	width:100%;
+	height:36px;
+	border-bottom:1px solid #4c4c4c;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	box-sizing:border-box;
+}
+.pop_msg_teachplan .pop_msg_teachplan_tab li{
+	float:left;
+	width:140px;
+	height:36px;
+	line-height:36px;
+	color:#333;
+	font-weight:bold;
+	font-size:14px;
+	margin-right:240px;
+	border-bottom:4px solid #4c4c4c;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	box-sizing:border-box;
+	position:relative;
+}
+.pop_msg_teachplan .pop_msg_teachplan_tab li span.teachplan_tab_ico{
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	width:16px;
+	height:16px;
+	background:url(../images/my_course/teachplan_tab_ico1.png) no-repeat;
+	vertical-align:top;
+	margin-right:8px;
+	margin-top:10px;
+}
+.pop_msg_teachplan .pop_msg_teachplan_tab li b.teachplan_arrow_tabdown{
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	width:21px;
+	height:7px;
+	background:url(../images/my_course/teachplan_arrow_tabdown.png) no-repeat;
+	position:absolute;
+	bottom:-10px;
+	left:61px;
+}
+
+.pop_msg_teachplan .pop_msg_teachplan_tab li.end{
+	margin-right:0;
+}
+
+.pop_msg_teachplan .pop_msg_teachplan_con{
+	width:100%;
+	height:350px;
+	overflow-y:auto;
+	overflow-x:hidden;
+	padding-top:75px;
+}
+.pop_msg_teachplan_con .teachplan_time_top{
+	width:450px;
+	border-bottom:1px solid #4c4c4c;
+	position:relative;
+	z-index:16;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	box-sizing:border-box;
+}
+.teachplan_beginbtn{
+	width:150px;
+	height:35px;
+	line-height:35px;
+	text-align:center;
+	color:#fff;
+	font-size:12px;
+	position:absolute;
+	left:0;
+	bottom:-1px;
+}
+.pop_msg_teachplan_con .bg_color_33c5db{
+	background:#33c5db;
+}
+.pop_msg_teachplan_con .bg_color_b20303{
+	background:#b20303;
+}
+.teachplan_begintime{
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	color:#333;
+	font-size:12px;
+	position:absolute;
+	left:245px;
+	bottom:10px;
+}
+.teachplan_arrow_down{
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	width:36px;
+	height:36px;
+	background:url(../images/my_course/teachplan_arrow_down.png) no-repeat;
+	position:absolute;
+	right:-18px;
+	bottom:-18px;
+	z-index:99;
+}
+
+.teachplan_arrow_heng{
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	width:36px;
+	height:36px;
+	background:url(../images/my_course/teachplan_arrow_heng.png) no-repeat;
+	position:absolute;
+	right:-18px;
+	bottom:-18px;
+	z-index:99;
+}
+
+.pop_msg_teachplan_con .teachplan_time_middle{
+	width:100%;
+	position:relative;
+}
+
+.teachplan_time_middle .teachplan_time_middle_right{
+	width:580px;
+	border-left:1px solid #4c4c4c;
+	margin-left:449px;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	box-sizing:border-box;
+	padding:55px 0;
+}
+.teachplan_time_middle_right .teachplan_time_mr_con{
+	width:580px;
+}
+.teachplan_time_mr_con .teachplan_time_mr_con_left{
+	float:left;
+	width:35px;
+	background:#33c5db;
+	color:#fff;
+	margin-left:-1px;
+}
+.teachplan_time_mr_con .teachplan_time_mr_con_left span{
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	width:24px;
+	color:#fff;
+	word-wrap:break-word;
+	word-break:nomal;
+	font-size:12px;
+}
+.teachplan_time_mr_con .teachplan_time_mr_con_right{
+	float:left;
+	width:421px;
+	text-align:left;
+	background:#d6eff3;
+	margin-left:15px;
+	border-left:2px solid #70d6e6;
+	border-right:13px solid #33c5db;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	box-sizing:border-box;
+	position:relative;
+}
+.teachplan_time_mr_con_right .teachplan_arrow_left_blue{
+	width:7px;
+	height:21px;
+	position:absolute;
+	left:-8px;
+}
+.teachplan_time_mr_con_right .teachplan_time_mr_con_righttit{
+	color:#333;
+	font-size:14px;
+	padding-left:15px;
+	padding-top:12px;
+}
+.teachplan_time_mr_con_right .teachplan_time_mr_con_righttxt{
+	color:#333;
+	font-size:12px;
+	padding-left:52px;
+	padding-top:8px;
+}
+.teachplan_time_mr_con_right .teachplan_time_mr_con_righico{
+	padding:15px 0 10px 52px;
+}
+.teachplan_time_mr_con_right .teachplan_time_mr_con_righico span{
+	float:left;
+	width:15px;
+	height:15px;
+	line-height:15px;
+	color:#33c5db;
+	font-size:12px;
+	margin-right:35px;
+	padding-left:21px;
+	background-size:15px 15px;
+}
+.teachplan_time_mr_con_righico span.teachplan_con_ico_01{
+	background:url(../images/my_course/teachplan_con_ico_01.png) left center no-repeat;	
+}
+.teachplan_time_mr_con_righico span.teachplan_con_ico_02{
+	background:url(../images/my_course/teachplan_con_ico_02.png) left center no-repeat;	
+}
+.teachplan_time_mr_con_righico span.teachplan_con_ico_03{
+	background:url(../images/my_course/teachplan_con_ico_03.png) left center no-repeat;	
+}
+
+.teachplan_time_middle .teachplan_time_middle_left{
+	width:450px;
+	border-bottom:1px solid #4c4c4c;
+	position:relative;
+	z-index:16;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	box-sizing:border-box;
+}
+
+
+.pop_msg_teachplan_con .teachplan_time_bottom{
+	width:450px;
+	height:75px;
+	border-right:1px solid #4c4c4c;
+	border-bottom:1px solid #4c4c4c;
+	position:relative;
+	z-index:15;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	box-sizing:border-box;
+}
+
+
+
+/****老师批阅表格****/
+.course_teacher_piyue{
+	width:1200px;
+	margin:0 auto;
+	text-align:center;	
+	padding:117px 0 40px 0;
+}
+.course_teacher_piyue .course_teacher_piyue_tit{
+	width:100%;
+	height:40px;
+	line-height:40px;
+	color:#1a1a1a;
+	text-align:left;
+	text-indent:15px;
+	font-weight:bold;
+	font-size:16px;
+	border-bottom:2px solid #ccc;
+	position:relative;
+	margin-bottom:30px;
+}
+
+.course_teacher_piyue_table{
+	width:100%;
+    text-align:center;
+    
+}
+.course_teacher_piyue_table tr td{
+	height:40px;
+	line-height:40px;
+	text-align:left;
+	text-indent:16px;
+	font-size:12px;
+	color:#333;
+	border-bottom:0;
+	border-left:0;
+	border-top:0;
+	border-left:1px solid #fff;
+	 text-align:center;
+}
+.course_teacher_piyue_table tr td:last-child{
+	border-bottom:0;
+	border-top:
+}.fontset{
+	font-size:16px;
+	font-color:#fff;
+	text-align:center;
+	color:#fff;
+}
+.fonttdset{
+	font-size:12px;
+	font-color:#333;
+	text-align:center;
+	color:#333;
+	opacity:2;
+	position:relative;
+}.bottomset{
+	float:center;
+	margin-left:20px;
+	margin-top:10px;
+}
+.course_teacher_piyue_table thead tr td:nth-child(1){
+	border-bottom:0;
+	border-top:0;
+	background:#9eda72;
+	border-bottom:2px solid #73c734;
+	text-align:center;
+}
+.course_teacher_piyue_table thead tr td:nth-child(2){
+	border-bottom:0;
+	border-top:0;
+	background:#babf57;
+	text-align:center;
+	border-bottom:2px solid #9fa53f;
+}
+.course_teacher_piyue_table thead tr td:nth-child(3){
+	border-bottom:0;
+	border-top:0;
+	background:#51c6a6;
+	text-align:center;
+	border-bottom:2px solid #319378;
+	
+}
+.course_teacher_piyue_table thead tr td:nth-child(4){
+	border-bottom:0;
+	border-top:0;
+	background:#babf57;
+	text-align:center;
+	border-bottom:2px solid #9fa53f;
+}
+.course_teacher_piyue_table thead tr td:nth-child(5){
+	border-bottom:0;
+	border-top:0;
+	background:#9eda72;
+	text-align:center;
+	font-color:fff;
+	border-bottom:2px solid #73c734;
+}
+.course_teacher_piyue_table tr td:last-child{
+	border-bottom:0;
+	border-top:
+}
+.course_teacher_piyue_table thead tr td{
+	background:#d2effb;
+	border-top:1px solid #9bcdff;
+	border-bottom:2px solid #9bcdff;
+	height:50px;
+	text-align:left;
+	font-size:14px;
+	font-color:fff;
+	font-weight:bold;
+}
+.course_teacher_piyue_table tbody tr:nth-child(2n+1) td{
+	opacity:0.4;
+}
+.course_teacher_piyue_table tbody  td:nth-child(1){background:#cef0e0;}
+.course_teacher_piyue_table tbody  td:nth-child(2){background:#e3dfaf;}
+.course_teacher_piyue_table tbody  td:nth-child(3){background:#b6eaf3;}
+.course_teacher_piyue_table tbody  td:nth-child(4){background:#e3dfaf;}
+.course_teacher_piyue_table tbody  td:nth-child(5){background:#cef0e0;}
+.course_teacher_piyue_table tbody  td:nth-child(5):nth-child(2){background:#ccc;}
+
+
+.course_teacher_piyue_table tbody tr td .course_teacher_piyue_edit{
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	color:#333;
+	font-size:12px;
+}
+.course_teacher_piyue_table tbody tr td .course_teacher_piyue_del{
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	font-size:12px;
+	color:#333;
+}
+.course_teacher_piyue_exportdata{
+	float:right;
+	margin-top:-31px;
+	text-align:center;
+}
+.course_teacher_piyue_exportdata a{
+	float:right;
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	width:95px;
+	height:35px;
+	line-height:35px;
+	text-align:center;
+	background:#4dd8fb;
+	color:#fff;
+	margin-top:30px;
+	margin-right:25px;
+	font-size:14px;
+	cursor:pointer;
+}

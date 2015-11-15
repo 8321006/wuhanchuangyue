@@ -1,0 +1,402 @@
+@charset "utf-8";
+
+/*个人中心*/
+
+/*****头部中间区域****/
+.exam_con{
+	width:960px;
+	margin:0 auto;
+	text-align:center;	
+	padding-top:87px;
+	padding-bottom:100px;
+	position:relative;
+}
+
+.exam_con .time_cal_con{
+	width:150px;
+	background:rgba(0,0,0,0.7);	
+	position:fixed;
+	top:157px;
+	z-index:16;
+	padding-bottom:15px;
+}
+.exam_con .time_cal_con .time_cal_ico{
+	width:45px;
+	height:45px;
+	margin-top:10px;
+}
+.exam_con .time_cal_con p{
+	width:150px;
+	text-align:center;
+	color:#feffff;
+	font-size:14px;
+	margin-top:12px;	
+}
+.exam_con .time_cal_con .time_cal_detail{
+	width:150px;
+	text-align:center;
+	color:#92e4ff;
+	font-size:22px;
+	margin-top:10px;	
+}
+.exam_con .time_cal_con .time_cal_detail span{
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	margin:0 5px;
+}
+.exam_con .time_cal_con .exam_submit_btn{
+	width:95px;
+	height:35px;
+	background:#4dd8fb;
+	color:#fff;
+	line-height:35px;
+	text-align:center;
+	font-size:16px;
+	margin:10px auto 0 auto;
+	cursor:pointer;
+}
+.exam_con .exam_title{
+	width:100%;
+	text-indent:12px;	
+	color:#1a1a1a;
+	text-align:left;
+	font-weight:bold;
+	font-size:16px;
+	padding:40px 0 8px 0;
+	border-bottom:2px solid #ccc;
+}
+.exam_con .exam_info{
+	width:100%;
+	padding:45px 40px 4px 25px;
+	border-bottom:1px solid #ccc;
+	box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+}
+.exam_info .exam_info_table{
+	width:100%;
+	text-align:left;
+	font-size:14px;
+}
+.exam_info .exam_info_table tr td{
+	display:inline-block;
+	vertical-align:top;
+	text-align:left;
+	height:55px;
+	font-size:14px;
+}
+.exam_info .exam_info_table tr td:first-child{
+	width:25%;
+	margin-right:5%;
+}
+.exam_info .exam_info_table tr td:nth-child(2){
+	width:45%;
+}
+.exam_info .exam_info_table tr td:nth-child(3){
+	width:25%;
+	text-align:right;
+}
+
+.exam_con .exam_subject{
+	width:100%;
+	text-align:left;
+	margin-top:35px;
+	position:relative;
+}
+.exam_con .exam_subject .exam_sub_title{
+	width:800px;
+	color:#1a1a1a;
+	text-align:left;
+	font-weight:bold;
+	font-size:16px;
+}
+.exam_con .exam_subject .exam_sub_chose{
+	width:800px;
+	text-align:left;
+	margin-top:20px;
+}
+.exam_subject .exam_sub_chose .exam_sub_chosebox{
+	float:left;
+	width:18px;
+	height:18px;
+	background:url(../images/exam/chosebox_ico.png) no-repeat;
+}
+.exam_subject .exam_sub_chose .exam_sub_chosebox_selected{
+	float:left;
+	width:18px;
+	height:18px;
+	background:url(../images/exam/chosebox_ico_selected.png) no-repeat;
+}
+.exam_subject .exam_sub_chose .exam_sub_chose_tit{
+	float:left;
+	width:750px;
+	line-height:18px;
+	color:#333;
+	font-size:14px;
+	margin-left:10px;
+}
+.exam_subject .exam_ask_textarea{
+	width:750px;
+	height:290px;
+	text-align:left;
+	resize:none;
+	overflow-y:auto;
+	border:1px solid #999;
+	margin-top:25px;
+	padding:10px;
+}
+
+
+/***老师批阅分数****/
+.exam_subject .exam_score_con{
+	width:112px;
+	height:112px;
+	background:#4dd8fb;
+	color:#fff;
+	position:absolute;
+	right:10px;
+	top:0;
+}
+.exam_score_con p{
+	width:112px;
+	font-size:14px;
+	margin:16px 0 0 16px;
+}
+.exam_score_con .exam_score_detail{
+	width:112px;
+	height:50px;
+	line-height:50px;
+	font-size:30px;
+	margin:8px 0 0 16px;
+}
+.exam_score_con .exam_score_input{
+	width:112px;
+	height:50px;
+	line-height:50px;
+	background:#90e5fb;
+	color:#fff;
+	text-align:center;
+	font-size:16px;
+	margin-top:8px;
+}
+
+
+.exam_subject .exam_sub_choseresult{
+	width:960px;	
+}
+.exam_sub_choseresult .exam_sub_mychoseresult{
+	float:left;
+	height:30px;
+	line-height:28px;
+	color:#4dd8fb;
+	font-size:12px;
+	padding-top:22px;
+}
+.exam_sub_choseresult .exam_sub_imgchoseresult{
+	width:30px;
+	height:30px;	
+}
+.exam_sub_choseresult .exam_sub_imgchoseresult span.wrong_img{
+	float:left;
+	width:30px;
+	height:30px;
+	background:url(../images/exam/wrong_ico.png) no-repeat;	
+	margin:20px 0 0 15px;
+}
+.exam_sub_choseresult .exam_sub_imgchoseresult span.right_img{
+	float:left;
+	width:30px;
+	height:30px;
+	background:url(../images/exam/right_ico.png) no-repeat;	
+	margin:20px 0 0 15px;
+}
+.exam_sub_choseresult .exam_sub_rightchoseresult{
+	float:left;
+	height:30px;
+	line-height:28px;
+	color:#fb4d4d;
+	font-size:12px;
+	padding-top:22px;
+	margin-left:15px;
+}
+.exam_subject .exam_sub_jiexi{
+	width:960px;	
+}
+.exam_subject .exam_sub_jiexi .exam_sub_jiexi_tit{
+	width:78px;
+	height:35px;
+	line-height:35px;
+	text-align:center;
+	background:#ffb24f;
+	margin-top:10px;
+}
+.exam_sub_jiexi_tit img{
+	width:18px;
+	height:25px;
+}
+.exam_sub_jiexi_tit span{
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	font-size:12px;
+	color:#fff;
+	margin-left:6px;
+}
+.exam_subject .exam_sub_jiexi .exam_sub_jiexi_txt{
+	width:960px;
+	color:#1a1a1a;
+	font-size:12px;
+	margin-top:10px;
+}
+
+
+/*****分数展示弹出框****/
+.pop_msg_bg_exam{ 
+	width:100%; 
+	height:100%; 
+	background:rgba(0,0,0,0.5); 
+	position:fixed; 
+	top:0; 
+	left:0;
+	z-index:15; 
+	display:none;
+}
+.pop_msg_exam{ 
+	width:602px; 
+	height:604px;
+	background:#fff;
+	position:fixed;
+	z-index:16; 
+	display:none;
+}
+.pop_msg_exam .exam_pop_tit{
+	width:602px;
+	height:40px;
+	line-height:40px;
+	border-bottom:1px solid #ccc;
+}
+.exam_pop_tit .exam_pop_tit_left{
+	float:left;
+	height:40px;
+	line-height:40px;
+	color:#333;
+	margin-left:12px;
+	font-size:14px;
+}
+.exam_pop_tit .exam_pop_tit_close{
+	float:right;
+	width:22px;
+	height:22px;
+	background:url(../images/exam/exam_pop_close.png) no-repeat;
+	margin:9px 8px 0 0;
+	cursor:pointer;
+}
+.pop_msg_exam .exam_pop_score_txt{
+	width:577px;
+	padding-left:25px;
+	padding-top:25px;
+	color:#333;
+	font-size:16px;
+}
+.exam_pop_score_txt span{
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	color:#4dd8fb;
+	font-size:60px;
+	margin:0 15px;
+}
+.pop_msg_exam .exam_pop_analyse{
+	width:562px;
+	padding:30px 20px 0 20px;
+}
+.exam_pop_analyse .exam_pop_analyse_tit{
+	width:562px;
+	height:42px;
+	line-height:42px;
+	border-bottom:1px solid #ccc;
+}
+.exam_pop_analyse_tit img{
+	float:left;
+	width:21px;
+	height:19px;
+	margin-top:11px;
+	margin-right:6px;
+	margin-left:6px;
+}
+.exam_pop_analyse_tit span{
+	float:left;
+	height:42px;
+	line-height:42px;
+	color:#333;
+	font-size:16px;
+}
+.exam_pop_analyse .exam_pop_analyse_list{
+	width:562px;
+}
+.exam_pop_analyse_list .exam_pop_analyse_list_detail{
+	width:562px;
+	margin-top:13px;
+}
+.exam_pop_analyse_list .exam_pop_analyse_list_detail b{
+	float:left;
+	width:85px;
+	text-align:right;
+	color:#333;
+	font-size:12px;
+}
+.exam_pop_analyse_list .exam_pop_analyse_list_detail span{
+	float:left;
+	color:#333;
+	font-size:12px;
+}
+
+.exam_pop_analyse .exam_pop_analyse_table_con{
+	width:562px;
+	padding:25px 0 0 0;
+}
+.exam_pop_analyse_table_con .exam_pop_analyse_table{
+	width:100%;
+	text-align:left;
+	border-right:1px solid #ccc;
+}
+.exam_pop_analyse_table thead tr td{
+	height:40px;
+	line-height:40px;
+	text-indent:24px;
+	border-left:1px solid #ccc;
+	border-top:1px solid #ccc;
+	border-bottom:2px solid #ccc;
+}
+.exam_pop_analyse_table tr td:nth-child(1){
+	width:45%;
+}
+.exam_pop_analyse_table tbody tr td{
+	height:40px;
+	line-height:40px;
+	text-indent:24px;
+	border-left:1px solid #ccc;
+	border-bottom:1px solid #ccc;
+}
+.exam_pop_analyse .exam_pop_analyse_btn{
+	width:562px;
+	padding-top:25px;
+	text-align:center;
+}
+.exam_pop_analyse .exam_pop_analyse_btn span{
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	width:174px;
+	height:40px;
+	line-height:40px;
+	text-align:center;
+	background:#4dd8fb;
+	color:#fff;
+	font-size:12px;
+	cursor:pointer;
+}
+

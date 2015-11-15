@@ -1,0 +1,135 @@
+@charset "utf-8";
+/**************autoWidth媒体查询自适应宽度布局**********************/
+
+
+
+@media screen and (min-width:1441px) {
+	
+/*****平台首页****/		
+.index_con3_content .flexslider{
+	height:567px;
+}
+.index_con3_content .flexslider .slides li{
+	height:567px;
+}	
+.index_con2_content, .index_con3_content{
+	padding-top:75px;
+}
+.index_con2_left_nav ul li{
+	height:64px;
+	line-height:64px;
+}
+.index_con2_content .index_con2_right{
+	height:525px;
+}	
+.index_con2_right .all_course_btn a{
+	margin-top:20px;
+}
+.flex-direction-nav{
+	top:240px;
+}
+
+/*****后台首页****/	
+.houtai_right_nav li img.bg_index_ico{
+	float:left;
+	width:72px;
+	height:72px;
+	margin:38px 0 0 35px;
+}	
+.houtai_right_nav li .houtai_right_nav_name{
+	float:right;
+	margin-right:30px;
+	margin-top:38px;
+}
+.houtai_right_nav li .houtai_right_nav_name table tr td{
+	width:35px;
+	height:35px;
+	line-height:35px;
+	text-align:center;
+	color:#fffefe;
+	font-size:18px;
+}
+/*****后台首页 结束****/	
+
+
+/*****后台教学设置 开始****/	
+
+.houtai_teaching_set_type_input{
+	width:60%;	
+}
+
+.houtai_teaching_set_type_all_input{
+	width:65%;
+}
+.houtai_teaching_set_type_all_textarea{
+	width:65%;
+}
+/*****后台教学设置 结束****/	
+}
+
+@media screen and (min-width:1024px)and (max-width:1440px) {
+	
+/*****平台首页****/		
+
+.index_con3_content .flexslider{
+	height:450px;
+}
+.index_con3_content .flexslider .slides li{
+	height:450px;
+}
+.index_con2_content, .index_con3_content{
+	padding-top:35px;
+}
+.index_con2_left_nav ul li{
+	height:80px;
+	line-height:80px;
+}
+.index_con2_content .index_con2_right{
+	height:495px;
+}
+.flex-direction-nav{
+	top:200px;
+}	
+
+	
+/*****后台首页 开始****/		
+.houtai_right_nav li img.bg_index_ico{
+	float:left;
+	width:72px;
+	height:72px;
+	margin:38px 0 0 20px;
+}
+.houtai_right_nav li .houtai_right_nav_name{
+	float:left;
+	margin-left:45px;
+	margin-right:0;
+	margin-top:38px;
+}
+.houtai_right_nav li .houtai_right_nav_name table tr td{
+	width:25px;
+	height:35px;
+	line-height:35px;
+	text-align:center;
+	color:#fffefe;
+	font-size:18px;
+}
+/*****后台首页 结束****/	
+
+
+/*****后台教学设置 开始****/	
+
+.houtai_teaching_set_type_input{
+	width:57%;
+}
+
+.houtai_teaching_set_type_all_input{
+	width:65%;
+}
+.houtai_teaching_set_type_all_textarea{
+	width:65%;
+}
+/*****后台教学设置 结束****/	
+
+
+}
+

@@ -1,0 +1,30 @@
+
+/* calendar */
+.box{width:396px; height:205px; position:absolute;}
+.message{width:204px;height:106px; position:absolute; background-color:#fff; left:406px; top:40px; padding:0 10px 10px 10px; display:none;}
+.message1{width:204px;height:106px; position:absolute; background-color:#fff; left:406px; top:40px; padding:0 10px 10px 10px; display:none;}
+img.rili_angle_arrow_left{ width:12px; height:22px; position:absolute; top:46px; left:-10px;}
+.rili_message_txt{ width:100%; text-align:left; color:#4c4c4c; line-height:18px; font-size:12px; margin-top:8px;}
+.calendar{width:394px; height:205px;position:absolute;background-color:#f9f9f9;border:1px solid #f5d2ba;color:#333!important;font-size:12px;}
+.calendar_head{line-height:28px;width:100%;float:left;position:relative;}
+.calendar_head input{width:35%;border:0px;font-family:Arial;background-color:#fff;margin-left:5%;text-align:center;line-height:18px;}
+.calendaremL{float:left;font-family:Arial;font-weight:bold;margin-top:-2px;padding:0 5px;cursor:pointer;}
+.calendaremR{float:right;font-family:Arial;font-weight:bold;margin-top:-2px;padding:0 5px;cursor:pointer;}
+.calendar_boy{float:left;position:relative;width:100%;}
+.calendar_boy i{position:absolute;left:0;top:25px;right:0px;bottom:0;text-align:center;font-size:150px;font-family:Arial;color:#eee;z-index:0;}
+._caltable{border-collapse:collapse;width:100%;float:left;position:relative;}
+._caltable tr td{line-height:25px;width:25px;text-align:center;font-family:Arial;cursor:pointer;}
+._caltable tr:first-child td{border-bottom:1px solid #ddd;cursor:default;border-bottom:1px solid #eee;border-right:0;}
+._caltable tr td:last-child{border-right:0;}
+._sday{color:#fe8e8e;font-family:'Microsoft YaHei';}
+.festival{color:#ff6a00!important;}
+._selDay{background-color:#fe8e8e;color:#fff;font-family:'Microsoft YaHei';}
+
+.calYear{border:1px solid #fe8e8e;width:50px;width:80%;position:absolute;z-index:2000;left:5%;background-color:#eee;border-collapse:collapse;}
+.calYear td{text-align:center;cursor:pointer;}
+.calYear td:hover{color:#fe8e8e;}
+.calMonth{border:1px solid #fe8e8e;width:50px;width:70%;position:absolute;z-index:2000;right:10%;background-color:#eee;border-collapse:collapse;}
+.calMonth td{text-align:center;cursor:pointer;}
+.calMonth td:hover{color:#fe8e8e;}
+.disDay{color:#999;cursor:text!important;}
+._calcolse{position:relative;border-radius:10px;width:10px;height:10px;color:red;}

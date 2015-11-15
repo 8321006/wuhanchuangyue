@@ -1,0 +1,342 @@
+@charset "utf-8";
+
+
+/****学情报告***/
+.study_report_container{
+	width:1200px;
+	background:#fff;
+	margin:0 auto 30px auto;
+}
+.sr_con_content{
+	width:100%;
+}
+.sr_con1_bg_top{
+	width:100%;
+	height:500px;
+	background:url(../images/study_report/study_report_banner.jpg) left top no-repeat;
+	position:relative;
+}
+.sr_con1_bg_top .sr_con1_bg_top_block{
+	width:100%;
+	height:178px;
+	text-align:left;
+	background:rgba(0,0,0,0.5);
+	position:absolute;
+	left:0;
+	bottom:0;
+}
+.sr_con1_bg_top_block div{
+	color:#bcf2ff;
+	font-size:30px;
+	padding-left:75px;
+	padding-top:32px;
+}
+.sr_con1_bg_top_block p{
+	color:#bcf2ff;
+	font-size:40px;
+	padding-left:75px;
+	padding-top:18px;
+}
+
+.sr_con1_bg_bottom{
+	width:100%;
+}
+.sr_con1_bg_bottom_title{
+	width:100%;
+	background:#cfe5ef;
+	padding:15px 75px;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	-o-box-sizing:border-box;
+}
+.sr_con1_bg_bottom_titletxt{
+	float:left;
+	color:#00aeff;
+	font-size:22px;
+}
+.sr_con1_bg_bottom_option{
+	float:right;
+	position:relative;
+}
+.sr_con1_option_div{
+	width:350px;
+	height:30px;
+	text-align:left;
+	line-height:30px;
+	text-indent:20px;
+	background:#00aeff;
+	color:#fff;
+	position:relative;
+	cursor:pointer;
+}
+.sr_con1_option_div b{
+	color:#fff;
+	font-size:14px;
+}
+.option_angle_ico{
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	width:12px;
+	height:8px;
+	background:url(../images/study_report/option_angle_ico.png) no-repeat;
+	position:absolute;
+	right:12px;
+	top:11px;	
+}
+.sr_con1_option_down{
+	width:350px;
+	border:1px solid gainsboro;
+	position:absolute;
+	right:1px;
+	top:30px;
+	display:none;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	border:1px solid #ccc;
+}
+.sr_con1_option_down li{
+	width:348px;
+	text-align:left;
+	height:30px;
+	line-height:30px;
+	text-indent:20px;
+	background:#fff;
+	color:#333;
+	cursor:pointer;
+	font-size:14px;
+}
+.sr_con1_option_down li:hover{
+	background:#d8edf2;
+}
+.sr_con1_bg_bottom_tips{
+	width:100%;
+	padding:30px 75px 80px 75px;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	-o-box-sizing:border-box;
+}
+.sr_con1_bg_bottom_tips div{
+	text-align:left;
+	color:#1a1a1a;
+	font-size:14px;
+	margin-top:10px;
+}
+
+
+
+/****第二页***/ 
+.sr_con2_bg_top{
+	width:100%;
+	padding:0 75px;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	-o-box-sizing:border-box;
+}
+.sr_con2_header{
+	width:100%;
+	padding:35px 0 20px 0;
+	border-bottom:2px solid #ccc;
+}
+.sr_con2_header img{
+	float:left;
+	width:193px;
+	height:60px;
+}
+
+.sr_con2_header b{
+	float:left;
+	width:160px;
+	height:60px;
+	line-height:60px;
+	background:#cfe5ef;
+	text-align:center;
+	color:#1a1a1a;
+	font-size:14px;
+	margin-left:18px;
+}
+
+.sr_con2_bg_bottom{
+	width:100%;
+	padding:30px 75px 80px 75px;
+	text-align:left;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	-o-box-sizing:border-box;
+}
+.sr_con2_bg_bottom h7{
+	width:100%;
+	color:#1a1a1a;
+	font-size:14px;	
+}
+.sr_con2_bg_bottom_txt{
+	width:100%;
+	color:#1a1a1a;
+	font-size:14px;
+	margin-top:10px;
+}
+.sr_con2_bg_bottom_txt b{
+	padding-left:25px;
+}
+.sr_con2_bg_bottom_tit{
+	color:#00aeff;
+	font-size:20px;
+	margin-top:20px;
+}
+.sr_con2_bg_bottom_chat{
+	width:100%;
+	padding-top:30px;
+}
+.sr_con2_bg_bottom_chat p{
+	width:52px;
+	height:30px;
+	line-height:30px;
+	background:#ff6868;
+	color:#fff;
+	text-align:center;
+	font-size:14px;
+}
+.study_report_img01{
+	width:100%;
+	margin-top:12px;
+}
+
+.sr_con2_bg_bottom_txtcon{
+	width:100%;
+	text-align:left;
+	color:#333;
+	font-size:14px;
+	line-height:24px;
+	margin-top:10px;
+}
+.sr_con2_bg_bottom_sectit{
+	width:100%;
+}
+.sr_con2_bg_bottom_sectit .sr_con2_bg_bottom_sectittxt{
+	float:left;
+	color:#1a1a1a;
+	font-size:18px;
+}
+.look_whole_seq{
+	float:right;
+	width:125px;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	background:#ff6868;
+	color:#fff;
+	font-size:14px;
+	cursor:pointer;
+}
+
+.study_report_img02{
+	width:100%;
+	height:326px;
+	margin-top:35px;
+}
+
+
+
+.study_report_table_detail{
+	width:100%;
+	padding-top:30px;
+}
+
+
+
+/***查看全部排名弹出框***/
+.pop_msg_bg_school_seq{ 
+	width:100%; 
+	height:100%; 
+	background:rgba(0,0,0,0.5); 
+	position:fixed; 
+	top:0; 
+	left:0;
+	z-index:15; 
+	display:none;
+}
+.pop_msg_school_seq{ 
+	width:740px; 
+	height:595px;
+	background:#fff;
+	position:fixed;
+	z-index:16; 
+	display:none;
+}
+
+.school_seq_title{
+	width:100%;
+	height:42px;
+	line-height:42px;
+	background:#00c6ff;
+	text-align:left;
+	color:#fff;
+	text-indent:10px;
+	font-size:16px;
+	position:relative;
+}
+.report_pop_close{
+	width:26px;
+	height:26px;
+	position:absolute;
+	right:10px;
+	top:8px;
+	cursor:pointer;
+}
+
+.school_info_detail{
+	width:100%;
+	height:460px;
+	padding:30px 20px 20px 20px;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	overflow-x:hidden;
+	overflow-y:auto;
+}
+.school_info_table{
+	width:100%;
+}
+.school_info_table tr td{
+	padding:12px 0;
+}
+.school_info_table thead tr td{
+	text-align:center;
+	border-left:1px solid #3b7f92;
+	border-top:1px solid #3b7f92;
+	border-bottom:1px solid #3b7f92;
+}
+.school_info_table thead tr td:last-child{
+	text-align:center;
+	border:1px solid #3b7f92;
+}
+.school_info_table tbody tr td{
+	text-align:center;
+	border-left:1px solid #323232;
+	border-right:1px solid #323232;
+	border-bottom:1px solid #323232;
+}
+.school_info_table tbody tr td:last-child{
+	text-align:center;
+	border-right:1px solid #323232;
+	border-bottom:1px solid #323232;
+}
+
+.school_info_table thead tr td{
+	background:#46d6ff;
+	color:#fff;
+}
+

@@ -1,0 +1,70 @@
+@charset "utf-8";
+
+/*个人中心*/
+
+.houtai_study_progess_content{
+	width:100%;
+	border:1px solid #ccc;
+	border-top:none;
+	text-align:center;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	box-sizing:border-box;
+	padding-bottom:20px;
+}
+
+.houtai_study_progess_content .study_progess_img_01{
+	width:90%;
+	margin-top:45px;
+}
+
+.houtai_study_progess_left{
+	float:left;	
+	width:48%;
+}
+.houtai_study_progess_right{
+	float:right;	
+	width:48%;
+}
+
+.houtai_study_progess_litter_content{
+	width:100%;
+	border:1px solid #ccc;
+	border-top:none;
+	text-align:center;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	box-sizing:border-box;
+	padding-bottom:30px;
+}
+
+.houtai_study_progess_litter_content .study_progess_img_02{
+	width:90%;
+	margin-top:55px;
+}
+
+.houtai_study_progess_litter_content .study_progess_img_03{
+	width:90%;
+	margin-top:10px;
+}
+
+.houtai_study_progess_content .study_progess_img_04{
+	width:90%;
+	margin-top:55px;
+}
+
+
+.houtai_study_progess_litter_content .study_progess_img_05{
+	width:90%;
+	margin-top:10px;
+}
+
+
+.houtai_study_progess_litter_content .study_progess_img_06{
+	width:90%;
+	margin-top:15px;
+}

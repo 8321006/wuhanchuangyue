@@ -1,0 +1,513 @@
+@charset "utf-8";
+
+/*平台内页*/
+
+/*****中间内容部分****/
+.container .video_con_content{
+	width:1200px;
+	margin:0 auto;
+	text-align:center;
+	padding-top:87px;
+	padding-bottom:40px;
+	position:relative;
+	z-index:3;
+}
+.container_index .video_con_content{
+	width:1200px;
+	margin:0 auto;
+	text-align:center;
+	padding-top:87px;
+	padding-bottom:40px;
+	position:relative;
+	z-index:3;
+}
+.video_con_content .video_con_tit{
+	width:1200px;
+	color:#333;
+	text-align:left;
+	font-size:14px;	
+	padding-top:30px;
+	padding-bottom:12px;
+}
+.video_con_content .video_zone{
+	width:1160px;
+	height:650px;
+	background:#000;
+	padding:25px 20px;	
+}
+
+.video_zone .video_zone_detail{
+	float:left;
+	width:880px;
+	height:650px;
+	background:#fff;
+}
+.video_zone .video_zone_right{
+	float:right;
+	width:265px;
+	height:650px;
+	background:#4d4d4d;
+}
+.video_zone_right .video_look_tab{
+	width:100%;
+	background:#000;
+}
+.video_zone_right .video_look_tab li{
+	float:left;
+	width:50%;
+	height:50px;
+	line-height:50px;
+	background:#000;
+	color:#fff;
+	font-size:14px;
+	cursor:pointer;
+}
+.video_zone_right .video_look_tab li.curr{
+	background:#4d4d4d;
+}
+.video_zone_right .video_look_tab li img{
+	width:20px;
+	height:20px;
+	vertical-align:top;
+	margin-right:8px;
+	margin-top:15px;
+}
+.video_zone_right .video_look_tab li span{
+	height:50px;
+	line-height:50px;
+	color:#fff;
+	font-size:14px;
+}
+
+.video_zone_right .video_look_tab_con{
+	width:100%;
+	
+}
+.video_look_tab_con .video_catalog_list{
+	width:100%;
+	height:600px;
+	padding:10px 10px 15px 20px;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	box-sizing:border-box;
+	overflow-y:auto;
+	overflow-x:hidden;
+}
+.video_look_tab_con .video_catalog_list li{
+	width:100%;
+	height:28px;
+	line-height:28px;
+	text-align:left;
+	margin-top:15px;	
+}
+.video_look_tab_con .video_catalog_list li b.video_catalog_list_ico{
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	vertical-align:top;
+	width:31px;
+	height:28px;
+	background:url(../images/my_course/video_ico_01.png) no-repeat;
+	margin-right:6px;
+	margin-left:-10px;
+}
+.video_look_tab_con .video_catalog_list li b.display_none{
+	display:none;	
+}
+.video_look_tab_con .video_catalog_list li span{
+	display:inline-block;
+	*display:inline;
+	width:202px;
+	*zoom:1;
+	height:28px;
+	line-height:28px;
+	color:#fff;
+	font-size:12px;
+	text-overflow:ellipsis;
+    overflow:hidden;
+    white-space:nowrap;
+	cursor:pointer;
+}
+.video_look_tab_con .video_catalog_list li span:hover{
+	color:#75ddff;
+}
+.video_look_tab_con .video_catalog_list li span.selected{
+	width:178px;
+	font-weight:bold;
+	color:#75ddff;
+}
+
+.video_look_tab_con .video_look_notes{
+	width:100%;
+	height:450px;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	box-sizing:border-box;
+	overflow-y:auto;
+	overflow-x:hidden;
+}
+.video_look_notes .video_look_notes_list{
+	width:100%;
+	padding:15px 10px 10px 10px;
+	border-bottom:1px solid #9e9e9e;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	box-sizing:border-box;
+}
+.video_look_notes .video_look_notes_txt{
+	width:100%;
+	text-align:left;
+	color:#fff;
+	line-height:22px;
+	font-size:12px;
+	margin-top:6px;
+	word-wrap:break-word;
+	word-break:break-all;
+}
+.video_look_notes .video_look_notes_issue{
+	width:100%;
+	padding-top:8px;
+}
+.video_look_notes_issue .video_look_notes_issuename{
+	float:left;
+	color:#fff;
+	font-size:12px;
+}
+.video_look_notes_issue .video_look_notes_issuetime{
+	float:right;
+	color:#fff;
+	font-size:12px;
+}
+.video_look_notes_edit{
+	width:100%;
+	height:150px;
+	padding:15px 10px;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	box-sizing:border-box;
+}
+.video_look_notes_edit .video_look_notes_edit_textarea{
+	width:100%;
+	height:80px;
+	resize:none;
+	background:#4d4d4d;
+	padding:6px;
+	color:#fff;
+	border:1px solid #9e9e9e;
+	font-size:12px;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	box-sizing:border-box;
+}
+
+.video_look_notes_edit_btn{
+	float:right;
+	margin-top:10px;	
+}
+.video_look_notes_edit_btn span{
+	float:left;
+	height:35px;
+	color:#fff;
+	line-height:35px;
+	margin-right:12px;
+	font-size:12px;
+}
+.video_look_notes_edit_btn a{
+	float:right;
+	width:78px;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	background:#4dd8fb;
+	color:#fff;
+	font-size:12px;
+}
+.video_look_notes_edit_btn a:hover{
+	float:right;
+	width:78px;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	background:#39c8ec;
+	color:#fff;
+	font-size:12px;
+	cursor:pointer;
+}
+
+
+
+
+.video_con_content .video_ques_info{
+	width:1200px;
+	padding-top:45px;
+}
+.video_ques_info .video_ques_detail{
+	float:left;
+	width:789px;
+}
+.video_ques_detail .mycourse_detail_cl_tit{
+	width:789px;
+	height:40px;
+	line-height:40px;
+	color:#1a1a1a;
+	text-align:left;
+	text-indent:25px;
+	font-weight:bold;
+	font-size:16px;
+	border-bottom:2px solid #ccc;	
+}
+.video_ques_detail .mycourse_detail_discuss_edit{
+	width:764px;
+	text-align:left;
+	padding-left:25px;
+}
+
+
+.video_ques_detail .mycourse_detail_discuss_edit .mycourse_detail_discuss_edit_zone{
+	width:746px;
+	height:80px;
+	color:#333;
+	overflow-y:auto;
+	overflow-x:hidden;
+	resize:none;
+	padding:8px;
+	font-size:12px;
+	border:1px solid #ccc;
+	margin-top:22px;
+}
+.video_ques_detail .mycourse_detail_discuss_edit .mycourse_detail_discuss_issue_btn{
+	float:right;
+	margin-top:10px;	
+}
+.video_ques_detail .mycourse_detail_discuss_issue_btn span{
+	float:left;
+	height:35px;
+	line-height:35px;
+	margin-right:12px;
+}
+.video_ques_detail .mycourse_detail_discuss_issue_btn a{
+	float:right;
+	width:128px;
+	height:35px;
+	line-height:35px;
+	text-align:center;
+	background:#4dd8fb;
+	color:#fff;
+	font-size:14px;
+	cursor:pointer;
+}
+.video_ques_detail .mycourse_detail_discuss_issue_btn a:hover{
+	float:right;
+	width:128px;
+	height:35px;
+	line-height:35px;
+	text-align:center;
+	background:#39c8ec;
+	color:#fff;
+	font-size:14px;
+	cursor:pointer;
+}
+
+
+.video_ques_info .video_info_detail{
+	float:right;
+	width:380px;
+}
+.video_info_detail .mycourse_cr_tit{
+	width:380px;
+	height:40px;
+	line-height:40px;
+	color:#1a1a1a;
+	text-align:left;
+	text-indent:15px;
+	font-weight:bold;
+	font-size:16px;
+	border-bottom:2px solid #ccc;
+}
+.video_info_detail .mycourse_cr_teacher_detail{
+	width:380px;
+	padding:25px 0;
+}
+.video_info_detail .mycourse_cr_teacher_detail .mycourse_cr_teacher_img{
+	float:left;
+	width:130px;
+	height:130px;
+	background:rgba(77,216,251,0.5);
+	-webkit-border-radius:130px;
+	-moz-border-radius:130px;
+	-o-border-radius:130px;
+	border-radius:130px;
+}
+.video_info_detail .mycourse_cr_teacher_detail .mycourse_cr_teacher_img img{
+	width:118px;
+	height:118px;
+	-webkit-border-radius:118px;
+	-moz-border-radius:118px;
+	-o-border-radius:118px;
+	border-radius:118px;
+	margin-top:6px;
+}
+.video_info_detail .mycourse_cr_teacher_detail .mycourse_cr_teacher_namedetail{
+	float:left;
+	margin-left:25px;
+}
+.video_info_detail .mycourse_cr_teacher_detail .mycourse_cr_teacher_namedetail p{
+	text-align:left;
+	width:225px;
+	font-size:14px;
+}
+
+
+/****视频弹出框样式***/
+.pop_msg_video_ask{
+	width:800px; 
+	height:511px;
+	background:url(../images/my_course/video_pop_btn_bg.png) no-repeat;
+	background-size:100% 100%;
+	position:fixed;
+	z-index:16; 
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	box-sizing:border-box;
+	display:none;
+}
+
+.pop_msg_bg_video_ask{
+	width:100%; 
+	height:100%; 
+	background:rgba(0,0,0,0.5); 
+	position:fixed; 
+	top:0; 
+	left:0;
+	z-index:15; 
+	display:none;
+}
+
+.pop_video_ask_title{
+	width:100%;
+	text-align:center;
+}
+.pop_video_ask_title span{
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	width:50%;
+	height:2.5em;
+	line-height:2.5em;
+	background:#d0f1ec;
+	color:#29b09a;
+	font-weight:bold;
+	-moz-border-radius:5px;
+	-ms-border-radius:5px;
+	-o-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	border:0.3em solid #3bd0b9;
+	text-align:center;
+	margin:5em 0 0 8%;
+	font-size:1.26em;
+}
+.pop_video_ask_con{
+	width:97%;
+	padding-left:6.5em;
+	margin-right:3%;
+	height:250px;
+	text-align:left;
+	overflow-y:auto;
+	overflow-x:hidden;
+	margin-top:0.5em;
+	-moz-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	box-sizing:border-box;
+}
+.pop_video_ask_subject{
+	width:100%;
+	text-align:left;
+	margin-top:1.2em;
+	padding:0 0.8em;
+	-moz-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	box-sizing:border-box;
+}
+.pop_video_ask_subject_tit{
+	width:100%;
+	font-size:14px;
+	font-weight:bold;
+	line-height:22px;
+}
+
+.pop_video_ask_sub_chose{
+	width:100%;
+	text-align:left;
+	margin-top:1em;
+}
+.pop_video_ask_sub_chosebox{
+	float:left;
+	width:18px;
+	height:18px;
+	background:url(../images/exam/chosebox_ico.png) no-repeat;
+}
+.pop_video_ask_sub_chosebox_selected{
+	float:left;
+	width:18px;
+	height:18px;
+	background:url(../images/exam/chosebox_ico_selected.png) no-repeat;
+}
+.pop_video_ask_sub_chose_tit{
+	float:left;
+	width:92%;
+	line-height:18px;
+	color:#333;
+	font-size:14px;
+	margin-left:10px;
+}
+
+.pop_video_ask_submit_btn{
+	width:100%;
+}
+.pop_video_ask_submit_btn a{
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	width:145px;
+	height:36px;
+	line-height:36px;
+	color:#d14500;
+	background:url(../images/my_course/bg_video_ask_submit_btn.png) no-repeat;
+	background-size:100% 100%;
+	margin-top:30px;
+	font-size:14px;
+	font-weight:bold;
+	cursor:pointer;
+}
+.pop_video_ask_submit_btn a:hover{
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	width:145px;
+	height:36px;
+	line-height:36px;
+	color:#d14500;
+	background:url(../images/my_course/bg_video_ask_submit_btn1.png) no-repeat;
+	background-size:100% 100%;
+	margin-top:30px;
+	font-size:14px;
+	font-weight:bold;
+	cursor:pointer;
+}

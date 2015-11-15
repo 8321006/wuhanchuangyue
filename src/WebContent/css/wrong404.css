@@ -1,0 +1,26 @@
+@charset "utf-8";
+
+/*个人中心*/
+
+/****中间区域***/
+.wrong404_con{
+	width:1200px;
+	margin:0 auto;
+	text-align:center;	
+	padding:87px 0 0 0;
+}
+.wrong404_con .wrong404_img_con{
+	width:1200px;
+	margin:0 auto;
+	text-align:center;	
+	padding:200px 0 0 0;
+}
+.wrong404_con .wrong404_img_con img{
+	width:454px;
+	height:234px;	
+}
+.wrong404_con .wrong404_img_con span{
+height:234px;
+ font-size:18px;
+ font-color:#ff0000;
+}

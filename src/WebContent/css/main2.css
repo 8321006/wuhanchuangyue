@@ -1,0 +1,309 @@
+@charset "utf-8";
+/*
+Author:Le.Cheng
+Development by:WistronITS SWPC
+Development Date:2014-06-23
+CSS Name:main.css
+*/
+
+/* reset */
+html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td{margin:0;padding:0;}
+address,caption,cite,code,dfn,em,strong,th,var {font-style:normal;font-weight:normal;}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}
+ol,ul{list-style:none;}
+fieldset,img {border:0;}
+table{border-collapse:collapse;border-spacing:0;}
+caption,th{text-align:left;}
+q:before,q:after{content:'';}
+abbr,acronym{border:0;}
+select:focus{border:1px solid #13b5b1;outline:none;}
+input,button,select,textarea{outline:none}
+textarea{resize:none}
+/* reset */
+
+/* public */
+*{font-family:Arial, "微软雅黑"; font-size:12px; color:#000000;}
+.clear{clear:both;} .cursor{cursor:pointer;}
+.fl{float:left;} .fr{float:right;}
+.tl{text-align:left;} .tc{text-align:center;} .tr{text-align:right;}
+/* public */
+
+/* layout */
+html {height:100%;}
+body {height:100%; background:#e7e7e7;}
+.top {position:fixed; z-index:3; width:100%; height:5px; background:#f97e37;}
+.container {margin:0 auto; width:1050px; min-height:100%; background:#ffffff;}
+
+.header {position:relative; margin:0 auto; width:1024px; height:99px; background:url(../images/bg_header.png) bottom no-repeat;}
+.mainbody {margin:0 auto 20px auto; width:1024px; padding-bottom:82px;}
+.footer {margin:-82px auto 0 auto;  width:1280px; height:78px; line-height:78px; font-size:16px; color:#fff; text-align:center; border-top:4px solid #1abc9c; background:#726f6f;}
+
+/* main */
+.user_info {position:absolute; top:16px; right:0px;}
+.user_info img {float:left; margin-top:3px; margin-right:5px;}
+.user_info span {float:left; margin-top:3px; margin-right:5px; font-size:16px; color:#666;}
+.user_info a {float:left; margin-top:3px; font-size:16px; color:#666;}
+.user_info .arrow {float:left; width:24px; height:24px; background:url(../images/icon_arrow.png) no-repeat; border:0; cursor:pointer;}
+.user_info .arrow:hover {background:url(../images/icon_arrow_on.png) no-repeat;}
+.user_info .arrow_on {float:left; width:24px; height:24px; background:url(../images/icon_arrow_on.png) no-repeat; border:0; cursor:pointer;}
+
+.user_center {position:absolute; top:41px; right:0px; width:128px; min-height:110px; padding:1px; background:#fff; border:2px solid #01a585; display:none;}
+.user_center li{float:left; margin:0; width:108px; line-height:28px; padding:0 10px; font-size:16px; color:#666; cursor:pointer;}
+.user_center li:hover{background:#f97e37; color:#fff;}
+.user_center li.focus{background:#f97e37; color:#fff;}
+
+.login_box {position:absolute; top:41px; right:0px; width:300px; min-height:150px; padding:1px; background:#fff; border:2px solid #01a585; display:none;}
+.login_box table {margin:30px auto;}
+.login_box td {padding:5px 0; line-height:30px; font-size:16px; color:#666;}
+.login_box td.tr{padding:5px 5px 5px 0;}
+.login_box input {float:left; width:156px; padding:6px 10px; color:#666; background:#fff; border:1px solid #c8c8c8;}
+.login_box button {width:100px; height:40px; line-height:40px; font-size:16px; font-weight:700; color:#fff; background:#1abc9c; border:0; cursor:pointer;}
+.login_box .btn_delete{position:absolute; top:10px; right:10px; width:20px; height:20px; background:url(../images/icon_delete.png) no-repeat; border:0; cursor:pointer;}
+.login_box .btn_delete:hover{background:url(../images/icon_delete_on.png) no-repeat;}
+
+.search {float:right; margin-top:54px; margin-right:15px; width:420px; height:35px; padding:0 10px;}
+.search input {float:left; margin-top:1px; width:385px; padding:7px 5px; font-size:16px; color:#666; border:0;}
+.search button {float:left; margin-top:5px; width:24px; height:24px; background:url(../images/icon_search.png) no-repeat; border:0; cursor:pointer;}
+
+.m_title {float:left; margin-top:10px; width:100%; min-height:44px; border-bottom:2px solid #1abc9c;}
+.m_title .title {float:left; min-width:120px; line-height:38px; font-size:22px; letter-spacing:8px; color:#01a585; text-align:center; border-bottom:6px solid #1abc9c;}
+.m_title .edit {float:left; width:120px; line-height:38px; font-size:22px; letter-spacing:8px; color:#01a585; text-align:center; border:6px solid #1abc9c; border-width:0 0 6px 0;}
+.m_title .count {float:left; margin-top:20px; margin-left:10px; font-size:16px; color:#666;}
+.m_title .btn {float:right; margin-top:9px; margin-left:1px; min-width:128px; height:34px; line-height:34px; font-size:18px; letter-spacing:4px; color:#fff; background:#1abc9c; border:0; cursor:pointer;}
+.m_title .btn_new {float:right; margin-top:9px; margin-left:1px; min-width:128px; height:34px; line-height:34px; padding:0 5px 0 28px; font-size:18px; letter-spacing:4px; color:#fff; background:#1abc9c url(../images/icon_new.png) 5px 5px no-repeat; border:0; cursor:pointer;}
+.m_title .btn_file {float:right; margin-top:9px; margin-left:12px; min-width:128px; height:34px; line-height:34px; padding:0 0 0 22px; font-size:18px; letter-spacing:4px; color:#fff; background:#1abc9c url(../images/icon_file.png) 5px 5px no-repeat; border:0; cursor:pointer;}
+.m_title .btn_paper {float:right; margin-top:9px; margin-left:12px; min-width:128px; height:34px; line-height:34px; padding:0 0 0 22px; font-size:18px; letter-spacing:4px; color:#fff; background:#1abc9c url(../images/icon_paper.png) 5px 5px no-repeat; border:0; cursor:pointer;}
+.m_title .btn_add {float:left; margin-top:5px; margin-bottom:15px; min-width:160px; height:50px; line-height:50px; padding:0 0 0 33px; font-size:22px; letter-spacing:4px; color:#fff; background:#1abc9c url(../images/icon_add.png) 12px 13px no-repeat; border:0; cursor:pointer;
+	     border-radius:6px;
+	-moz-border-radius:6px;
+	-webkit-box-radius:6px;
+}
+.m_title .btn_remove {float:right; margin-top:9px; margin-left:12px; min-width:128px; height:34px; line-height:34px; padding:0 0 0 22px; font-size:18px; letter-spacing:4px; color:#fff; background:#1abc9c url(../images/icon_remove.png) 5px 5px no-repeat; border:0; cursor:pointer;}
+.m_title .btn_release {float:right; margin-top:9px; margin-left:1px; min-width:128px; height:34px; line-height:34px; padding:0 5px 0 38px; font-size:18px; letter-spacing:4px; color:#fff; background:#1abc9c url(../images/icon_release.png) 10px 5px no-repeat; border:0; cursor:pointer;}
+.m_title ul {float:right; margin-top:16px;}
+.m_title li {float:left; margin-right:30px;}
+.m_title input[type="radio"] {float:left; margin-top:4px; margin-right:5px;}
+.m_title li label {font-size:18px; letter-spacing:2px; color:#999;}
+
+.textbook {float:left; margin-bottom:30px; width:1054px;}
+.textbook li {float:left; margin-top:30px; margin-right:30px; width:180px;}
+.textbook li .img {width:180px; height:254px;}
+.textbook li .title {margin-top:5px; margin-bottom:5px; width:180px; font-size:15px; color:#333; text-align:center;}
+.textbook li .name {margin-top:5px; margin-bottom:5px; width:180px; color:#666;}
+.textbook .score {margin-top:5px; margin-bottom:5px; width:180px;}
+.textbook .score span {float:right; margin-left:5px; color:#666;}
+.textbook .score img {float:right; margin-left:5px;}
+
+.course_list {float:left; width:100%; table-layout:fixed; word-wrap:break-word; border:1px solid #d1eaef;}
+.course_list td {line-height:35px; padding:5px; font-size:18px; color:#333; text-align:center; background:#eef8fa; border-right:1px solid #fff;}
+.course_list td.tdR{border-right:0px;}
+.course_list .odd td{background:#fff;}
+.course_list .img {margin:0 auto; width:62px; height:88px; border:1px solid #a5bec2;}
+.course_list .btn_edit {margin:0 15px; width:26px; height:26px; background:url(../images/icon_03.png) no-repeat; border:0; cursor:pointer;}
+.course_list .btn_edit_no {margin:0 15px; width:26px; height:26px; background:url(../images/icon_03_no.png) no-repeat; border:0; cursor:pointer;}
+.course_list .btn_open {margin:0 15px; width:26px; height:26px; background:url(../images/icon_04.png) no-repeat; border:0; cursor:pointer;}
+.course_list .btn_open_no {margin:0 15px; width:26px; height:26px; background:url(../images/icon_04_no.png) no-repeat; border:0; cursor:pointer;}
+.course_list .btn_del {margin:0 15px; width:26px; height:26px; background:url(../images/icon_05.png) no-repeat; border:0; cursor:pointer;}
+.course_list .btn_del_no {margin:0 15px; width:26px; height:26px; background:url(../images/icon_05_no.png) no-repeat; border:0; cursor:pointer;}
+.course_list .btn_new {float:right; margin-top:3px; min-width:128px; height:34px; line-height:34px; padding:0 0 0 22px; font-size:18px; color:#fff; background:#1abc9c url(../images/icon_new.png) 5px 5px no-repeat; border:0; cursor:pointer;}
+.course_list .btn_release {margin:0 15px; width:26px; height:26px; background:url(../images/icon_10.png) no-repeat; border:0; cursor:pointer;}
+.course_list .btn_release_no {margin:0 15px; width:26px; height:26px; background:url(../images/icon_10_no.png) no-repeat; border:0; cursor:pointer;}
+.course_list .btn_plan_open {margin:0 15px; width:26px; height:26px; background:url(../images/icon_11.png) no-repeat; border:0; cursor:pointer;}
+.course_list .btn_plan_open_no {margin:0 15px; width:26px; height:26px; background:url(../images/icon_11_no.png) no-repeat; border:0; cursor:pointer;}
+.course_list .btn_remove {margin:0 15px; width:26px; height:26px; background:url(../images/icon_12.png) no-repeat; border:0; cursor:pointer;}
+.course_list .btn_begin {margin:0 15px; width:26px; height:26px; background:url(../images/icon_13.png) no-repeat; border:0; cursor:pointer;}
+.course_list .btn_begin_no {margin:0 15px; width:26px; height:26px; background:url(../images/icon_13_no.png) no-repeat; border:0; cursor:pointer;}
+
+.course_list li {margin:5px 0; width:620px; height:40px;}
+.course_list img {float:left;}
+.course_list p {float:left; width:388px; height:38px; padding:0 20px; background:#fff; text-align:left; border:1px solid #e1dfdf; border-width:1px 1px 1px 0px;}
+.course_list a {line-height:38px; font-size:18px; color:#555; text-decoration:none;}
+.course_list .status {float:right; margin-top:3px; min-width:128px; line-height:34px; font-size:18px; color:#01a585;}
+.course_list .stop {float:right; margin-top:3px; min-width:128px; line-height:34px; font-size:18px; color:#ff0000;}
+
+.action{float:left; margin:20px 0; width:1024px; height:36px;}
+.page{margin:0 auto; width:280px; min-width:680px; height:36px;}
+.page li{float:left; width:32px; height:32px; line-height:32px; margin:0 6px; font-size:16px; color:#1abc9c; text-align:center; border:2px solid #1abc9c; cursor:pointer;}
+.page li:hover{color:#fff; background:#1abc9c;}
+.page li.h{color:#fff; background:#1abc9c;}
+.page li.pageLastAll{width:36px; height:36px; line-height:32px; background:url(../images/icon_07.png) center no-repeat; border:0;}
+.page li.pageLastAll:hover{background:#1abc9c url(../images/icon_07_on.png) center no-repeat;}
+.page li.pageLast{width:36px; height:36px; line-height:32px; background:url(../images/icon_06.png) center no-repeat; border:0;}
+.page li.pageLast:hover{background:#1abc9c url(../images/icon_06_on.png) center no-repeat;}
+.page li.pageNext{width:36px; height:36px; line-height:32px; background:url(../images/icon_08.png) center no-repeat; border:0;}
+.page li.pageNext:hover{background:#1abc9c url(../images/icon_08_on.png) center no-repeat;}
+.page li.pageNextAll{width:36px; height:36px; line-height:32px; background:url(../images/icon_09.png) center no-repeat; border:0;}
+.page li.pageNextAll:hover{background:#1abc9c url(../images/icon_09_on.png) center no-repeat;}
+
+.course_name {float:left; margin-top:15px; width:1024px;}
+.course_name img {float:left;}
+.course_name .title {float:left; width:874px; height:59px; background:url(../images/pic_04.png) no-repeat;}
+.course_name input {float:left; margin-top:8px; margin-left:5px; width:855px; padding:8px 5px; font-size:22px; letter-spacing:8px; color:#fff; text-align:center; background:none; border:0;}
+
+.mt10{margin-top:10px;}
+.course_table {float:left; width:100%; table-layout:fixed; word-wrap:break-word; border:1px solid #fff; border-width:1px;}
+.course_table td {line-height:35px; padding:7px; font-size:18px; color:#6f6f6f; background:#f1f0ee; border-right:1px solid #fff; border-bottom:1px solid #fff;}
+.course_table td.title {color:#007861; text-align:center; background:#baebe1;}
+.course_table ul{float:left; margin-left:35px;}
+.course_table li{float:left; margin-right:35px; min-width:65px; line-height:35px; padding:0 10px; font-size:18px; color:#6f6f6f; cursor:pointer;}
+.course_table li.select{color:#fff; background:#f97e37;}
+.course_table input {float:left; margin-left:35px; width:740px; padding:5px; font-size:18px; color:#6f6f6f; background:#fff; border: 1px solid #e1dfdf;}
+.course_table .search {float:left; margin-top:5px; margin-left:5px; width:24px; height:24px; background:url(../images/icon_search.png) no-repeat; border:0; cursor:pointer;}
+
+.course_introduction {float:left; margin-top:2px; width:1024px; height:301px; background:url(../images/pic_05.png) no-repeat; border-bottom:3px solid #1abc9c;}
+.course_introduction .upload {float:left; margin-top:20px; margin-left:40px; width:180px; height:254px; border:3px solid #1abc9c;}
+.course_introduction .title {float:left; margin-top:20px; margin-left:70px; letter-spacing:8px; font-size:22px; color:#1abc9c;}
+.course_introduction textarea{float:left; margin-top:10px; margin-left:70px; width:640px; height:170px; padding:20px; font-size:18px; color:#666; background:#fff; border:2px solid #adadad;}
+
+.file_table {float:left; width:100%; table-layout:fixed; word-wrap:break-word; border:1px solid #e1dfdf; border-width:0px 1px 1px 1px;}
+.file_table td {height:40px; padding:14px 19px; font-size:18px; color:#6f6f6f; background:#f1f0ee; border-right:1px solid #e1dfdf; border-bottom:1px solid #e1dfdf;}
+.file_table img {float:left;}
+.file_table p {float:left; width:390px; height:38px; line-height:38px; padding:0 20px; font-size:18px; color:#555; background:#fff; border:1px solid #e1dfdf; border-width:1px 1px 1px 0px;}
+.file_table a {line-height:38px; font-size:18px; color:#555; text-decoration:none;}
+
+.file_ul {float:left; width:1026px; margin-top:1px;}
+.file_ul li {float:left; margin-right:1px; margin-bottom:1px; width:471px; height:40px; padding:14px 19px; background:#f1f0ee; border:1px solid #e1dfdf;}
+.file_ul img {float:left;}
+.file_ul p {float:left; width:388px; height:38px; line-height:38px; padding:0 20px; font-size:18px; color:#555; background:#fff; border:1px solid #e1dfdf; border-width:1px 1px 1px 0px;}
+.file_ul a {line-height:38px; font-size:18px; color:#555; text-decoration:none;}
+.file_ul .btn_delete{float:right; margin-top:9px; width:20px; height:20px; background:url(../images/icon_delete.png) no-repeat; border:0; cursor:pointer;}
+.file_ul .btn_delete:hover{background:url(../images/icon_delete_on.png) no-repeat;}
+
+.course_content {float:left; width:100%; margin-top:30px;}
+.course_content dt {height:43px;}
+.course_content .title {float:left; min-width:135px; line-height:43px; font-size:22px; letter-spacing:4px; color:#fff; text-align:center; background:#1abc9c;
+	     border-radius:3px;
+	-moz-border-radius:3px;
+	-webkit-box-radius:3px;
+}
+.course_content dd {padding-bottom:50px;}
+.course_content .line {float:left; margin-left:65px; width:960px; border-left:4px solid #1abc9c;}
+.course_content .number {position:absolute; top:22px; left:-38px; width:26px; height:26px; background:#f97e37;
+	     border-radius:16px;
+	-moz-border-radius:16px;
+	-webkit-box-radius:16px;
+}
+.course_content .number span {float:left; width:26px; line-height:26px; font-size:18px; color:#fff; text-align:center;}
+.course_content .number .add {float:left; margin-top:1px; margin-left:1px;}
+/*.course_content .no1 {position:absolute; top:35px; left:-11px;}
+.course_content .no2 {position:absolute; top:270px; left:-11px;}
+.course_content .no3 {position:absolute; top:505px; left:-11px;}
+.course_content .no4 {position:absolute; top:740px; left:-11px;}
+.course_content .no_add {position:absolute; top:980px; left:-11px;}*/
+.course_div {position:relative; float:left; margin-top:25px; margin-left:22px; width:935px;}
+.course_div .course_title {float:left; width:129px; height:70px; line-height:70px; padding-left:5px; font-size:22px; color:#fff; text-align:center; background:url(../images/pic_09.png) no-repeat;}
+.course_div .course_add {float:left; width:129px; height:70px; line-height:70px; padding-left:5px; font-size:22px; color:#fff; text-align:center; background:url(../images/pic_10.png) no-repeat; cursor:pointer;}
+.course_div .course_edit {float:left; margin-left:15px; width:110px; line-height:70px; font-size:22px; letter-spacing:8px; color:#fff; text-align:center; background:none; border:0;}
+/*.course_div .course_ctn {float:left; width:590px; min-height:210px; padding:0 22px; background:#f1f0ee; border-left:2px solid #1abc9c;}
+.course_div .course_ctn li {float:left; margin:15px 0; width:590px;}
+.course_div .course_ctn img {float:left;}
+.course_div .course_ctn p {float:left; width:508px; height:38px; line-height:38px; padding:0 20px; font-size:18px; color:#555; background:#fff; border:1px solid #e1dfdf; border-width:1px 1px 1px 0px;}
+.course_div .course_ctn a {line-height:38px; font-size:18px; color:#555; text-decoration:none;}
+.course_div .course_ctn .btn_delete{float:right; margin-top:9px; width:20px; height:20px; background:url(../images/icon_delete.png) no-repeat; border:0; cursor:pointer;}
+.course_div .course_ctn .btn_delete:hover{background:url(../images/icon_delete_on.png) no-repeat;}*/
+
+.course_div .course_right {float:left; width:796px; border-left:2px solid #1abc9c;}
+.course_div .course_right table {float:left; width:100%;}
+.course_div .course_right td {padding:0; border:0;}
+.course_div .course_right td.ctn {background:#f1f0ee;}
+.course_div .course_right td.file {background:#1abc9c;
+	     border-radius:0px 6px 6px 0px;
+	-moz-border-radius:0px 6px 6px 0px;
+	-webkit-box-radius:0px 6px 6px 0px;
+}
+.course_div .course_right ul {float:left; margin-left:0px; width:590px; padding:0 22px;}
+.course_div .course_right li {float:left; margin:15px 0px; padding:0; width:590px;}
+.course_div .course_right img {float:left;}
+.course_div .course_right p {float:left; width:508px; height:38px; line-height:38px; padding:0 20px; font-size:18px; color:#555; background:#fff; border:1px solid #e1dfdf; border-width:1px 1px 1px 0px;}
+.course_div .course_right a {line-height:38px; font-size:18px; color:#555; text-decoration:none;}
+.course_div .course_right .btn_delete{float:right; margin-top:9px; width:20px; height:20px; background:url(../images/icon_delete.png) no-repeat; border:0; cursor:pointer;}
+.course_div .course_right .btn_delete:hover{background:url(../images/icon_delete_on.png) no-repeat;}
+
+.course_div .course_file {float:left; width:163px; min-height:210px; background:#1abc9c;
+	     border-radius:0px 3px 3px 0px;
+	-moz-border-radius:0px 3px 3px 0px;
+	-webkit-box-radius:0px 3px 3px 0px;
+}
+.course_div .btn_file {float:left; margin:10px 0 10px 20px; min-width:128px; height:34px; line-height:34px; padding:0 0 0 22px; font-size:18px; letter-spacing:4px; color:#fff; background:#1abc9c url(../images/icon_file.png) 5px 5px no-repeat; border:0; cursor:pointer;}
+.course_div .btn_paper {float:left; margin:10px 0 10px 20px; min-width:128px; height:34px; line-height:34px; padding:0 0 0 22px; font-size:18px; letter-spacing:4px; color:#fff; background:#1abc9c url(../images/icon_paper.png) 5px 5px no-repeat; border:0; cursor:pointer;}
+
+.course_line {float:left; margin:20px 0; width:100%; border-bottom:3px solid #1abc9c;}
+
+.operating {float:right; margin-top:10px; margin-bottom:10px; width:1024px;}
+.operating button{float:right; margin-left:12px; min-width:120px; height:50px; line-height:50px; font-size:18px; color:#fff; background:#1abc9c; border:0; cursor:pointer;}
+
+.operating_n {float:right; margin-bottom:10px; width:1024px;}
+.operating_n button{float:right; margin-left:12px; padding:0 40px; min-width:120px; height:50px; line-height:50px; font-size:22px; color:#fff; background:#1abc9c; border:0; cursor:pointer;}
+
+.plan_name {float:left; margin-top:15px; width:1024px;}
+.plan_name img {float:left;}
+.plan_name .title {float:left; width:825px; height:59px; background:url(../images/pic_12.png) no-repeat;}
+.plan_name input {float:left; margin-top:8px; margin-left:5px; width:804px; padding:8px 5px; font-size:22px; letter-spacing:8px; color:#fff; text-align:center; background:none; border:0;}
+
+.plan_table {float:left; width:100%; table-layout:fixed; word-wrap:break-word; border:1px solid #fff; border-width:1px 0px 1px 0px;}
+.plan_table td {line-height:35px; padding:7px; font-size:18px; color:#6f6f6f; background:#f1f0ee; border-right:1px solid #fff; border-bottom:1px solid #fff;}
+.plan_table td.title {color:#007861; text-align:center; background:#baebe1;}
+.plan_table ul{float:left; margin-left:35px;}
+.plan_table li{float:left; margin-right:35px; min-width:65px; line-height:35px; padding:0 10px; font-size:18px; color:#6f6f6f; cursor:pointer;}
+.plan_table li.select{color:#fff; background:#f97e37;}
+.plan_table input {float:left; margin-left:35px; width:500px; padding:5px; font-size:18px; color:#6f6f6f; background:#fff; border: 1px solid #e1dfdf;}
+.plan_table .search {float:left; margin-top:5px; margin-left:5px; width:24px; height:24px; background:url(../images/icon_search.png) no-repeat; border:0; cursor:pointer;}
+
+.plan_line {float:left; width:100%; border-bottom:3px solid #1abc9c;}
+
+.plan_div {position:relative; float:left; margin-top:15px; width:100%;}
+.plan_div .btn_remove {position:absolute; top:-12px; right:-12px; width:24px; height:24px; background:url(../images/icon_remove_01.png) no-repeat; border:0; cursor:pointer;}
+.plan_div .plan_title {float:left; width:147px; height:50px; background:url(../images/pic_13.png) no-repeat;}
+.plan_div .plan_title .title {float:left; margin-left:28px; line-height:50px; font-size:22px; color:#fff;}
+.plan_div .plan_title .number {float:left; margin-top:13px; margin-left:10px; width:26px; height:26px; line-height:26px; font-size:18px; color:#fff; text-align:center; background:#f97e37;
+	     border-radius:16px;
+	-moz-border-radius:16px;
+	-webkit-box-radius:16px;
+}
+.plan_div .plan_ctn {float:left; margin-left:10px; width:835px; padding:15px; background:#f1f0ee; border:1px solid #e2e2e2; vertical-align:top;}
+.plan_div .img {float:left; width:180px; height:254px; border:3px solid #1abc9c;}
+.plan_div .name {float:left; margin-left:20px; line-height:39px; font-size:20px; color:#1abc9c;}
+.plan_div .input {float:left; margin-left:15px; width:522px; padding:8px 5px; font-size:18px; color:#333; background:#fff; border:1px solid #adadad;}
+.plan_div .task {float:left; margin-top:15px; margin-left:20px; width:520px; line-height:39px; font-size:20px; color:#1abc9c;}
+.plan_div textarea{float:left; margin-left:20px; width:607px; height:144px; padding:10px; line-height:18px; font-size:18px; color:#333; border:1px solid #adadad; background:#fff;}
+.plan_div .status {float:left; margin-top:25px; width:130px; height:130px; background:#1abc9c;}
+.plan_div .status .yes {float:left; margin-top:25px; margin-left:40px; width:50px; height:50px; background:url(../images/pic_14.png) no-repeat;}
+.plan_div .status .yes_span {float:left; margin-top:5px; margin-left:28px; width:70px; font-size:20px; color:#005d4b; text-align:center;}
+.plan_div .status .no {float:left; margin-top:25px; margin-left:40px; width:50px; height:50px; background:url(../images/pic_15.png) no-repeat;}
+.plan_div .status .no_span {float:left; margin-top:5px; margin-left:28px; width:70px; font-size:20px; color:#fff; text-align:center;}
+.plan_div .notes {float:left; margin-top:-5px; margin-left:15px; width:542px; font-size:20px; color:#1abc9c;}
+.plan_div .notes_textarea{float:left; margin-top:5px; margin-left:15px; width:520px; height:108px; padding:10px; line-height:18px; font-size:18px; color:#333; background:#fff; border:1px solid #adadad;}
+.plan_div .result {float:left; margin-top:-5px; margin-left:15px; font-size:20px; color:#1abc9c;}
+
+.plan_div .volume {float:left; margin-top:5px; margin-left:15px; line-height:26px; font-size:20px; color:#1abc9c;}
+.plan_div .result_span {float:left; margin-top:5px; width:24px; height:24px; line-height:24px; font-size:20px; color:#ff0000; text-align:center; background:#fff; border:1px solid #adadad;}
+
+.plan_tabs {float:left; margin-left:10px; width:867px;}
+.plan_tabs .tabs {float:left; width:165px; border-right:2px solid #1abc9c;}
+.plan_tabs .tabs li {float:left; width:100%; height:70px; cursor:pointer;}
+.plan_tabs .tabs li a {float:right; margin-right:20px; line-height:70px; font-size:20px; color:#adadad; text-align:right; text-decoration:none;}
+.plan_tabs .tabs li.h {width:155px; border-right:10px solid #1abc9c;}
+.plan_tabs .tabs li.h a {margin-right:10px; font-size:22px; color:#1abc9c;}
+
+.plan_tabs .tabs_ctn {float:left; width:670px; min-height:210px; padding:0 15px; background:#f1f0ee;}
+.plan_tabs .tabs_ctn li {float:left; margin:15px 0; width:670px;}
+.plan_tabs .tabs_ctn img {float:left;}
+.plan_tabs .tabs_ctn p {float:left; width:589px; height:38px; line-height:38px; padding:0 20px; font-size:18px; color:#555; background:#fff; border:1px solid #adadad; border-width:1px 1px 1px 0px;}
+.plan_tabs .tabs_ctn a {line-height:38px; font-size:18px; color:#555; text-decoration:none;}
+
+.plan_task {position:relative; float:left; margin-top:20px; margin-left:10px; width:260px; height:183px; padding:10px; background:#f1f0ee; border-left:2px solid #1abc9c;}
+.plan_task .top {position:absolute; top:0px; left:-12px; width:10px; height:70px; background:#1abc9c;}
+.plan_task .title {float:left; font-size:20px; color:#1abc9c;}
+.plan_task p {float:left; margin-top:10px; font-size:18px; line-height:30px; color:#333;}
+
+.study_notes {position:relative; float:left; margin-top:20px; margin-left:30px; width:680px; height:183px; padding:10px; background:#f1f0ee; border-left:2px solid #1abc9c;}
+.study_notes .top {position:absolute; top:0px; left:-12px; width:10px; height:70px; background:#1abc9c;}
+.study_notes .title {float:left; font-size:20px; color:#1abc9c;}
+.study_notes textarea{float:left; margin-top:15px; margin-left:0px; width:658px; height:115px; padding:10px; line-height:30px; font-size:18px; color:#333; border:1px solid #adadad; background:#fff;}
+
+.student_table {float:left; margin-top:15px; width:100%; table-layout:fixed; word-wrap:break-word; border:1px solid #fff; border-width:1px 0px 1px 0px;}
+.student_table td {line-height:35px; padding:15px 7px; font-size:18px; color:#333;  text-align:center; background:#f1f0ee; border-right:1px solid #fff; border-bottom:1px solid #fff;}
+.student_table td.number {color:#333; background:#f3d9c9;}
+.student_table a {font-size:18px; color:#333;}
+
+/* main */

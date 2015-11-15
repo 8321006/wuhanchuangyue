@@ -1,0 +1,219 @@
+@charset "utf-8";
+
+/*后台管理系统——教学设置*/
+
+.houtai_teaching_set_left{
+	float:left;	
+	width:35%;
+}
+
+.houtai_teaching_set_content{
+	width:100%;
+	height:450px;
+	border:1px solid #ccc;
+	border-top:none;
+	text-align:center;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	box-sizing:border-box;
+	padding:0 15px;
+}
+.houtai_tset_school_img_tit{
+	width:100%;
+	text-align:left;
+	color:#333;
+	font-size:14px;
+	padding-top:20px;
+}
+.houtai_tset_school_img_info{
+	width:100%;
+	text-align:left;
+	color:#999;
+	line-height:20px;
+	font-size:12px;
+	margin-top:8px;
+}
+
+.houtai_tset_school_img_upload_zone{
+	width:100%;
+	background:#eff2f7;
+	padding:10px 0;
+	margin-top:10px;
+	position:relative;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	box-sizing:border-box;
+}
+.houtai_tset_school_img_upload_zone .htset_simg_upload_looksearch_btn {
+	float:left;
+    display: inline-block;
+	width:25%;
+	height:30px;
+    line-height:30px;
+    background:#6ad7f2;  
+    color:#fff;
+	text-align:center;
+	overflow:hidden;
+	position:relative;
+	font-size:12px;
+	margin-left:15px;
+}
+.htset_simg_upload_looksearch_btn input.htset_simg_upload_zone_filebtn{
+    position:absolute;
+    right:0;
+    top:0;
+	filter:alpha(opacity=40);
+    opacity:0;
+	-moz-opacity:0;
+	-webkit-opacity:0;
+	-o-opacity:0
+}
+
+.htset_simg_upload_zone_file{
+	float:left;
+	width:60%;
+	height:28px;
+	line-height:28px;
+	color:#333;
+	text-align:left;
+	padding-left:8px;
+	font-size:12px;
+	border:1px solid #ccc;
+}
+
+
+.houtai_tset_school_img_con{
+	width:180px;
+	height:180px;
+	text-align:center;
+	border:1px solid #ccc;
+	margin:20px auto 0 auto;
+}
+.houtai_tset_school_img_con img{
+	width:150px;
+	height:150px;
+	margin-top:15px;
+}
+
+.houtai_tset_school_img_btn{
+	width:182px;
+	height:45px;
+	line-height:45px;
+	background:#6ad7f2;
+	text-align:center;
+	color:#fff;
+	font-size:14px;
+	margin:25px auto 0 auto;
+}
+
+.houtai_teaching_set_right{
+	float:right;	
+	width:62%;
+	margin-left:3%;
+}
+.houtai_teaching_set_type_con{
+	width:100%;
+	padding-top:20px;
+}
+.houtai_teaching_set_type_left{
+	float:left;
+	width:33.3%;
+	text-align:left;
+}
+.houtai_teaching_set_type_middle{
+	float:left;
+	width:33.3%;
+	text-align:middle;
+}
+.houtai_teaching_set_type_right{
+	float:left;
+	width:33.3%;
+	text-align:right;
+}
+.houtai_teaching_set_type_txt{
+	float:left;
+	width:70px;
+	height:30px;
+	line-height:30px;
+	text-align:left;
+	color:#333;
+	font-size:12px;
+}
+.houtai_teaching_set_type_input{
+	float:left;
+	height:30px;
+	line-height:30px;
+	padding:4px 0;
+	color:#333;
+	text-indent:8px;
+	border:1px solid #ccc;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	box-sizing:border-box;
+	font-size:12px;
+}
+.houtai_teaching_set_type_all{
+	width:100%;
+}
+.houtai_teaching_set_type_all_txt{
+	float:left;
+	width:70px;
+	height:30px;
+	line-height:30px;
+	text-align:left;
+	color:#333;
+	font-size:12px;
+}
+.houtai_teaching_set_type_all_input{
+	float:left;
+	height:30px;
+	line-height:30px;
+	padding:4px 0;
+	color:#333;
+	text-indent:8px;
+	border:1px solid #ccc;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	box-sizing:border-box;
+	font-size:12px;
+}
+
+.houtai_teaching_set_type_all_textarea{
+	float:left;
+	height:180px;
+	color:#333;
+	resize:none;
+	padding:10px;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	box-sizing:border-box;
+	border:1px solid #ccc;
+	font-size:12px;
+}
+.houtai_teaching_set_type_con a.houtai_teaching_set_uploading_btn{
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	width:150px;
+	height:40px;
+	line-height:40px;
+	text-align:center;
+	color:#fff;
+	background:#6ad7f2;
+	font-size:14px;
+	margin:20px auto 0 auto;
+}
+
+
+
+

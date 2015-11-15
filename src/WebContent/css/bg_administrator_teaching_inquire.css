@@ -1,0 +1,375 @@
+@charset "utf-8";
+
+/*调查问卷*/
+
+
+.administrator_teaching_inquire_con{
+	width:100%;
+}
+
+.teaching_inquire_select_con{
+	float:left;
+	padding-top:30px;
+}
+
+.teaching_inquire_select_con .teaching_inquire_option{
+	float:left;
+	width:189px;
+	height:30px;
+	line-height:30px;
+	color:#333;
+	background:#fff;
+	text-align:left;
+	text-indent:15px;
+	border:1px solid #ccc;
+	font-size:12px;
+	cursor:pointer;
+	
+}
+.teaching_inquire_select_con .teaching_inquire_detail_btn{
+	float:left;
+	width:110px;
+	height:30px;
+	line-height:30px;
+	background:#58cce9;
+	text-align:center;
+	color:#fff;
+	font-size:12px;
+	margin-left:5px;
+	cursor:pointer;
+}
+
+
+.administrator_teaching_inquire_upload_zone{
+	float:left;
+	background:#eff2f7;
+	padding:10px 0 10px 20px;
+	margin-top:20px;
+	position:relative;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	box-sizing:border-box;
+}
+.administrator_teaching_inquire_upload_zone .administrator_teaching_inquire_upload_looksearch_btn {
+	float:left;
+    display: inline-block;
+	width:110px;
+	height:30px;
+    line-height:30px;
+    background:#6ad7f2;  
+    color:#fff;
+	text-align:center;
+	overflow:hidden;
+	position:relative;
+	font-size:12px;
+}
+.administrator_teaching_inquire_upload_zone .administrator_teaching_inquire_upload_looksearch_btn:hover {
+	float:left;
+    display: inline-block;
+	width:110px;
+	height:30px;
+    line-height:30px;
+    background:#39c8ec;  
+    color:#fff;
+	text-align:center;
+	overflow:hidden;
+	position:relative;
+	font-size:12px;
+}
+.administrator_teaching_inquire_upload_looksearch_btn input.administrator_teaching_inquire_upload_img_zone_filebtn{
+    position:absolute;
+    right:0;
+    top:0;
+	filter:alpha(opacity=40);
+    opacity:0;
+	-moz-opacity:0;
+	-webkit-opacity:0;
+	-o-opacity:0
+}
+
+.administrator_teaching_inquire_upload_zone .administrator_teaching_inquire_upload_img_zone_file{
+	float:left;
+	width:180px;
+	height:28px;
+	line-height:28px;
+	color:#333;
+	text-align:left;
+	padding-left:8px;
+	font-size:12px;
+	border:1px solid #ccc;
+	margin-left:5px;
+}
+
+.administrator_teaching_inquire_upload_zone .administrator_teaching_inquire_upload_btn{
+	float:left;
+	width:110px;
+	height:30px;
+    line-height:30px;
+    background:#6ad7f2;  
+    color:#fff;
+	text-align:center;
+	overflow:hidden;
+	position:relative;
+	font-size:12px;
+	margin-left:10px;
+	cursor:pointer;
+}
+.administrator_teaching_inquire_upload_zone .administrator_teaching_inquire_upload_btn:hover{
+	float:left;
+	width:110px;
+	height:30px;
+    line-height:30px;
+    background:#39c8ec;  
+    color:#fff;
+	text-align:center;
+	overflow:hidden;
+	position:relative;
+	font-size:12px;
+	margin-left:10px;
+	cursor:pointer;
+}
+
+.administrator_teaching_inquire_tips{
+	float:left;
+	color:#f00;
+	height:30px;
+	line-height:30px;
+	font-size:12px;
+	margin-left:10px;
+	margin-top:30px;
+}
+
+
+.administrator_teaching_inquire_table{
+	width:100%;
+}
+.administrator_teaching_inquire_table tr td{
+	height:40px;
+	line-height:40px;
+	text-align:left;
+	text-indent:16px;
+	font-size:12px;
+	color:#333;
+}
+.administrator_teaching_inquire_table tr td:last-child{
+	border-right:1px solid #ccc;
+}
+.administrator_teaching_inquire_table thead tr td{
+	background:#f0f0f0;
+	border-left:1px solid #ccc;
+	border-top:1px solid #ccc;
+	border-bottom:2px solid #ccc;
+	font-weight:bold;	
+}
+.administrator_teaching_inquire_table tbody tr td{
+	border-left:1px solid #ccc;
+	border-bottom:1px solid #ccc;
+}
+.administrator_teaching_inquire_table tbody tr:hover{
+	border-left:1px solid #ccc;
+	border-bottom:1px solid #ccc;
+	background:#e1f8fd;
+}
+.administrator_teaching_inquire_table tbody tr:nth-child(2n+1) {
+	background:#f9f9f9;
+}
+.administrator_teaching_inquire_table tbody tr:nth-child(2n+1):hover {
+	background:#e1f8fd;
+}
+.administrator_teaching_inquire_table tbody tr td .administrator_addstudent_table_look{
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	color:#333;
+	width:50px;
+	height:24px;
+	line-height:24px;
+	background:#6ad7f2;
+	color:#fff;
+	font-size:12px;
+	cursor:pointer;
+}
+.administrator_teaching_inquire_table tbody tr td .administrator_addstudent_table_look:hover{
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	color:#333;
+	width:50px;
+	height:24px;
+	line-height:24px;
+	background:#39c8ec;
+	color:#fff;
+	font-size:12px;
+	cursor:pointer;
+}
+
+
+
+
+
+
+
+
+
+/****新增调查问卷弹出框****/
+
+.pop_msg_bg_administrator_teaching_inquire{ 
+	width:100%; 
+	height:100%; 
+	background:rgba(0,0,0,0.5); 
+	position:fixed; 
+	top:0; 
+	left:0;
+	z-index:15; 
+	display:none;
+}
+.pop_msg_administrator_teaching_inquire{ 
+	width:840px; 
+	height:630px;
+	background:#fff;
+	position:absolute;
+	z-index:16; 
+	display:none;
+}
+
+.pop_teaching_inquire_title{
+	width:100%;
+	height:40px;
+	background:#99cbed;
+}
+.pop_teaching_inquire_titlename{
+	float:left;
+	height:40px;
+	line-height:40px;
+	color:#fff;
+	font-size:14px;
+	margin-left:15px;
+}
+.teaching_inquire_pop_close{
+	float:right;
+	width:26px;
+	height:26px;
+	margin-right:8px;
+	margin-top:7px;
+	cursor:pointer;
+	 opacity: 0.5;
+}
+.teaching_inquire_pop_close:hover{
+	float:right;
+	width:26px;
+	height:26px;
+	margin-right:8px;
+	margin-top:7px;
+	cursor:pointer;
+	 opacity: 1;
+}
+
+
+.pop_teaching_inquire_content{
+	width:100%;
+	text-align:left;
+	padding:0 25px;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	box-sizing:border-box;
+}
+
+.pop_teaching_inquire_type_con{
+	width:100%;
+}
+
+.pop_teaching_inquire_type_tit{
+	width:100%;
+	text-align:center;
+	color:#1a1a1a;
+	font-size:16px;
+	padding:25px 0 0 0;
+}
+
+.pop_teaching_inquire_subject_con{
+	width:100%;
+	height:450px;
+	overflow-y:auto;
+	overflow-x:hidden;
+}
+.pop_teaching_inquire_subject_list{
+	width:100%;
+	padding-top:25px;
+}
+.pop_teaching_inquire_sub_title{
+	width:100%;
+	color:#1a1a1a;
+	text-align:left;
+	font-weight:bold;
+	font-size:14px;
+}
+.pop_teaching_inquire_sub_chose{
+	width:100%;
+	text-align:left;
+	margin-top:15px;
+}
+.pop_teaching_inquire_sub_chosebox{
+	float:left;
+	width:16px;
+	height:16px;
+	background:url(../images/exam/chosebox_ico.png) no-repeat;
+}
+.pop_teaching_inquire_sub_chosebox_selected{
+	float:left;
+	width:16px;
+	height:16px;
+	background:url(../images/exam/chosebox_ico_selected.png) no-repeat;
+}
+.pop_teaching_inquire_sub_chose_tit{
+	float:left;
+	height:16px;
+	line-height:16px;
+	color:#333;
+	font-size:12px;
+	margin-left:10px;
+}
+.pop_teaching_inquire_ask_textarea{
+	width:90%;
+	height:240px;
+	text-align:left;
+	resize:none;
+	overflow-y:auto;
+	border:1px solid #d9d9d9;
+	margin-top:15px;
+	padding:10px;
+}
+
+
+
+.pop_teaching_inquire_type_btn{
+	width:335px;
+	text-align:center;
+	margin:0 auto;
+	padding-top:25px;
+}
+.pop_teaching_inquire_type_btn span{
+	width:150px;
+	height:40px;
+	line-height:40px;
+	text-align:center;
+	color:#fff;
+	font-size:14px;
+	cursor:pointer;
+}
+.pop_teaching_inquire_type_btn span.pop_teaching_inquire_btn_cancle{
+	float:left;
+	background:#ff6600;
+}
+.pop_teaching_inquire_type_btn span.pop_teaching_inquire_btn_confirm{
+	float:right;
+	background:#6ad7f2;
+}
+
+
+
+
+

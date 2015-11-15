@@ -1,0 +1,270 @@
+@charset "utf-8";
+
+/*注册*/
+
+/*****头部中间区域****/
+.register_con{
+	width:1200px;
+	margin:0 auto;
+	text-align:center;	
+	padding-top:87px;
+}
+.register_step{
+	width:350px;
+	margin:0 auto;
+	text-align:center;
+}
+.register_step .register_step_detail{
+	width:100%;
+	text-align:left;
+	padding:100px 0;
+}
+.register_step_detail .register_input_con{
+	width:100%;
+}
+.register_school_info{
+	width:100%;
+	text-align:center;
+	margin-left:20px;	
+}
+.register_school_info .register_tit_txt{
+	width:100%;
+	text-align:center;
+	color:#1a1a1a;
+	font-size:16px;
+	margin-top:-50px;
+}
+.register_school_info .register_school_img_con{
+	width:82px;
+	height:82px;
+	background:rgba(174,228,239,0.5);
+	text-align:center;
+	padding:5px;
+	margin:30px auto;
+	-moz-border-radius:82px;
+	-ms-border-radius:82px;
+	-o-border-radius:82px;
+	-webkit-border-radius:82px;
+	border-radius:82px;
+}
+.register_school_img{
+	width:82px;
+	height:82px;
+}
+
+.register_input_con .register_type_txt{
+	float:left;
+	width:80px;
+	height:35px;
+	line-height:35px;
+	text-align:right;
+	color:#333;
+	font-size:14px;
+	margin-right:12px;
+}
+.register_input_con input.register_input_big{
+	float:left;
+	width:240px;
+	height:23px;
+	line-height:23px;
+	font-size:12px;
+	padding:5px 0;
+	text-indent:6px;
+	color:#ccc;
+	border:1px solid #ccc;
+}
+.register_pwd_input_con{
+	float:left;
+	width:240px;
+	position:relative;
+}
+.register_input_con img.pwd_view_ico{
+	width:26px;
+	height:16px;
+	position:absolute;
+	right:5px;
+	top:10px;
+	cursor:pointer;
+}
+.register_input_con input.register_yzm_input{
+	float:left;
+	width:115px;
+	height:23px;
+	line-height:23px;
+	font-size:12px;
+	padding:5px 0;
+	text-indent:6px;
+	color:#ccc;
+	border:1px solid #ccc;
+}
+.register_input_con .register_yzmclick_txt{
+	float:right;
+	height:35px;
+	line-height:35px;
+	text-align:right;
+	color:#333;
+	font-size:12px;
+	cursor:pointer;
+}
+.register_tips_txt{
+	padding-left:92px;
+	color:#f00;
+	font-size:12px;
+	margin-top:8px;
+	
+}
+.register_read_agreement{
+	width:100%;
+	padding-left:92px;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	box-sizing:border-box;
+}
+.register_read_agreement span{
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	vertical-align:top;
+	width:16px;
+	height:16px;
+	line-height:16px;
+	color:#333;
+	font-size:12px;
+	cursor:pointer;
+}
+.register_read_agreement_chose{
+	background:url(../images/exam/chosebox_ico.png) center center no-repeat;
+}
+.register_read_agreement_chose_selected{
+	background:url(../images/exam/chosebox_ico_selected.png) center center no-repeat;
+}
+.register_read_agreement i{
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	vertical-align:top;
+	height:16px;
+	line-height:16px;
+	color:#333;
+	padding-left:8px;
+	font-size:12px;
+}
+.register_read_agreement i b{
+	color:#1290cb;
+	font-size:12px;
+	cursor:pointer;
+}
+.register_read_agreement a.register_btn{
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	width:185px;
+	height:38px;
+	line-height:38px;
+	background:#45cfec;
+	color:#fff;
+	text-align:center;
+	font-size:14px;
+	margin-top:24px;
+	cursor:pointer;
+}
+
+/****步骤2****/
+
+.register_option_con{
+	float:left;
+	width:240px;
+	height:30px;
+	position:relative;
+	cursor:pointer;
+}
+.register_option_detail{
+	width:240px;
+	height:23px;
+	line-height:23px;
+	font-size:12px;
+	padding:5px 0;
+	color:#333;
+	border:1px solid #ccc;
+	position:relative;
+}
+.register_option_detail .school_option_txt{
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	width:195px;
+	height:23px;
+	line-height:23px;
+	padding-left:6px;
+}
+.register_option_arrow{
+	width:10px;
+	height:7px;
+	position:absolute;
+	top:13px;
+	right:8px;
+	z-index:13;
+}
+.school_chose_option_down{
+	width:240px;
+	height:120px;
+	position:absolute;
+	left:0;
+	top:30px;
+	display:none;
+	z-index:14;
+	border:1px solid #ccc;
+	overflow-y:auto;
+	overflow-x:hidden;
+}
+.school_chose_option_down li{
+	width:238px;
+	text-align:left;
+	height:30px;
+	line-height:30px;
+	background:#fff;
+	text-indent:6px;
+	color:#333;
+	cursor:pointer;
+	font-size:14px;
+}
+.school_chose_option_down li:hover{
+	background:#d8edf2;
+}
+
+
+/****步骤3****/
+
+.register_finish_con{
+	width:100%;
+	text-align:center;
+}
+.register_finish_ico{
+	float:left;
+	width:36px;
+	height:36px;
+	background:url(../images/find_pwd/pwd_right_ico.png) no-repeat;
+	margin-right:12px;	
+}
+.register_finish_txt{
+	float:left;
+	width:295px;
+	height:36px;
+	line-height:36px;
+	text-align:left;
+	color:#333;
+	font-size:14px;
+}
+.register_finish_btn{
+	width:185px;
+	height:38px;
+	line-height:38px;
+	background:#45cfec;
+	color:#fff;
+	text-align:center;
+	font-size:14px;
+	cursor:pointer;
+	margin:35px auto 0 auto;
+}

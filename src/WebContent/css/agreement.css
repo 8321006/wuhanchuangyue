@@ -1,0 +1,37 @@
+@charset "utf-8";
+
+/*协议*/
+
+/****中间区域***/
+.agreement_con{
+	width:960px;
+	margin:0 auto;
+	text-align:center;	
+	padding:87px 0 65px 0;
+}
+.agreement_con h7{
+	display:block;
+	color:#1a1a1a1;
+	text-align:center;
+	padding:30px 0;
+	font-size:20px;
+	font-weight:bold;
+}
+.agreement_list_title{
+	width:100%;
+	color:#4dd8fb;
+	text-align:left;
+	font-size:16px;
+  	font-weight:bold;
+  	padding:20px 0 11px 0;
+}
+.agreement_list_txt{
+	width:100%;
+	text-align:left;
+	font-size:12px;
+  	line-height:22px;
+	margin-top:5px;
+}
+.agreement_list_txt b{
+	padding-left:25px;
+}
